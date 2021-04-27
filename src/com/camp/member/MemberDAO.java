@@ -97,7 +97,7 @@ public class MemberDAO {
 			System.out.println(" 회원 번호 : " + num);
 
 			// 3 sql 작성 (insert) & pstmt 객체 생성
-			sql = "insert into camp_member values(?, ?, ?, ?, ?, ?, ?, now())";
+			sql = "insert into camp_member values(?, ?, ?, ?, ?, ?, now())";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -105,9 +105,8 @@ public class MemberDAO {
 			pstmt.setString(2, mb.getId());
 			pstmt.setString(3, mb.getPw());
 			pstmt.setString(4, mb.getName());
-			pstmt.setString(5, mb.getPhoneNumber());
+			pstmt.setString(5, mb.getPhone());
 			pstmt.setString(6, mb.getEmail());
-			pstmt.setString(7, mb.getGender());
 			// 4 sql 실행
 
 			pstmt.executeUpdate();

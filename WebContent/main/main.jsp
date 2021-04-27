@@ -5,66 +5,42 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>CampMap</title>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+<link rel="stylesheet" href="/Portpolio_camp/WebContent/css/footer.css" type="text/css" />
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 
 <style>
-
-#menu { text-decoration-line: none; color: black; padding: 10px; }
-#con { padding-top: 20px; }
-
-html {
-
-    position: relative;
-
-    min-height: 100%;
-
-    margin: 0;
-
-}
-
-body {
-
-    min-height: 100%;
-
-}
-
-.footer {
-
-    position: absolute;
-
-    left: 0;
-
-    bottom: 0;
-
-    width: 100%;
-
-	padding: 15px 0;
-
-	text-align: center;
-
-}
-
+#menu { text-decoration-line: none; color: black;}
 
 </style>
 
         
 </head>
-<body>
+<body style="background-color: #F2F2F2;">
 
 <!-- navbar 시작 -->
  <%@include file ="/navbar/navbar.jsp" %>
+<!-- navbar 끝 -->
 
-<!-- container -->
-<div class="container"> 
-  <div class="col-md-12 text-center" id="con">
+
+<!-- container 시작 -->
+<div class="container pt-3 " > 
+
+<!-- 메인 텍스트 시작 -->
+  <div class="col-md-12 text-center p-5" id="con">
    <a href="main.jsp" id="menu">
     <h1>CampMap</h1>
    </a>
   </div>
+<!-- 메인 텍스트 끝 -->  
   
+<!-- 이미지 슬라이드 시작 -->  
   <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
   <ol class="carousel-indicators">
     <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"></li>
@@ -109,11 +85,49 @@ body {
     <span class="visually-hidden">Next</span>
   </a>
 </div>
+<!-- 이미지 슬라이드 끝 -->  
+  
+<!-- 테이블 테스트 시작 -->
+<table class="table my-5">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+<!-- 테이블 테스트 끝 -->
   
   
 </div>
-<!-- footer -->
+<!-- container 끝 -->
+
+
+
+<!-- footer 시작 -->
 <%@include file ="/footer/footer.jsp" %>
+<!-- footer 끝 -->
 
 </body>
 </html>

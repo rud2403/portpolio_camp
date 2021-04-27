@@ -8,9 +8,8 @@ public class MemberBean {
 	private String id;
 	private String pw;
 	private String name;
-	private String PhoneNumber;
+	private String phone;
 	private String email;
-	private String gender;
 	private Timestamp regdate;
 
 	
@@ -45,12 +44,12 @@ public class MemberBean {
 		this.name = name;
 	}
 
-	public String getPhoneNumber() {
-		return PhoneNumber;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setPhoneNumber(String PhoneNumber) {
-		this.PhoneNumber = PhoneNumber;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getEmail() {
@@ -59,14 +58,6 @@ public class MemberBean {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
 	}
 
 	public Timestamp getRegdate() {
@@ -79,7 +70,7 @@ public class MemberBean {
 
 	@Override
 	public String toString() {
-		return "MemberBean [id=" + id + ", pw=" + pw + ", name=" + name + ", gender=" + gender + ", email=" + email + ", PhoneNumber=" + PhoneNumber
+		return "MemberBean [id=" + id + ", pw=" + pw + ", name=" + name + ", email=" + email + ", phone=" + phone
 				+ ", regdate=" + regdate + "]";
 	}
 }
