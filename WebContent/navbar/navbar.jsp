@@ -5,12 +5,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
+<style type="text/css">
+</style>
 
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #E9E9E9;">
+<%
+ String id = (String)session.getAttribute("id");
+
+%>
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #E9E9E9 ;">
   <div class="container-fluid">
     <a class="navbar-brand" href="/Portpolio_camp/main/main.jsp">CampMap</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,17 +24,39 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      
+      	<%
+         if(session.getAttribute("id") == null){
+        %>
         <li class="nav-item">
           <a class="nav-link" href="/Portpolio_camp/member/insertForm.jsp">회원가입</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/Portpolio_camp/member/loginForm.jsp">로그인</a>
         </li>
+        <%
+         }
+        %> 
+ 
+        
+        <%
+         if(session.getAttribute("id") != null){
+        %>
+        <li class="nav-item">
+          <a class="nav-link" href="/Portpolio_camp/member/myinfoForm.jsp">내정보</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/Portpolio_camp/member/logoutPro.jsp">로그아웃</a>
+        </li>
+        <%
+         }
+        %>
+        
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">|</a>
         </li>        
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">무료 캠핑장</a>
+          <a class="nav-link active" aria-current="page" href="/Portpolio_camp/freecamp/freeForm.jsp">무료 캠핑장</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">유료 캠핑장</a>
@@ -40,9 +68,18 @@
           <a class="nav-link active" aria-current="page" href="#">캠핑 톡</a>
         </li>        
       </ul>
+      
+	   
+      <%
+      if(session.getAttribute("id") != null){
+      %>
       <span class="navbar-text">
-        @@@님 반갑습니다.
+        <%=id %>님 반갑습니다.
       </span>
+      <%
+      }
+      %>
+      
     </div>
   </div>
 </nav>

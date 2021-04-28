@@ -24,17 +24,14 @@
 		// DB에 대한 처리를 하는 객체를 생성
 		MemberDAO bdao = new MemberDAO();
 		
-		// 글쓰기 기능 사용
+		// 회원가입 기능 사용
 		bdao.insertMember(mb);
 		
 		// 페이지 이동
-		response.sendRedirect("/Portpolio_camp/main/main.jsp");
-		
+		response.sendRedirect("insertconfirmForm.jsp");
 		
 	%>
-	
-	
-	
+
 
 </body>
 </html>
