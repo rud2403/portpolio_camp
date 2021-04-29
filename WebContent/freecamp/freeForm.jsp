@@ -22,9 +22,16 @@
 <!-- row 시작 -->	
 <div class="row mt-4">
 
+<!-- 왼쪽 col 시작 -->
     <div class="col-4 text-center">
 		<h3>무료 캠핑장 LIST</h3>
 		<hr>
+	<div class="row">
+		<div class="col">
+		게시글 총 x개
+		</div>
+	</div>
+	
 	<!-- table 시작 -->
 	<table class="table mt-5">
 	  <tbody>
@@ -76,7 +83,28 @@
 	  </tbody>
 	</table>
 	<!-- table 끝 -->
+	
+	<!-- page네비 시작 -->
+	<div class="row">
+		<div class="col-3"></div>
+		<div class="col-lg-3">
+		<nav aria-label="Page navigation example">
+		  	<ul class="pagination">
+			    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+			    <li class="page-item"><a class="page-link" href="#">1</a></li>
+			    <li class="page-item"><a class="page-link" href="#">2</a></li>
+			    <li class="page-item"><a class="page-link" href="#">3</a></li>
+			    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+		  	</ul>
+		</nav>
+		</div>
+		<div class="col-6"></div>
 	</div>
+	<!-- page네비 끝 -->
+	</div>
+	<!-- 왼쪽 col 끝 -->
+	
+	<!-- 오른쪽 col 시작 -->
 	<div class="col-8 text-center">
 	<!-- 지도 api 시작 -->
 	<div id="map" style="width:100%; height:900px;"></div>
@@ -175,6 +203,7 @@
 
 		</script>
 		</div>
+		<!-- 오른쪽 col 끝 -->
 		<!-- 지도 api 끝 -->
 	</div>
 	
