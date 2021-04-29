@@ -21,7 +21,7 @@
 
         
 </head>
-<body style="background-color: #F2F2F2;">
+<body class="pb-1" style="background-color: #F2F2F2;">
 
 <!-- navbar 시작 -->
  <jsp:include page="/navbar/navbar.jsp" />

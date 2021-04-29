@@ -66,7 +66,7 @@
 				// 비밀번호 다름. ( + 회원이다.)
 				%>
 				<script type="text/javascript">
-					alert("비밀번호 오류");
+					alert("비밀번호가 틀립니다.");
 					history.back();
 				</script>
 				

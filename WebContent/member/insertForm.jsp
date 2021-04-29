@@ -11,25 +11,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 
 
-<style type="text/css">
-
-html {
-
-    position: relative;
-
-    min-height: 100%;
-
-    margin: 0; 
-    
-    }
-
-body { min-height: 100%; }
-
-.contain { padding-left: 400px; padding-right: 400px; }
-
-</style>
-
-
 <script type="text/javascript">
 
 function check1(){
@@ -128,7 +109,8 @@ function check1(){
 
  <h2 class="text-center p-5"> 회원가입 </h2>
  
- <div class="contain">
+ <!-- 컨테이너 시작 -->
+ <div class="container-md">
   <form class="row g-3" action="insertPro.jsp" method="post" name="fr">
  
    <!-- 아이디 --> 
@@ -176,10 +158,13 @@ function check1(){
 
  </form>
 </div>
+ <!-- 컨테이너 종료 -->
+
 	
 
-<!-- footer -->
+<!-- footer 시작 -->
 <jsp:include page="/footer/footer.jsp" />
+<!-- footer 끝 -->
 	
 </body>
 </html>

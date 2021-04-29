@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>무료 캠핑장</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
@@ -17,8 +17,35 @@
  
 <!-- navbar 끝 -->
 
+<!-- container 시작 -->	
+<div class="container-fluid">	
+<div class="row">
+	<div class="col-6 text-center" style="background-color: #2EFEC8;">
+		ㅇㅇ<br>
+		<br>
+		<br>
+	</div>
+	<div class="col-6" style="background-color: #610B5E;">	
+		ㅇㅇ
+	</div>
+</div>
 
+<div class="row">
+	<div class="col-6" style="background-color: #0B3B17;">
+		ㅎㅎ
+	</div>
+	<div class="col-6" style="background-color: #D8F781;">	
+		ㅎㅎ
+	</div>
+</div>
 
-	무료캠핑장 페이지 입니다.
+</div>
+<!-- container 끝 -->	
+
+<!-- footer 시작 -->
+<div class="row">
+ <jsp:include page="/footer/footer.jsp" />
+</div>
+<!-- footer 끝 -->
 </body>
 </html>
