@@ -13,7 +13,6 @@
 
 <%
  String id = (String)session.getAttribute("id");
-
 %>
 
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #E9E9E9 ;">
@@ -43,7 +42,7 @@
          if(session.getAttribute("id") != null){
         %>
         <li class="nav-item">
-          <a class="nav-link" href="/Portpolio_camp/member/myinfoForm.jsp">내정보</a>
+          <a class="nav-link" href="/Portpolio_camp/member/mypageForm.jsp">마이페이지</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/Portpolio_camp/member/logoutPro.jsp">로그아웃</a>

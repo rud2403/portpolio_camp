@@ -6,27 +6,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-<style type="text/css">
 
-#ft {
-
-    position:relative;
-
-    bottom:0px;
-
-    width:100%;
-    
-    height: 10%;
-
-    
-    }
-
-</style>
 </head>
 <body>
 
-	
-	<div class="footer text-center pb-4 mt-5" id="ft">
+	<br><br><br><br><br><br>
+	<div class="footer text-center pb-4 mt-5" id="ft" >
 	<hr>
 		Copyright © 2021 BGM
 	</div>

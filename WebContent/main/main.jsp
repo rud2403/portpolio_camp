@@ -50,7 +50,7 @@
   <div class="carousel-inner">
   
     <div class="carousel-item active">
-      <img src="https://allways.smotor.com/wp-content/uploads/2020/04/0429_%EC%BA%A0%ED%95%91_12.jpg" class="d-block w-100 rounded" alt="..." width="300" height="500">
+      <img src="https://allways.smotor.com/wp-content/uploads/2020/04/0429_%EC%BA%A0%ED%95%91_12.jpg" class="d-block w-100 rounded" alt="..." width="300" height="500"  onclick="location.href='insertForm.jsp'"  style='cursor:pointer;'>
       <div class="carousel-caption d-none d-md-block">
       	<h1>추천 캠핑장 </h1>
         <h5>양산 @@계곡</h5>
@@ -59,7 +59,7 @@
     </div>
     
     <div class="carousel-item">
-      <img src="http://img.etoday.co.kr/pto_db/2019/10/600/20191001173327_1372185_787_590.jpg" class="d-block w-100 rounded" alt="..." width="300" height="500">
+      <img src="http://img.etoday.co.kr/pto_db/2019/10/600/20191001173327_1372185_787_590.jpg" class="d-block w-100 rounded" alt="..." width="300" height="500"  onclick="location.href='insertForm.jsp'"  style='cursor:pointer;'>
       <div class="carousel-caption d-none d-md-block">
       	<h1>추천 캠핑장2 </h1>
         <h5>Second slide label</h5>

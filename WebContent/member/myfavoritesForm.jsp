@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>레이아웃</title>
+<title>캠핑장 즐겨찾기</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
@@ -20,20 +20,21 @@
 <!-- container 시작 -->	
 <div class="container-fluid">	
 <div class="row">
-	<div class="col-6 text-center" style="background-color: #2EFEC8;">
-		ㅇㅇ
+	<div class="col-2 text-center mt-5"  style=" border-right: 1px solid black; height: 600px;">
+	
+	<!-- 페이지 목록 시작 -->
+		<ul class="list-group list-group-flush mt-3">
+		  <li class="my-5"><h3>마이페이지</h3></li>
+		  <li class="list-group-item">내정보</li>
+		  <li class="list-group-item">내정보 관리</li>
+		  <li class="list-group-item">캠핑장 즐겨찾기</li>
+		  <li class="list-group-item">회원탈퇴</li>
+		</ul>
+	<!-- 페이지 목록 끝 -->
+	
 	</div>
-	<div class="col-6" style="background-color: #610B5E;">	
-		ㅇㅇ
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-6" style="background-color: #0B3B17;">
-		ㅎㅎ
-	</div>
-	<div class="col-6" style="background-color: #D8F781;">	
-		ㅎㅎ
+	<div class="col-10 text-center mt-5">
+		<h3>캠핑장 즐겨찾기</h3>
 	</div>
 </div>
 

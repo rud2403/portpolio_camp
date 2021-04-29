@@ -27,6 +27,7 @@
 
 <div class="row mt-5">
 
+<!-- table 시작 -->
 	<table class="table pl-3 pr-3">
 	  <thead>
 	    <tr>
@@ -62,7 +63,8 @@
 	    </tr>
 	  </tbody>
 	</table>
-	
+<!-- table 끝 -->
+
 </div>
 <!-- row 끝 -->
 
