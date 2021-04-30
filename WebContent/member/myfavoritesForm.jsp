@@ -23,13 +23,7 @@
 	<div class="col-2 text-center mt-5"  style=" border-right: 1px solid black; height: 600px;">
 	
 	<!-- 페이지 목록 시작 -->
-		<ul class="list-group list-group-flush mt-3">
-		  <li class="my-5"><h3>마이페이지</h3></li>
-		  <li class="list-group-item">내정보</li>
-		  <li class="list-group-item">내정보 관리</li>
-		  <li class="list-group-item">캠핑장 즐겨찾기</li>
-		  <li class="list-group-item">회원탈퇴</li>
-		</ul>
+	 <jsp:include page="/pagelist/pagelistForm.jsp" />
 	<!-- 페이지 목록 끝 -->
 	
 	</div>

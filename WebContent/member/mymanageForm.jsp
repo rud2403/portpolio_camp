@@ -20,22 +20,61 @@
 <!-- container 시작 -->	
 <div class="container-fluid">	
 <div class="row">
+<!-- 왼쪽 열 시작 -->
 	<div class="col-2 text-center mt-5"  style=" border-right: 1px solid black; height: 600px;">
 	
 	<!-- 페이지 목록 시작 -->
-		<ul class="list-group list-group-flush mt-3">
-		  <li class="my-5"><h3>마이페이지</h3></li>
-		  <li class="list-group-item">내정보</li>
-		  <li class="list-group-item">내정보 관리</li>
-		  <li class="list-group-item">캠핑장 즐겨찾기</li>
-		  <li class="list-group-item">회원탈퇴</li>
-		</ul>
+	 <jsp:include page="/pagelist/pagelistForm.jsp" />
 	<!-- 페이지 목록 끝 -->
 	
 	</div>
+<!-- 왼쪽 열 종료 -->	
+
+<!-- 오른쪽 열 시작 -->	
 	<div class="col-10 text-center mt-5">
 		<h3>내정보 관리</h3>
+		
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-10">
+				<!-- 테이블 시작 -->
+				<table class="table">
+				  <tbody>
+				    <tr>
+				      <th scope="row">아이디</th>
+				      <td>rud2403</td>
+				      <td><button type="button" class="btn btn-light">Light</button></td>
+				    </tr>
+				    <tr>
+				      <th scope="row">비밀번호</th>
+				      <td>********</td>
+				      <td><button type="button" class="btn btn-light">Light</button></td>
+				    </tr>
+				    <tr>
+				      <th scope="row">이름</th>
+				      <td>박경민</td>
+				      <td><button type="button" class="btn btn-light">Light</button></td>
+				    </tr>
+				    <tr>
+				      <th scope="row">전화번호</th>
+				      <td>01020592403</td>
+				      <td><button type="button" class="btn btn-light">Light</button></td>
+				    </tr>
+				    <tr>
+				      <th scope="row">이메일</th>
+				      <td>rud2403@naver.com</td>
+				      <td><button type="button" class="btn btn-light">Light</button></td>
+				    </tr>				    				    
+				  </tbody>
+				</table>
+				<!-- 테이블 종료 -->
+			</div>
+			<div class="col-1"></div>
+			
+		</div>
+		
 	</div>
+<!-- 오른쪽 열 종료 -->	
 </div>
 
 </div>

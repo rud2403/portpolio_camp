@@ -12,30 +12,73 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 </head>
 <body>
+
+	<%
+		// 세션제어
+		String id = (String)session.getAttribute("id");
+		
+		if(id == null){
+			response.sendRedirect("loginForm.jsp");
+		}
+		
+		// 아이디 비밀번호를 입력받아서 정보를 삭제처리하는 페이지로 전달
+		
+		// 아이디/비밀번호 입력 받아서 정보를 삭제처리하는 페이지로 전달
+	%>
+
 <!-- navbar 시작 -->
  <jsp:include page="/navbar/navbar.jsp" />
- 
 <!-- navbar 끝 -->
 
 <!-- container 시작 -->	
 <div class="container-fluid">	
 <div class="row">
+
+	<!-- 왼쪽 열 시작 -->
 	<div class="col-2 text-center mt-5"  style=" border-right: 1px solid black; height: 600px;">
-	
 	<!-- 페이지 목록 시작 -->
-		<ul class="list-group list-group-flush mt-3">
-		  <li class="my-5"><h3>마이페이지</h3></li>
-		  <li class="list-group-item">내정보</li>
-		  <li class="list-group-item">내정보 관리</li>
-		  <li class="list-group-item">캠핑장 즐겨찾기</li>
-		  <li class="list-group-item">회원탈퇴</li>
-		</ul>
+	 <jsp:include page="/pagelist/pagelistForm.jsp" />
 	<!-- 페이지 목록 끝 -->
-	
 	</div>
+	<!-- 왼쪽 열 끝 -->
+	
+	
+	
+	<!-- 오른쪽 열 시작 -->
 	<div class="col-10 text-center mt-5">
 		<h3>회원탈퇴</h3>
+		
+		<div class="row text-center my-5 pt-5">
+		
+		<h2>비밀번호 재확인</h2>
+		
+		
+		</div>
+		<!-- form태그 시작 -->
+		<form action="withdrawalPro.jsp" method="get">
+			<div class="row">
+				<div class="col-4"></div>
+					<div class="col-4">
+					<div class="row">
+					  <div class="col-auto">
+					    <label for="inputPassword6" class="col-form-label">Password</label>
+					  </div>
+					  <div class="col-auto">
+					  	<input type="hidden" name="id" value="<%=id%>">
+					    <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" name="pw">
+					  </div>
+					  <div class="col-auto">
+					    <input class="btn btn-primary" type="submit" value="회원탈퇴">
+					 	 </div>
+					 	 </div>
+					  </div>
+				  <div class="col-4"></div>
+			</div>
+		</form>
+		<!-- form태그 끝 -->	
 	</div>
+	<!-- 오른쪽 열 끝 -->
+	
 </div>
 
 </div>

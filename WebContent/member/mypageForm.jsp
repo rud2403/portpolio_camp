@@ -30,7 +30,7 @@
 <div class="row pt-5">
 	<div class="col-3">
 		<!-- 카드 시작 -->		
-		<div class="card container" style="width: 18rem; height: 500px;">
+		<div class="card container" style="width: 20rem; height: 500px;">
 		  <img src="/Portpolio_camp/img/mypage/user.png" class="card-img-top my-5" alt="..." height="130px">
 		  <div class="card-body text-center my-5">
 		    <h5 class="card-title">내정보</h5>
@@ -43,7 +43,7 @@
 	</div>
 	<div class="col-3">	
 		<!-- 카드 시작 -->		
-		<div class="card container" style="width: 18rem; height: 500px;">
+		<div class="card container" style="width: 20rem; height: 500px;">
 		  <img src="/Portpolio_camp/img/mypage/user.png" class="card-img-top my-5" alt="..." height="130px">
 		  <div class="card-body text-center my-5">
 		    <h5 class="card-title">내정보 관리</h5>
@@ -55,7 +55,7 @@
 	</div>
 	<div class="col-3">	
 		<!-- 카드 시작 -->		
-		<div class="card container" style="width: 18rem; height: 500px;"> 
+		<div class="card container" style="width: 20rem; height: 500px;"> 
 		  <img src="/Portpolio_camp/img/mypage/user.png" class="card-img-top my-5" alt="..." height="130px">
 		  <div class="card-body text-center my-5">
 		    <h5 class="card-title">캠핑장 즐겨찾기</h5>
@@ -67,7 +67,7 @@
 	</div>
 	<div class="col-3">	
 		<!-- 카드 시작 -->		
-		<div class="card container" style="width: 18rem; height: 500px;">
+		<div class="card container" style="width: 20rem; height: 500px;">
 		  <img src="/Portpolio_camp/img/mypage/user.png" class="card-img-top my-5" alt="..." height="130px">
 		  <div class="card-body text-center my-5">
 		    <h5 class="card-title">회원탈퇴</h5>

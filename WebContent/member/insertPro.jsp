@@ -26,11 +26,20 @@
 		
 		// 회원가입 기능 사용
 		bdao.insertMember(mb);
+
+		
+// 		<script type="text/javascript">
+			
+// 			alert("회원가입이 완료되었습니다.");
+// 			location.href="/Portpolio_camp/main/main.jsp";
+			
+// 		</script>
+
 		
 		// 페이지 이동
-		response.sendRedirect("insertconfirmForm.jsp");
+		response.sendRedirect("/Portpolio_camp/member/insertconfirmForm.jsp");
 		
-	%>
+		%>
 
 
 </body>

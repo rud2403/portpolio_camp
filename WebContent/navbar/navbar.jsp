@@ -64,7 +64,7 @@
           <a class="nav-link active" aria-current="page" href="/Portpolio_camp/board/commuForm.jsp">캠핑 장터</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">캠핑 톡</a>
+          <a class="nav-link active" aria-current="page" href="#">자유게시판</a>
         </li>        
       </ul>
       

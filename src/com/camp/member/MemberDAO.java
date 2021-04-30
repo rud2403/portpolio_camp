@@ -23,6 +23,7 @@ public class MemberDAO {
 	private String sql = "";
 
 	// 디비에 필요한 정보
+	// getConnection() 시작
 	private Connection getConnection() {
 
 		// Context 객체를 생성
@@ -46,7 +47,7 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 		return conn;
-	} // getConnection()
+	} // getConnection() 끝
 
 	// 자원 해제 코드 - finally 구문에서 쓰인다.
 	public void closeDB() {
@@ -66,8 +67,7 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public void insertMember(MemberBean mb) {
 
 		int num = 0;
@@ -113,7 +113,7 @@ public class MemberDAO {
 
 			System.out.println("sql구문 실행 완료 : 회원가입 완료");
 
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("디비 연결 실패 !!");
 			e.printStackTrace();
 		} finally {
@@ -130,6 +130,63 @@ public class MemberDAO {
 
 	} // insertBoard()
 
-	
+	/////////////////////////////// 수정할 곳 ////////////////////////////////////
 
+	// deleteBoard(BoardBean bb) 시작
+	public int deleteMember(MemberBean mb) {
+		int check = -1;
+
+		try {
+			// DB접속 후
+			// 1 드라이버 로드
+			// 2 디비 연결
+			// => 한번에 처리하는 메소드로 변경
+			conn = getConnection();
+
+			// 3. sql작성 & pstmt 객체생성
+			sql = "select pw from camp_member where id = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			// ? 채우기
+
+			pstmt.setString(1, mb.getId());
+			// 4. sql 실행
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				// 아이디가 있는 경우
+				if (mb.getPw().equals(rs.getString("pw"))) {
+					// 비밀번호 같음
+
+					// sql 구문 작성 & pstmt 객체
+					// sql문 하나당 pstmt하나 따라와야함
+					sql = "delete from camp_member where id = ? ";
+					pstmt = conn.prepareStatement(sql);
+
+					// ? 채우기
+					pstmt.setString(1, mb.getId());
+
+					// sql 실행
+					pstmt.executeUpdate(); // 정상적으로 실행 됐다면 check = 1;
+					
+					check = 1; 
+				}
+				
+				System.out.println("회원 탈퇴 완료" + check);
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); 
+			
+		} finally{
+			closeDB();
+		}
+
+		return check;
+		
+		// deleteMember(MemberBean mb) 끝
+
+	}
 }
