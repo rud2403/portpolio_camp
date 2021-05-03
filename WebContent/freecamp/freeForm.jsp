@@ -54,11 +54,19 @@ function func1(){
 		</div>
 		
 		<!-- id가 'admin'일때만 나타나는 글쓰기 버튼 시작 -->
-		<%if(id.equals("admin")){%>
-		<div class="col-4">
-			<button type="button" class="btn btn-outline-primary" onclick="location.href='/Portpolio_camp/freecamp/freewriteForm.jsp'">글쓰기</button>
-		</div>
-		<%} %>
+		<%
+		try {
+			if(id.equals("admin")){ %>
+			<div class="col-4">
+				<button type="button" class="btn btn-outline-primary" onclick="location.href='/Portpolio_camp/freecamp/freewriteForm.jsp'">글쓰기</button>
+			</div>
+		<%
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		%>
+
 		<!-- id가 'admin'일때만 나타나는 글쓰기 버튼 끝 -->
 		
 	</div>
@@ -193,7 +201,7 @@ function func1(){
 			' <div class="text-center pl-3 col-10">'+
 			'  <div class="row-4"><h5>부산 오랑대 공원</h5></div>'+
 			'  <div class="row-4">주소 xxxxxxx</div>'+
-			'  <div class="row-4"><input class="btn btn-primary" type="submit" value="상세보기"></div>'+
+			'  <div class="row-4"><input class="btn btn-primary btn-sm" type="submit" value="상세보기"></div>'+
 			' </div>'+
 			' </div>'+
 			'</div>'

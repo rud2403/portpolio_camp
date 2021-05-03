@@ -21,7 +21,7 @@ public class MemberDAO {
 	private ResultSet rs = null;
 	private DataSource ds = null;
 	private String sql = "";
-
+	
 	// 디비에 필요한 정보
 	// getConnection() 시작
 	private Connection getConnection() {

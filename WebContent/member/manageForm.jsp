@@ -96,14 +96,14 @@
 				      
 				      <!-- 가운데 부분 시작 -->
 				      <td>
-					      <form action="/Portpolio_camp/main/main.jsp" method="post">
+					      <form action="/Portpolio_camp/member/managepwPro.jsp" method="post">
 					      	<div id="i2" style="display: none;">
 					      		<div>현재 비밀번호 &nbsp;&nbsp;&nbsp;<input type="text" name=""></div><br>
 					      		<div>새 비밀번호 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name=""></div><br>
 					      		<div>새 비밀번호 확인&nbsp;<input type="text" name=""></div><br>
 					      		
-					   		<input type="submit" class="btn btn-light " value="확인">
-					      	<input type="button" class="btn btn-light " value="취소" onclick="func1();">	
+					   		<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
+					      	<input type="button" class="btn btn-outline-primary btn-sm" value="취소" onclick="func1();">	
 					      		
 					      	</div>
 	    		
@@ -112,7 +112,7 @@
 				      </td>
 				      <!-- 가운데 부분 끝 -->
 				      
-				      <td><button type="button" class="btn btn-light" onclick="func1();">변경하기</button></td>
+				      <td><button type="button" class="btn btn-outline-primary" onclick="func1();">변경하기</button></td>
 				      
 				    </tr>
 				   <!-- 비밀번호 행 끝 -->
@@ -127,8 +127,8 @@
 				      		<div id="i4" style="display: none;">
 					      		<div><input type="text" name=""></div><br>
 					      		
-						   		<input type="submit" class="btn btn-light " value="확인">
-						      	<input type="button" class="btn btn-light " value="취소" onclick="func2();">	
+						   		<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
+						      	<input type="button" class="btn btn-outline-primary btn-sm" value="취소" onclick="func2();">	
 						      		
 						     </div>
 					      	
@@ -136,7 +136,7 @@
 				      	</form>
 					  </td>
 				      <!-- 가운데 부분 끝 -->
-				      <td><button type="button" class="btn btn-light" onclick="func2();">변경하기</button></td>
+				      <td><button type="button" class="btn btn-outline-primary" onclick="func2();">변경하기</button></td>
 				    </tr>
    				    <!-- 이름 행 끝 -->
 				    
@@ -151,8 +151,8 @@
 					      		<div id="i6" style="display: none;">
 						      		<div><input type="text" name=""></div><br>
 						      		
-							   		<input type="submit" class="btn btn-light " value="확인">
-							      	<input type="button" class="btn btn-light " value="취소" onclick="func3();">	
+							   		<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
+							      	<input type="button" class="btn btn-outline-primary btn-sm" value="취소" onclick="func3();">	
 							      		
 							     </div>
 						      	
@@ -162,7 +162,7 @@
 				     <!-- 가운데 부분 끝 -->
 				      
 				      
-				      <td><button type="button" class="btn btn-light" onclick="func3();">변경하기</button></td>
+				      <td><button type="button" class="btn btn-outline-primary" onclick="func3();">변경하기</button></td>
 				    </tr>
    				    <!-- 전화번호 행 끝 -->
 				    
@@ -177,8 +177,8 @@
 					      		<div id="i8" style="display: none;">
 						      		<div><input type="text" name=""></div><br>
 						      		
-							   		<input type="submit" class="btn btn-light" value="확인">
-							      	<input type="button" class="btn btn-light" value="취소" onclick="func4();">	
+							   		<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
+							      	<input type="button" class="btn btn-outline-primary btn-sm" value="취소" onclick="func4();">	
 							      		
 							     </div>
 						      	
@@ -187,7 +187,7 @@
 				      </td>
 				      
 				      
-				      <td><button type="button" class="btn btn-light" onclick="func4();">변경하기</button></td>
+				      <td><button type="button" class="btn btn-outline-primary" onclick="func4();">변경하기</button></td>
 				    </tr>
 				    <!-- 이메일 행 끝 -->
 				    
