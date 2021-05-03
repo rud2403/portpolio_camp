@@ -68,6 +68,8 @@ public class MemberDAO {
 		}
 	}
 
+	
+	// insertMember 메소드 시작
 	public void insertMember(MemberBean mb) {
 
 		int num = 0;
@@ -128,9 +130,8 @@ public class MemberDAO {
 
 		}
 
-	} // insertBoard()
+	} // insertMember 메소드 끝
 
-	/////////////////////////////// 수정할 곳 ////////////////////////////////////
 
 	// deleteBoard(BoardBean bb) 시작
 	public int deleteMember(MemberBean mb) {
@@ -176,7 +177,7 @@ public class MemberDAO {
 
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace(); 
 			
@@ -186,7 +187,78 @@ public class MemberDAO {
 
 		return check;
 		
-		// deleteMember(MemberBean mb) 끝
-
 	}
+	// deleteMember(MemberBean mb) 끝
+
+	
+	/////////// 로그인 멤버 ////////////////////////////////////
+	
+	// loginMemeber(MemberBean mb) 시작
+	public int loginMember(MemberBean mb){
+		int check = -1;
+
+		try {
+			// DB접속 후
+			// 1 드라이버 로드
+			// 2 디비 연결
+			// => 한번에 처리하는 메소드로 변경
+			conn = getConnection();
+
+			// 3. sql작성 & pstmt 객체생성
+			sql = "select pw from camp_member where id = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			// ? 채우기
+
+			pstmt.setString(1, mb.getId());
+			// 4. sql 실행
+			rs = pstmt.executeQuery();
+
+			if(rs.next()){
+				// 회원이다
+				// 비밀번호를 사용해서 본인 확인
+				if(mb.getPw().equals(rs.getString("pw")) ){
+					// 비밀번호가 같다 ( + 회원이다 ) => 본인 => 로그인성공
+					System.out.println("로그인성공");
+					
+					check = 1; 
+				}
+				
+				else{
+					
+					check = 0;
+					
+				}
+				
+			}
+			
+			System.out.println("로그인 완료" + check);
+
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); 
+			
+		} finally{
+			closeDB();
+		}
+
+		return check;
+		
+	}
+		
+	
+	// infoMemeber() 시작
+	public void infoMember(){
+		
+		
+		
+		
+	}
+	// infoMemeber() 끝
+
+
+	
+	
 }
+// class MemberDAO 끝

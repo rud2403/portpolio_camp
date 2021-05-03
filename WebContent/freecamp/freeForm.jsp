@@ -10,15 +10,36 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+// 게시글 제목 클릭시 마커가 선택되는 기능 시작
+function func1(){
+	kakao.maps.event.addListener(marker1, 'mouseover', function() {
+	infowindow1.open(map, marker1);
+    });
+}
+//게시글 제목 클릭시 마커가 선택되는 기능 종료
+
+</script>
+
 </head>
+
+
+
 <body>
+
+<%
+ String id = (String)session.getAttribute("id");
+%>
+
 <!-- navbar 시작 -->
  <jsp:include page="/navbar/navbar.jsp" />
- 
 <!-- navbar 끝 -->
 
 <!-- container 시작 -->
 <div class="container-fluid">
+
 <!-- row 시작 -->	
 <div class="row mt-4">
 
@@ -27,9 +48,19 @@
 		<h3>무료 캠핑장 LIST</h3>
 		<hr>
 	<div class="row">
-		<div class="col">
+		<div class="col-4"></div>
+		<div class="col-4">
 		게시글 총 x개
 		</div>
+		
+		<!-- id가 'admin'일때만 나타나는 글쓰기 버튼 시작 -->
+		<%if(id.equals("admin")){%>
+		<div class="col-4">
+			<button type="button" class="btn btn-outline-primary" onclick="location.href='/Portpolio_camp/freecamp/freewriteForm.jsp'">글쓰기</button>
+		</div>
+		<%} %>
+		<!-- id가 'admin'일때만 나타나는 글쓰기 버튼 끝 -->
+		
 	</div>
 	
 	<!-- table 시작 -->
@@ -40,7 +71,7 @@
 	      <td class="col-4"><img src="http://img.etoday.co.kr/pto_db/2019/10/600/20191001173327_1372185_787_590.jpg" class="d-block rounded" alt="..." width="120px" height="100px"></td>
 	      <td class="pt-2 ml-3 col-6">
 	      	<div class="row">
-	      	부산 오랑대공원
+	      	<a onclick="func1();" style='cursor:pointer;'>부산 오랑대공원</a>
 	     	</div> 
 	      	<div class="row py-3">
 	      	거리 "xxx"km
@@ -197,15 +228,16 @@
 		      // 마커2 위에 인포윈도우2를 표시합니다
 		      infowindow2.open(map, marker2);  
 		});
-		
-		
 		//-- 마커 클릭 이벤트 끝 --//
 
 		</script>
+		<!-- 지도 api 끝 -->
+		
 		</div>
 		<!-- 오른쪽 col 끝 -->
-		<!-- 지도 api 끝 -->
+		
 	</div>
+	<!-- row 끝 -->
 	
 </div>	
 <!-- container 끝 -->
@@ -215,6 +247,9 @@
  <jsp:include page="/footer/footer.jsp" />
 </div>
 <!-- footer 끝 -->
+	
+	
+
 	
 </body>
 </html>

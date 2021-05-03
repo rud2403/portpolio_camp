@@ -24,28 +24,45 @@
 		
 		<%
 		
-		System.out.println("전달 정보 : " + mb);
+			System.out.println("전달 정보 : " + mb);
 		///////////////////////////////////////////////////
 		// DB이동 후 로그인 상태 판별
 		
-		MemberDAO bdao = new MemberDAO();
-			
-		// 해당 글 정보를 사용해서 회원 정보 삭제
+		final String DRIVER = "com.mysql.jdbc.Driver";
+		final String DBURL = "jdbc:mysql://localhost:3306/portpolio_camp";
+		final String DBID = "root";
+	 	final String DBPW = "1234";
+	 	
+	 	// 1. 드라이버 로드
+	 	
+	 	Class.forName(DRIVER);
+	 	
+	 	Connection conn = DriverManager.getConnection(DBURL, DBID, DBPW);
+	 	
+	 	String sql ="select pw from camp_member where id = ?";
+	 	
+	 	
+	 	PreparedStatement pstmt = conn.prepareStatement(sql);
+
+	
+		pstmt.setString(1, mb.getId());
 		
-		int check = bdao.loginMember(mb);
-		
-		
+		ResultSet rs = pstmt.executeQuery();
 		
 		//sql 구문의 결과가 있을 때
-		if(check > 0){
-
-			session.setAttribute("id", mb.getId());
-
-			// main.jsp 페이지 이동
-			response.sendRedirect("/Portpolio_camp/main/main.jsp");
-			System.out.println("로그인성공");
+		if(rs.next()){
+			// 회원이다
+			// 비밀번호를 사용해서 본인 확인
+			if(mb.getPw().equals(rs.getString("pw")) ){
+				// 비밀번호가 같다 ( + 회원이다 ) => 본인 => 로그인성공
+						
+				// 로그인 성공의 의미로 회원 ID정보를 session내장 객체에 저장
+				session.setAttribute("id", mb.getId());
+				// main.jsp 페이지 이동
+				response.sendRedirect("/Portpolio_camp/main/main.jsp");
+				System.out.println("로그인성공");
 				
-			}else if(check == 0){
+			}else{
 				// 비밀번호 다름. ( + 회원이다.)
 				%>
 				<script type="text/javascript">
@@ -55,7 +72,8 @@
 				
 				<%
 				
-		
+			}
+			
 		}else{ // 비회원이다.
 			%>
 			<script type="text/javascript">
@@ -65,13 +83,14 @@
 				 }else{
 					 history.back();
 				 }
-		<%		 
-		}
-		%>
+				 
 				// Y - 회원가입 페이지 이동, N - 페이지 뒤로가기
 				//alert("비회원입니다.");
 				
 			</script>
-
+			
+			<%
+		}
+	%>
 </body>
 </html>

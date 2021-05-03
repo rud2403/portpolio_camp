@@ -10,6 +10,40 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+	function func1() {
+		var con = document.getElementById("i1");
+		con.style.display = (con.style.display != 'none') ? "none" : "block";
+		var con = document.getElementById("i2");
+		con.style.display = (con.style.display != 'none') ? "none" : "block";
+	}
+	
+	function func2() {
+		var con = document.getElementById("i3");
+		con.style.display = (con.style.display != 'none') ? "none" : "block";
+		var con = document.getElementById("i4");
+		con.style.display = (con.style.display != 'none') ? "none" : "block";
+	}
+	
+	function func3() {
+		var con = document.getElementById("i5");
+		con.style.display = (con.style.display != 'none') ? "none" : "block";
+		var con = document.getElementById("i6");
+		con.style.display = (con.style.display != 'none') ? "none" : "block";
+	}
+	
+	function func4() {
+		var con = document.getElementById("i7");
+		con.style.display = (con.style.display != 'none') ? "none" : "block";
+		var con = document.getElementById("i8");
+		con.style.display = (con.style.display != 'none') ? "none" : "block";
+	}
+
+
+</script>
+
+
 </head>
 <body>
 <!-- navbar 시작 -->
@@ -34,37 +68,130 @@
 	<div class="col-10 text-center mt-5">
 		<h3>내정보 관리</h3>
 		
-		<div class="row">
+		<!-- 행 시작 -->
+		<div class="row mt-5">
+		
 			<div class="col-1"></div>
+			
 			<div class="col-10">
 				<!-- 테이블 시작 -->
 				<table class="table">
 				  <tbody>
 				    <tr>
 				      <th scope="row">아이디</th>
+				      
+				      <!-- 가운데 부분 시작 -->
+				      
 				      <td>rud2403</td>
-				      <td><button type="button" class="btn btn-light">Light</button></td>
+				      <!-- 가운데 부분 끝 -->
+				      
+				      <td>
+				      	<div style="display: none;"><button type="button" class="btn btn-light"></button></div>
+				      </td>
 				    </tr>
+				    
+				    <!-- 비밀번호 행 시작 -->
 				    <tr>
 				      <th scope="row">비밀번호</th>
-				      <td>********</td>
-				      <td><button type="button" class="btn btn-light">Light</button></td>
+				      
+				      <!-- 가운데 부분 시작 -->
+				      <td>
+					      <form action="/Portpolio_camp/main/main.jsp" method="post">
+					      	<div id="i2" style="display: none;">
+					      		<div>현재 비밀번호 &nbsp;&nbsp;&nbsp;<input type="text" name=""></div><br>
+					      		<div>새 비밀번호 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name=""></div><br>
+					      		<div>새 비밀번호 확인&nbsp;<input type="text" name=""></div><br>
+					      		
+					   		<input type="submit" class="btn btn-light " value="확인">
+					      	<input type="button" class="btn btn-light " value="취소" onclick="func1();">	
+					      		
+					      	</div>
+	    		
+					      	<div id="i1">********</div>
+					      </form>
+				      </td>
+				      <!-- 가운데 부분 끝 -->
+				      
+				      <td><button type="button" class="btn btn-light" onclick="func1();">변경하기</button></td>
+				      
 				    </tr>
+				   <!-- 비밀번호 행 끝 -->
+				    
+				    <!-- 이름 행 시작 -->
 				    <tr>
 				      <th scope="row">이름</th>
-				      <td>박경민</td>
-				      <td><button type="button" class="btn btn-light">Light</button></td>
+				      
+				      <!-- 가운데 부분 시작 -->
+				      <td>
+				      <form action="/Portpolio_camp/main/main.jsp" method="post">
+				      		<div id="i4" style="display: none;">
+					      		<div><input type="text" name=""></div><br>
+					      		
+						   		<input type="submit" class="btn btn-light " value="확인">
+						      	<input type="button" class="btn btn-light " value="취소" onclick="func2();">	
+						      		
+						     </div>
+					      	
+					      	<div id="i3">박경민</div>
+				      	</form>
+					  </td>
+				      <!-- 가운데 부분 끝 -->
+				      <td><button type="button" class="btn btn-light" onclick="func2();">변경하기</button></td>
 				    </tr>
+   				    <!-- 이름 행 끝 -->
+				    
+				    <!-- 전화번호 행 시작 -->
 				    <tr>
 				      <th scope="row">전화번호</th>
-				      <td>01020592403</td>
-				      <td><button type="button" class="btn btn-light">Light</button></td>
+				      
+				      <!-- 가운데 부분 시작 -->
+				      <td>
+				      
+					     <form action="/Portpolio_camp/main/main.jsp" method="post">
+					      		<div id="i6" style="display: none;">
+						      		<div><input type="text" name=""></div><br>
+						      		
+							   		<input type="submit" class="btn btn-light " value="확인">
+							      	<input type="button" class="btn btn-light " value="취소" onclick="func3();">	
+							      		
+							     </div>
+						      	
+						      	<div id="i5">01020592403</div>
+					      </form>
+				      </td>
+				     <!-- 가운데 부분 끝 -->
+				      
+				      
+				      <td><button type="button" class="btn btn-light" onclick="func3();">변경하기</button></td>
 				    </tr>
+   				    <!-- 전화번호 행 끝 -->
+				    
+				    <!-- 이메일 행 시작 -->
 				    <tr>
 				      <th scope="row">이메일</th>
-				      <td>rud2403@naver.com</td>
-				      <td><button type="button" class="btn btn-light">Light</button></td>
-				    </tr>				    				    
+				      
+				      
+				      <td>
+				      
+					     <form action="/Portpolio_camp/main/main.jsp" method="post">
+					      		<div id="i8" style="display: none;">
+						      		<div><input type="text" name=""></div><br>
+						      		
+							   		<input type="submit" class="btn btn-light" value="확인">
+							      	<input type="button" class="btn btn-light" value="취소" onclick="func4();">	
+							      		
+							     </div>
+						      	
+						      	<div id="i7">rud2403@naver.com</div>
+					      </form>
+				      </td>
+				      
+				      
+				      <td><button type="button" class="btn btn-light" onclick="func4();">변경하기</button></td>
+				    </tr>
+				    <!-- 이메일 행 끝 -->
+				    
+				    				    				    
 				  </tbody>
 				</table>
 				<!-- 테이블 종료 -->
