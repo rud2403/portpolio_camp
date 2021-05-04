@@ -27,9 +27,8 @@
 		
 		// 전달되는 정보(파라미터)를 저장 => 액션태그 사용 자바빈객체 저장
 				
-		String pw = request.getParameter("pw");
-		String pw1 = request.getParameter("pw1");
-		String pw2 = request.getParameter("pw2");
+		String phone = request.getParameter("phone");
+
 		%>
 		
 		<jsp:useBean id="mb" class="com.camp.member.MemberBean" />
@@ -58,7 +57,7 @@
 	 	Connection conn = DriverManager.getConnection(DBURL, DBID, DBPW);
 		
 	 	// 3. sql작성 & pstmt 객체생성
-	 	String sql = "select pw from camp_member where id = ? ";
+	 	String sql = "select phone from camp_member where id = ? ";
 
 	 	PreparedStatement pstmt = conn.prepareStatement(sql);
 	 	
@@ -70,63 +69,36 @@
 	 	
 
 	 	// 5. 데이터 처리
+	 		// 아이디가 있는 경우
 		 	if(rs.next()){
-		 		// 아이디가 있는 경우
 		 		
-		 		
-		 		if(mb.getPw().equals(rs.getString("pw"))){
-		 			// 비밀번호 같음
 		 			
-		 			
-		 			// 새 비밀번호 일치 확인
-		 			if(pw1.equals(pw2)){
-		 				
 		 			// sql 구문 작성 & pstmt 객체
-		 			sql = "update camp_member set pw = ? where id = ? ";
+		 			sql = "update camp_member set phone = ? where id = ? ";
 		 			
 		 			pstmt = conn.prepareStatement(sql);
 		 				// sql문 하나당 pstmt하나 따라와야함
 		 			
 		 			// ? 채우기
-		 			pstmt.setString(1, pw1);
+		 			pstmt.setString(1, phone);
 		 			pstmt.setString(2, mb.getId());
 		
 		 			// sql 실행
 		 			
 		 			pstmt.executeUpdate();
 		 			
+		 			
 		 			//페이지 이동
 		 			//response.sendRedirect("/Portpolio_camp/member/manageForm.jsp");
 		 			
 			 		%>
 			 		<script type="text/javascript">
-		 			alert(" 비밀번호 변경완료 ");
+		 			alert(" 전화번호 변경완료 ");
 		 			location.href="/Portpolio_camp/member/manageForm.jsp";
 		 			</script>
 			 		
 			 		<%
-		 			
-		 			}else{
-				 		%>
-				 		
-				 		<script type="text/javascript">
-				 			alert("새 비밀번호가 다릅니다.");
-				 			history.back();
-				 		</script>
-				 		
-				 		<%
-		 			}
-			 	}else{
-			 		// 비밀번호 다름 => 오류 (페이지 뒤로 이동)
-			 		%>
-			 		
-			 		<script type="text/javascript">
-			 			alert("현재 비밀번호가 다릅니다.");
-			 			history.back();
-			 		</script>
-			 		
-			 		<%
-			 	}
+
 		 		
 		 	}else{
 		 		// 아이디가 없는 경우 => 오류 (페이지 뒤로 이동)

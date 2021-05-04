@@ -13,11 +13,24 @@
 
 <script type="text/javascript">
 
+<%
+String id = (String)session.getAttribute("id");
+%>
+
 // 게시글 제목 클릭시 마커가 선택되는 기능 시작
+
+var ele = document.getElementById('marker1');
+
 function func1(){
-	kakao.maps.event.addListener(marker1, 'mouseover', function() {
+	
+	alert("클릭 됐음");
+	kakao.maps.event.addListener(document.getElementById(marker1).click(), 'mouseclick', function() {
 	infowindow1.open(map, marker1);
+	ele.click();
+
     });
+	
+
 }
 //게시글 제목 클릭시 마커가 선택되는 기능 종료
 
@@ -29,9 +42,6 @@ function func1(){
 
 <body>
 
-<%
- String id = (String)session.getAttribute("id");
-%>
 
 <!-- navbar 시작 -->
  <jsp:include page="/navbar/navbar.jsp" />
@@ -79,7 +89,7 @@ function func1(){
 	      <td class="col-4"><img src="http://img.etoday.co.kr/pto_db/2019/10/600/20191001173327_1372185_787_590.jpg" class="d-block rounded" alt="..." width="120px" height="100px"></td>
 	      <td class="pt-2 ml-3 col-6">
 	      	<div class="row">
-	      	<a onclick="func1();" style='cursor:pointer;'>부산 오랑대공원</a>
+	      	<a onclick="func1();" style='cursor:pointer;' name="id">부산 오랑대공원</a>
 	     	</div> 
 	      	<div class="row py-3">
 	      	거리 "xxx"km
@@ -140,11 +150,14 @@ function func1(){
 		<div class="col-6"></div>
 	</div>
 	<!-- page네비 끝 -->
+	
 	</div>
 	<!-- 왼쪽 col 끝 -->
 	
 	<!-- 오른쪽 col 시작 -->
 	<div class="col-8 text-center">
+	
+	
 	<!-- 지도 api 시작 -->
 	<div id="map" style="width:100%; height:900px;"></div>
 		
@@ -162,8 +175,7 @@ function func1(){
 		//마커가 표시될 위치입니다 
 		var markerPosition1  = new kakao.maps.LatLng(33.450750, 126.570100); 
 		var markerPosition2  = new kakao.maps.LatLng(33.450300, 126.570300); 
-		var markerPosition3  = new kakao.maps.LatLng(33.450500, 126.570500); 
-		var markerPosition4  = new kakao.maps.LatLng(33.451000, 126.571000); 
+
 		
 		// 마커를 생성합니다
 		var marker1 = new kakao.maps.Marker({
@@ -174,22 +186,17 @@ function func1(){
 		    position: markerPosition2
 		});
 		
-		var marker3 = new kakao.maps.Marker({
-		    position: markerPosition3
-		});		
-		
-		var marker4 = new kakao.maps.Marker({
-		    position: markerPosition4
-		});			
+
 		// 마커가 지도 위에 표시되도록 설정합니다
 		marker1.setMap(map);
 		marker2.setMap(map);
-		marker3.setMap(map);
-		marker4.setMap(map);
+
 		
 		
 		//-- 마커 클릭 이벤트 시작 --//
 		// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+		
+		
 		
 		//-- iwContent1 시작--//
 		var iwContent1 = 
@@ -212,6 +219,8 @@ function func1(){
 		 // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
 		var iwContent2 = '<div style="padding:5px;">안녕하세요</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다    
+		    
+		    
 		    
 		// 인포윈도우1을 생성합니다
 		var infowindow1 = new kakao.maps.InfoWindow({

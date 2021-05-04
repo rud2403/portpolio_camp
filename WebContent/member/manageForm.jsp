@@ -1,6 +1,11 @@
+<%@page import="com.camp.member.MemberBean"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -46,6 +51,65 @@
 
 </head>
 <body>
+
+<%
+		// 로그인한 사람의 정보를 DB에서 조회해서
+		// jsp화면에 출력
+	
+		// 로그인 세션 처리
+		String id = (String)session.getAttribute("id");
+	
+		if (id == null) {
+			//로그인 x
+			System.out.println("[info.jsp] : 아이디 없음 -> 로그인페이지 이동");
+			response.sendRedirect("loginForm.jsp");
+		}
+	
+		// 디비 연결 후 필요한 데이터 조회 -> 출력
+		
+		final String DRIVER = "com.mysql.jdbc.Driver";
+		final String DBURL = "jdbc:mysql://localhost:3306/portpolio_camp";
+		final String DBID = "root";
+		final String DBPW = "1234";
+		
+		// 1 드라이버 로드
+		Class.forName(DRIVER);
+		
+		// 2 디비 연결
+		Connection conn = DriverManager.getConnection(DBURL, DBID, DBPW);
+		
+		// 3 쿼리 작성(select) & pstmt 작성
+		String sql = "select * from camp_member where id = ?";
+	
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		// 4 sql 객체 실행 -> rs에 저장
+		pstmt.setString(1, id);
+		ResultSet rs = pstmt.executeQuery();
+		
+		// 5 데이터 처리
+		MemberBean mb = null;
+
+		if(rs.next()) { 
+			// rs에 저장된 정보를 꺼내서 화면에 출력
+			mb = new MemberBean();
+
+			mb.setId(rs.getString("id"));
+			mb.setPw(rs.getString("pw"));
+			mb.setName(rs.getString("name"));
+			mb.setPhone(rs.getString("phone"));			
+			mb.setEmail(rs.getString("email"));
+			mb.setRegdate(rs.getTimestamp("regdate"));
+			
+			System.out.println("sql 구문 실행 완료");
+			System.out.println("저장된 회원 정보" + mb);
+		}
+		
+	%>
+
+
+
+
 <!-- navbar 시작 -->
  <jsp:include page="/navbar/navbar.jsp" />
  
@@ -75,14 +139,16 @@
 			
 			<div class="col-10">
 				<!-- 테이블 시작 -->
-				<table class="table">
+				<table class="table text-center">
 				  <tbody>
 				    <tr>
 				      <th scope="row">아이디</th>
 				      
 				      <!-- 가운데 부분 시작 -->
 				      
-				      <td>rud2403</td>
+				      <td>
+				      	<%=mb.getId() %>
+				      </td>
 				      <!-- 가운데 부분 끝 -->
 				      
 				      <td>
@@ -97,17 +163,24 @@
 				      <!-- 가운데 부분 시작 -->
 				      <td>
 					      <form action="/Portpolio_camp/member/managepwPro.jsp" method="post">
+					     	<input type="hidden" name="id" value="<%=mb.getId() %>">
 					      	<div id="i2" style="display: none;">
-					      		<div>현재 비밀번호 &nbsp;&nbsp;&nbsp;<input type="text" name=""></div><br>
-					      		<div>새 비밀번호 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name=""></div><br>
-					      		<div>새 비밀번호 확인&nbsp;<input type="text" name=""></div><br>
+					      		<div>현재 비밀번호 &nbsp;&nbsp;&nbsp;<input type="password" name="pw"></div><br>
+					      		<div>새 비밀번호 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="pw1"></div><br>
+					      		<div>새 비밀번호 확인&nbsp;<input type="password" name="pw2"></div><br>
 					      		
 					   		<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
 					      	<input type="button" class="btn btn-outline-primary btn-sm" value="취소" onclick="func1();">	
 					      		
 					      	</div>
-	    		
-					      	<div id="i1">********</div>
+    							<%
+    								String pw="";
+    								for(int i= 0 ; i<mb.getPw().length();i++)
+    								{
+    									pw+="*";
+    								}
+    							%>
+					      	<div id="i1"><%=pw %></div>
 					      </form>
 				      </td>
 				      <!-- 가운데 부분 끝 -->
@@ -123,16 +196,17 @@
 				      
 				      <!-- 가운데 부분 시작 -->
 				      <td>
-				      <form action="/Portpolio_camp/main/main.jsp" method="post">
+				      <form action="/Portpolio_camp/member/managenamePro.jsp" method="post">
+				      	<input type="hidden" name="id" value="<%=mb.getId() %>">
 				      		<div id="i4" style="display: none;">
-					      		<div><input type="text" name=""></div><br>
+					      		<div><input type="text" name="name"></div><br>
 					      		
 						   		<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
 						      	<input type="button" class="btn btn-outline-primary btn-sm" value="취소" onclick="func2();">	
 						      		
 						     </div>
 					      	
-					      	<div id="i3">박경민</div>
+					      	<div id="i3"><%=mb.getName() %></div>
 				      	</form>
 					  </td>
 				      <!-- 가운데 부분 끝 -->
@@ -147,16 +221,17 @@
 				      <!-- 가운데 부분 시작 -->
 				      <td>
 				      
-					     <form action="/Portpolio_camp/main/main.jsp" method="post">
+					     <form action="/Portpolio_camp/member/managephonePro.jsp" method="post">
+					     	<input type="hidden" name="id" value="<%=mb.getId() %>">
 					      		<div id="i6" style="display: none;">
-						      		<div><input type="text" name=""></div><br>
+						      		<div><input type="text" name="phone"></div><br>
 						      		
 							   		<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
 							      	<input type="button" class="btn btn-outline-primary btn-sm" value="취소" onclick="func3();">	
 							      		
 							     </div>
 						      	
-						      	<div id="i5">01020592403</div>
+						      	<div id="i5"><%=mb.getPhone() %></div>
 					      </form>
 				      </td>
 				     <!-- 가운데 부분 끝 -->
@@ -173,16 +248,17 @@
 				      
 				      <td>
 				      
-					     <form action="/Portpolio_camp/main/main.jsp" method="post">
+					     <form action="/Portpolio_camp/member/manageemailPro.jsp" method="post">
+					     	<input type="hidden" name="id" value="<%=mb.getId() %>">
 					      		<div id="i8" style="display: none;">
-						      		<div><input type="text" name=""></div><br>
+						      		<div><input type="email" name="email"></div><br>
 						      		
 							   		<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
 							      	<input type="button" class="btn btn-outline-primary btn-sm" value="취소" onclick="func4();">	
 							      		
 							     </div>
 						      	
-						      	<div id="i7">rud2403@naver.com</div>
+						      	<div id="i7"><%=mb.getEmail() %></div>
 					      </form>
 				      </td>
 				      

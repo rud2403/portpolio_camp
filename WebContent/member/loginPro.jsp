@@ -21,6 +21,7 @@
 		<jsp:useBean id="mb" class="com.camp.member.MemberBean"></jsp:useBean>
 		
 		<jsp:setProperty property="*" name="mb"/>
+
 		
 		<%
 		
