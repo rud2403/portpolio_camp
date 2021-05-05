@@ -9,6 +9,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import javax.websocket.Session;
 
 import com.camp.member.MemberBean;
 
@@ -210,6 +211,7 @@ public class MemberDAO {
 			pstmt = conn.prepareStatement(sql);
 			// ? 채우기
 
+			
 			pstmt.setString(1, mb.getId());
 			// 4. sql 실행
 			rs = pstmt.executeQuery();
@@ -249,11 +251,56 @@ public class MemberDAO {
 		
 	
 	// infoMemeber() 시작
-	public void infoMember(){
+	public void infoMember(MemberBean mb){
+			
 		
-		
-		
-		
+			try {
+				
+				
+				// 디비 연결 후 필요한 데이터 조회 -> 출력
+				
+				conn = getConnection();
+				
+				
+				// 3 쿼리 작성(select) & pstmt 작성
+				sql = "select * from camp_member where id = ?";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				System.out.println("mb.getId() = " +mb.getId());
+
+				// 4 sql 객체 실행 -> rs에 저장
+				
+				
+				pstmt.setString(1, mb.getId());
+				
+				rs = pstmt.executeQuery();
+				// 5 데이터 처리
+
+				System.out.println("sql 실행완료 ");
+
+				
+				if(rs.next()) { 
+					// rs에 저장된 정보를 꺼내서 화면에 출력
+					
+					mb.setId(rs.getString("id"));
+					mb.setPw(rs.getString("pw"));
+					mb.setName(rs.getString("name"));
+					mb.setPhone(rs.getString("phone"));
+					mb.setEmail(rs.getString("email"));
+					mb.setRegdate(rs.getTimestamp("regdate"));
+					
+					System.out.println("sql 구문 실행 완료");
+					System.out.println("저장된 회원 정보" + mb);
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("예외 발생");
+			}
+			
+
 	}
 	// infoMemeber() 끝
 

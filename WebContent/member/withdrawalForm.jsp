@@ -58,20 +58,21 @@
 		<form action="withdrawalPro.jsp" method="get">
 			<div class="row">
 				<div class="col-4"></div>
-					<div class="col-4">
-					<div class="row">
-					  <div class="col-auto">
-					    <label for="inputPassword6" class="col-form-label">Password</label>
-					  </div>
-					  <div class="col-auto">
-					  	<input type="hidden" name="id" value="<%=id%>">
-					    <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" name="pw">
-					  </div>
-					  <div class="col-auto">
-					    <input class="btn btn-primary" type="submit" value="회원탈퇴">
-					 	 </div>
-					 	 </div>
-					  </div>
+					<div class="col-4 text-center">
+						<div class="row">
+						  <div class="col-auto">
+						    <label for="inputPassword6" class="col-form-label">Password</label>
+						  </div>
+						  <div class="col-auto">
+						  	<input type="hidden" name="id" value="<%=id%>">
+						    <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" name="pw">
+						    <input class="btn btn-primary mt-5" type="submit" value="회원탈퇴">
+						  </div>
+						  <div class="col-auto">
+						    
+						  </div>
+						</div>
+					 </div>
 				  <div class="col-4"></div>
 			</div>
 		</form>
