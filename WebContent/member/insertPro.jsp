@@ -37,7 +37,7 @@
 
 		
 		// 페이지 이동
-		response.sendRedirect("/Portpolio_camp/member/insertconfirmForm.jsp");
+		 response.sendRedirect("/Portpolio_camp/member/insertconfirmForm.jsp");
 		
 		%>
 

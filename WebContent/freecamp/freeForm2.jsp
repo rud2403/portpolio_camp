@@ -5,24 +5,26 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>무료 캠핑장</title>
+
+<!-- jquery 시작 -->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<!-- jquery 끝 -->
+
+
+<!-- 카카오 map api 시작 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8cf6d2a5b75cdde0c3700860a547a92e"></script>
+<!-- 카카오 map api 끝 -->
+
+
+<!-- 부트스트랩 시작-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 
-<script type="text/javascript">
+<!-- 부트스트랩 끝-->
 
-
-
-	
-	
-	function func1() {
-		
-	}
-
-
-</script>
 
 </head>
 
@@ -81,7 +83,7 @@
 	      <td class="col-4"><img src="http://img.etoday.co.kr/pto_db/2019/10/600/20191001173327_1372185_787_590.jpg" class="d-block rounded" alt="..." width="120px" height="100px"></td>
 	      <td class="pt-2 ml-3 col-6">
 	      	<div class="row" id="ck">
-	      	<a onclick="func1();" style='cursor:pointer;'>부산 오랑대공원</a>
+	      	<a style='cursor:pointer;'>부산 오랑대공원</a>
 	     	</div> 
 	      	<div class="row py-3">
 	      	거리 "xxx"km
@@ -124,6 +126,7 @@
 	  </tbody>
 	</table>
 	<!-- table 끝 -->
+	<input type="button" value="jquery 테스트" id="bt" onclick="func1()">
 	
 	<!-- page네비 시작 -->
 	<div class="row">
@@ -153,7 +156,6 @@
 	<!-- 지도 api 시작 -->
 	<div id="map" style="width:100%; height:900px;"></div>
 		
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8cf6d2a5b75cdde0c3700860a547a92e"></script>
 		<script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = { 
@@ -212,15 +214,14 @@
 		    });
 		    
 		    kakao.maps.event.addListener(marker, 'click', makeClickListener(map, marker, infowindow));
-		    
-		    
+		   
 		    //kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 		    
 		    
 		}
 		    
 		    
-		// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+		// 인포윈도우를 표시하는 클릭을 만드는 함수입니다 
 		function makeClickListener(map, marker, infowindow) {
 		    return function() {
 		        infowindow.open(map, marker);
@@ -234,19 +235,37 @@
 		    };
 		}
 		
+		
 		// 게시글 제목 클릭시 마커가 선택되는 기능 시작
 		var txt = document.getElementById('ck');
+		var bt = document.getElementById('bt');
+		var mc = makeClickListener(map, marker, infowindow);
 		
-
 		txt.addEventListener('click', function(){
-			// 	alert("클릭 됐습니다.");
-			 	alert(positions[1]);
+			 alert("클릭 됐습니다.");
+			 
+			 $(document).ready(function() {
+					alert("JQUERY 준비-시작");
 
-			positions[1].trigger('click');
+					$(mc).trigger('click');
+					
+					alert("JQUERY 준비-끝");
+				});
+ 			 
 			
 		});
+		
+		
 		//게시글 제목 클릭시 마커가 선택되는 기능 종료
 
+		
+		// Jquery 테스트 시작
+		function func1() {
+			 alert(" jquery 테스트 버튼도 함께 클릭 됐습니다.");
+		}
+		
+		// Jquery 테스트 끝
+		
 		
 // 		//마커가 표시될 위치입니다 
 // 		var markerPosition1  = new kakao.maps.LatLng(33.450750, 126.570100); 
