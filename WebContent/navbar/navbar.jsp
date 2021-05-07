@@ -55,7 +55,7 @@
           <a class="nav-link active" aria-current="page" href="#">|</a>
         </li>        
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/Portpolio_camp/freecamp/freeForm3.jsp">무료 캠핑장</a>
+          <a class="nav-link active" aria-current="page" href="/Portpolio_camp/freecamp/freeForm.jsp">무료 캠핑장</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">유료 캠핑장</a>

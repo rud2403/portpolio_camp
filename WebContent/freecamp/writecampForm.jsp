@@ -6,8 +6,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<!-- 부트스트랩 시작 -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+	<!-- 부트스트랩 끝 -->
+
+	<!-- 우편번호 시작 -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<!-- 우편번호 끝 -->
+	
 <script>
+
     function sample6_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -55,17 +67,60 @@
             }
         }).open();
     }
+    
 </script>
 
 </head>
 <body>
+
+	<!-- 우편번호 시작 -->
 	<form action="/Portpolio_camp/freecamp/writecampPro.jsp" method="get">
-		<input type="text" id="sample6_postcode" placeholder="우편번호">
+		<input type="hidden" id="sample6_postcode" placeholder="우편번호">
 		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-		<input type="text" id="sample6_address" placeholder="주소"><br>
-		<input type="text" id="sample6_detailAddress" placeholder="상세주소">
-		<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+		<input type="text" id="sample6_address" placeholder="주소" name="address"><br>
+		<input type="hidden" id="sample6_detailAddress" placeholder="상세주소">
+		<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
 		<input type="submit" value="보내기">
 	</form>
+	<!-- 우편번호 끝 -->
+	
+	
+	<!-- 모달 키는 버튼 시작 -->
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+	  Launch demo modal
+	</button>
+	<!-- 모달 키는 버튼 끝 -->
+
+
+	<!-- Modal 시작-->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-xl">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      
+	      <!-- 게시판 글 쓰기 폼 작성 시작 -->
+	      <form action="/Portpolio_camp/freecamp/writecampPro.jsp" method="get">
+		      <div class="modal-body">
+			        여기가 모달 중앙인가요
+			       <input type="text" name="test"> 
+			  </div>
+			      
+
+		      <div class="modal-footer">
+		      	<button type="submit" class="btn btn-primary">작성</button>
+			  	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+		      </div>
+	      </form>
+	     <!-- 게시판 글 쓰기 폼 작성 끝 -->
+	      
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal 끝-->
+
+	
 </body>
 </html>

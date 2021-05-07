@@ -17,11 +17,72 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 	<!-- jquery 끝 -->
 	
+	<!-- 우편번호 시작 -->
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<!-- 우편번호 끝 -->
+	
+	<!-- id 값 받아오기 시작 -->
 	<script type="text/javascript">
 		<%
 		String id = (String)session.getAttribute("id");
 		%>
 	</script>
+	<!-- id 값 받아오기 끝 -->
+	
+	<!-- 우편번호 스크립트 시작 -->
+	<script>
+
+	    function sample6_execDaumPostcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+	
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	
+	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+	                if(data.userSelectedType === 'R'){
+	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	    	                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있고, 공동주택일 경우 추가한다.
+	                    if(data.buildingName !== '' && data.apartment === 'Y'){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                    if(extraAddr !== ''){
+	                        extraAddr = ' (' + extraAddr + ')';
+	                    }
+	                    // 조합된 참고항목을 해당 필드에 넣는다.
+	                    document.getElementById("sample6_extraAddress").value = extraAddr;
+	                
+	                } else {
+	                    document.getElementById("sample6_extraAddress").value = '';
+	                }
+	
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('sample6_postcode').value = data.zonecode;
+	                document.getElementById("sample6_address").value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById("sample6_detailAddress").focus();
+	            }
+	        }).open();
+	    }
+	    
+	</script>	
+	<!-- 우편번호 스크립트 끝 -->
+	
 </head>
 
 
@@ -57,7 +118,7 @@
 		try {
 			if(id.equals("admin")){ %>
 			<div class="col-4">
-				<button type="button" class="btn btn-outline-primary" onclick="location.href='/Portpolio_camp/freecamp/freewriteForm.jsp'">글쓰기</button>
+				<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">글쓰기</button>
 			</div>
 		<%
 			}
@@ -65,7 +126,6 @@
 			e.printStackTrace();
 		}
 		%>
-
 		<!-- id가 'admin'일때만 나타나는 글쓰기 버튼 끝 -->
 		
 	</div>
@@ -142,6 +202,145 @@
 	
 	</div>
 	<!-- 왼쪽 col 끝 -->
+	
+	
+	<!-- 게시판 글쓰기 Modal 시작-->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-xl">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h2 class="modal-title" id="exampleModalLabel">무료 캠핑장 - 글쓰기 </h2>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      
+	      <!-- 게시판 글 쓰기 폼 작성 시작 -->
+	      <form action="/Portpolio_camp/freecamp/writecampPro.jsp" method="get">
+	      	  <!-- 글쓰기 본문 시작 -->
+		      <div class="modal-body mx-5">
+			       <div class="form-floating mb-3">
+					  <input type="text" class="form-control" id="floatingInput" placeholder="캠핑지명" name="test">
+					  <label for="floatingInput">캠핑지명</label>
+					</div>
+					
+			       	<!-- 우편번호 시작 -->
+						<input type="text" id="sample6_address" placeholder="주소" name="address" class="form-control"><br>
+						<input type="button" class="btn btn-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+						
+						<input type="hidden" id="sample6_postcode" placeholder="우편번호">
+						<input type="hidden" id="sample6_detailAddress" placeholder="상세주소">
+						<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
+					<!-- 우편번호 끝 -->
+					
+					<!-- 위도 경도 시작 -->
+					<div class="row my-3">
+						<div class="col">
+							<input type="text" class="form-control" id="floatingInput" placeholder="위도" name="lat">
+						</div>
+						<div class="col">
+							<input type="text" class="form-control" id="floatingInput" placeholder="경도" name="lng">
+						</div>
+					</div>
+			       	<!-- 위도 경도 끝 -->
+			       	<hr>
+			       	<!-- 주변환경 텍스트 시작 -->
+			       	<div class="row text-center">
+			       		<div class="col-4"></div>
+			       		<div class="col-4">주변 환경</div>
+			       		<div class="col-4"></div>			       		
+			       	</div>
+			       	<!-- 주변환경 텍스트 끝 -->
+			       	
+			       	<!-- CheckBox 시작 -->
+			       	<!-- row 시작 -->
+			       	<div class="row m-3">
+			       	<div class="col m-2">
+			       	<h5>화장실</h5> <div class="form-check">
+							  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="yes" checked>
+							  <label class="form-check-label" for="exampleRadios1">
+							    있음
+							  </label>
+							</div>
+							<div class="form-check">
+							  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="no">
+							  <label class="form-check-label" for="exampleRadios2">
+							    없음
+							  </label>
+							</div>
+					</div>	
+			       	<div class="col m-2">
+			       <h5>주차장</h5> <div class="form-check">
+							  <input class="form-check-input" type="radio" name="park" id="exampleRadios1" value="yes" checked>
+							  <label class="form-check-label" for="exampleRadios1">
+							    있음
+							  </label>
+							</div>
+							<div class="form-check">
+							  <input class="form-check-input" type="radio" name="park" id="exampleRadios2" value="no">
+							  <label class="form-check-label" for="exampleRadios2">
+							    없음
+							  </label>
+							</div>
+					</div>
+			       	<div class="col m-2">
+			       	<h5>물놀이</h5> <div class="form-check">
+							  <input class="form-check-input" type="radio" name="water" id="exampleRadios1" value="yes" checked>
+							  <label class="form-check-label" for="exampleRadios1">
+							    있음
+							  </label>
+							</div>
+							<div class="form-check">
+							  <input class="form-check-input" type="radio" name="water" id="exampleRadios2" value="no">
+							  <label class="form-check-label" for="exampleRadios2">
+							    없음
+							  </label>
+							</div>
+					</div>
+			       	<div class="col m-2">
+			       	<h5>낚시</h5> <div class="form-check">
+							  <input class="form-check-input" type="radio" name="fishing" id="exampleRadios1" value="yes" checked>
+							  <label class="form-check-label" for="exampleRadios1">
+							    있음
+							  </label>
+							</div>
+							<div class="form-check">
+							  <input class="form-check-input" type="radio" name="fishing" id="exampleRadios2" value="no">
+							  <label class="form-check-label" for="exampleRadios2">
+							    없음
+							  </label>
+							</div>
+					</div>																			
+			       </div>
+			      	<!-- row1 끝 -->
+			      	
+			       
+			       	
+			  </div>
+			  <!-- 글쓰기 본문 끝 -->
+			      
+
+		      <div class="modal-footer">
+		      	<button type="submit" class="btn btn-primary">작성</button>
+			  	<button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+			  	<button type="reset">취소2</button>
+		      </div>
+	      </form>
+	     <!-- 게시판 글 쓰기 폼 작성 끝 -->
+	      
+	    </div>
+	  </div>
+	</div>
+	<!-- 게시판 글쓰기 Modal 끝-->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	<!-- 오른쪽 col 시작 -->
 	<div class="col-8 text-center">
