@@ -1,0 +1,92 @@
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#fr").submit();
+		})
+	</script>
+
+</head>
+<body>
+	
+	<!-- camp/파일업로드 프로 -->
+	<%
+	// 파일 업로드 전 준비
+	
+	// 0) 해당 라이브러리 설치(cos.jar)
+	// 1) 파일이 저장될 위치 지정
+	String path = request.getRealPath("/upload");
+
+	System.out.println("파일이 저장되는 실제 경로 : " + path);
+	
+	// 2) 파일의 크기를 지정 -> 10mb
+	int maxSize = 10 * 1024 * 1024;
+	
+	// 파일 업로드 => Multipart 객체를 생성
+	MultipartRequest multi = new MultipartRequest(
+			request,
+			path,
+			maxSize,
+			"UTF-8",
+			new DefaultFileRenamePolicy()
+			);
+	
+	System.out.println("파일이 업로드 됐습니다.");
+	
+	// 이전 페이지에서 전달해 준 정보를 출력s
+	String name = multi.getParameter("name");
+	String address = multi.getParameter("address");
+	String lat = multi.getParameter("lat");
+	String lng = multi.getParameter("lng");
+	String toilet = multi.getParameter("toilet");
+	String park = multi.getParameter("park");
+	String water = multi.getParameter("water");
+	String fishing = multi.getParameter("fishing");
+	String field = multi.getParameter("field");
+	String land = multi.getParameter("land");
+	String level = multi.getParameter("level");
+
+
+	
+	//String filename = multi.getParameter("filename");
+	
+	// 서버에 올라가는 파일의 이름(중복처리)
+	String filename = multi.getFilesystemName("filename");
+	
+	// 서버에 올라가는 파일이름 X 파일자체의 이름
+	String oFileName = multi.getOriginalFileName("filename");
+	
+	%>
+
+	<hr>
+	
+	<form id="fr" name="fr" action="/Portpolio_camp/freecamp/writecampPro.jsp" method="post">
+		<input type="hidden" name="name" value="<%=name %>">
+		<input type="hidden" name="address" value="<%=address %>">
+		<input type="hidden" name="lat" value="<%=lat %>">
+		<input type="hidden" name="lng" value="<%=lng %>">
+		<input type="hidden" name="toilet" value="<%=toilet %>">
+		<input type="hidden" name="park" value="<%=park %>">
+		<input type="hidden" name="water" value="<%=water %>">
+		<input type="hidden" name="fishing" value="<%=fishing %>">
+		<input type="hidden" name="field" value="<%=field %>">
+		<input type="hidden" name="land" value="<%=land %>">
+		<input type="hidden" name="filename" value="<%=filename %>">
+		<input type="hidden" name="level" value="<%=level %>">
+		
+		
+	</form>
+
+	<!-- <a href="javascript:fr.submit();">DB 저장하기</a> -->
+	
+</body>
+</html>
