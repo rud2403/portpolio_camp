@@ -118,7 +118,7 @@ public class BoardDAO {
 			System.out.println(" 글 번호 : " + num);
 
 			// 3 sql 작성 (insert) & pstmt 객체 생성
-			sql = "insert into camp_camp values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ?)";
+			sql = "insert into camp_camp values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ?, ? ,?)";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -135,6 +135,9 @@ public class BoardDAO {
 			pstmt.setString(11, bb.getLand());
 			pstmt.setString(12, bb.getFilename());
 			pstmt.setString(13, bb.getLevel());
+			pstmt.setInt(14, bb.getReadcount());
+			pstmt.setString(15, bb.getComent());
+			
 
 			// 4 sql 실행
 
@@ -241,6 +244,9 @@ public class BoardDAO {
 					bb.setFilename(rs.getString("filename"));
 					bb.setDate(rs.getDate("date"));
 					bb.setLevel(rs.getString("level"));
+					bb.setReadcount(rs.getInt("readcount"));
+					bb.setComent(rs.getString("coment"));
+					
 
 					// Bean -> ArrayList 한칸에 저장
 					BoardListAll.add(bb);
@@ -316,6 +322,8 @@ public class BoardDAO {
 					bb.setFilename(rs.getString("filename"));
 					bb.setDate(rs.getDate("date"));
 					bb.setLevel(rs.getString("level"));
+					bb.setReadcount(rs.getInt("readcount"));
+					bb.setComent(rs.getString("coment"));
 
 					// Bean -> ArrayList 한칸에 저장
 					BoardList.add(bb);
@@ -334,7 +342,106 @@ public class BoardDAO {
 
 			return BoardList;
 		}
-		// getBoardList(int startRow, int pageSize); 끝
+		// getBoardList(int startRow, int pageSize) 끝
+		
+		
+		
+		// updateReadcount(int num) 시작
+		public void updateReadcount(int num){
+			
+			try {
+			// 1,2 디비 연결
+			conn = getConnection();
+			
+			
+			// 3 sql 구문 작성(update) & pstmt 객체
+			sql = "update camp_camp set readcount = readcount + 1 where num=?";
+			
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, num);
+			
+			//4 sql 실행
+			
+			pstmt.execute();
+			
+			System.out.println("글 조회수 증가 완료");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				closeDB();
+			}
+			
+			
+			// 4 sql 실행
+			
+			
+		}
+		// updateReadcount(int num) 끝
+		
+		
+		
+		// getBoard(int num) 시작
+		public BoardBean getBoard(int num){
+
+			BoardBean bb = null;
+			
+			try {
+				
+				// 1, 2 디비 연결
+				conn = getConnection();
+				
+				// 3 sql 작성(select) & pstmt 객체
+				sql = "select * from camp_camp where num=?";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, num);
+				
+				// 4 sql 실행
+				
+				rs = pstmt.executeQuery();
+				
+				// 5 데이터 처리
+				if(rs.next()){
+					
+					bb = new BoardBean();
+					
+					bb.setNum(rs.getInt("num"));
+					bb.setName(rs.getString("name"));
+					bb.setAddress(rs.getString("address"));
+					bb.setLat(rs.getString("lat"));
+					bb.setLng(rs.getString("lng"));
+					bb.setToilet(rs.getString("toilet"));
+					bb.setPark(rs.getString("park"));
+					bb.setWater(rs.getString("water"));
+					bb.setFishing(rs.getString("fishing"));
+					bb.setField(rs.getString("field"));
+					bb.setLand(rs.getString("land"));
+					bb.setFilename(rs.getString("filename"));
+					bb.setDate(rs.getDate("date"));
+					bb.setLevel(rs.getString("level"));
+					bb.setReadcount(rs.getInt("readcount"));
+					bb.setComent(rs.getString("coment"));
+				}
+				
+				System.out.println(" 글 번호에 해당하는 글정보 저장 완료");
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				closeDB();
+			}
+			
+			return bb;
+			
+
+		}
+		// getBoard(int num) 끝
+		
 		
 }
 // BoardDAO 끝

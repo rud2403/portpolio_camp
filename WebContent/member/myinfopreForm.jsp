@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>회원탈퇴</title>
+<title>내정보</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
@@ -46,7 +46,7 @@
 	
 	<!-- 오른쪽 열 시작 -->
 	<div class="col-10 text-center mt-5">
-		<h3>회원탈퇴</h3>
+		<h3>내정보</h3>
 		
 		<div class="row text-center mt-5 pt-5">
 		
@@ -55,7 +55,7 @@
 		
 		</div>
 		<!-- form태그 시작 -->
-		<form action="withdrawalPro.jsp" method="get">
+		<form action="myinfoprePro.jsp" method="get">
 			<div class="row">
 				<div class="col-4"></div>
 					<div class="col-4 text-center">
@@ -66,7 +66,7 @@
 						  <div class="col-auto">
 						  	<input type="hidden" name="id" value="<%=id%>">
 						    <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" name="pw">
-						    <input class="btn btn-primary mt-5" type="submit" value="회원탈퇴">
+						    <input class="btn btn-primary mt-5" type="submit" value="확인">
 						  </div>
 						  <div class="col-auto">
 						    

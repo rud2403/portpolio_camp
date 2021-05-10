@@ -32,6 +32,7 @@
 	</script>
 	<!-- id 값 받아오기 끝 -->
 	
+
 	
 	<script type="text/javascript">
 		<!-- jquery 시작 -->
@@ -42,13 +43,17 @@
 				$("#cc2").click();
 			});
 			
-			$("#loc1").click(function(){
-				location.href="/Portpolio_camp/main/main.jsp";
-			});
-			$("#loc2").click(function(){
-				location.href="/Portpolio_camp/main/main.jsp";
-			});
+			// 상세보기 구현 시작
+// 			$("#loc1").click(function(){
+// 				location.href="/Portpolio_camp/main/main.jsp";
+// 			});
+// 			$("#loc2").click(function(){
+// 				location.href="/Portpolio_camp/main/main.jsp";
+// 			});
+			// 상세보기 구현 끝
+
 			
+			// 지도 위치 이동 시작
 			$("#ck1").click(function(){
 			 	infowindow1.open(map, marker1);
 			 	map.setCenter(markerPosition1);						
@@ -58,6 +63,7 @@
  			 	infowindow2.open(map, marker2);
  			 	map.setCenter(markerPosition2);						
  			});
+			// 지도 위치 이동 끝
 
  			
 
@@ -189,7 +195,7 @@
 	<div class="row">
 		<div class="col-4" >
 			<!-- 사용자 현재위치 버튼 시작 -->
-			<button type="button" class="btn btn-outline-info btn-sm" id="place">현재위치</button>
+			<button type="button" class="btn btn-outline-secondary btn-sm" id="place">현재위치</button>
 			<!-- 사용자 현재위치 버튼 끝 -->
 		</div>
 		<div class="col-4">
@@ -221,7 +227,7 @@
 		%>
 	    <tr>
 	      <th class="pt-5 col-2" scope="row"><%=bb.getNum() %></th>	      
-	      <td class="col-4"><img src="http://img.etoday.co.kr/pto_db/2019/10/600/20191001173327_1372185_787_590.jpg" class="d-block rounded" alt="..." width="90px" height="100px"></td>
+	      <td class="col-4"><img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block rounded" alt="..." width="90px" height="100px"></td>
 	      <td class="pt-2 ml-3 col-6">
 	      	<div class="row" style='cursor:pointer;'>
 	      		<a id="ck<%=bb.getNum() %>"><%=bb.getName() %></a>
@@ -242,7 +248,7 @@
 	     	<div class="row" >
 		     	<div class="col-1"></div>
 		     	<div class="col-4">
-	     			<input class="btn btn-primary btn-sm m-2" id="loc<%=bb.getNum() %>" type="button" value="상세보기">
+	     			<input class="btn btn-light btn-sm m-2" id="loc<%=bb.getNum() %>" type="button" value="상세보기" onclick="location.href='content.jsp?num=<%=bb.getNum()%>&pageNum=<%=pageNum%>'">
 	     		</div>
 	     		<div class="col-7"></div>
 	     	</div>	     		     	
@@ -253,7 +259,7 @@
 	  </tbody>
 	</table>
 	<!-- table 끝 -->	
-	
+
 	<!-- page네비 시작 -->
 
 	<div class="row">
@@ -520,11 +526,11 @@
 	
 	
 	<!-- 오른쪽 col 시작 -->
-	<div class="col-8 text-center">
+	<div class="col-8 text-center mt-5">
 	
 	
 	<!-- /////////////////////////////////지도 api 시작 /////////////////////////////////-->
-	<div id="map" style="width:100%; height:900px;"></div>
+	<div id="map" style="width:100%; height:940px;"></div>
 		
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8cf6d2a5b75cdde0c3700860a547a92e"></script>
 		<script>

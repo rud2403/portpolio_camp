@@ -35,7 +35,7 @@
 		  <div class="card-body text-center my-5">
 		    <h5 class="card-title">내정보</h5>
 		    <p class="card-text">가입 시 입력한 회원정보를 조회 합니다.</p>
-		    <a href="/Portpolio_camp/member/myinfoForm.jsp" class="btn btn-primary">이동하기</a>
+		    <a href="/Portpolio_camp/member/myinfopreForm.jsp" class="btn btn-primary">이동하기</a>
 		  </div>
 		</div>
 		<!-- 카드 종료 -->		

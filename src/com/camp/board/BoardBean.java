@@ -19,7 +19,21 @@ public class BoardBean {
 	private String filename;
 	private Date date;
 	private String level;
+	private int readcount;
+	private String coment;
 	
+	public int getReadcount() {
+		return readcount;
+	}
+	public void setReadcount(int readcount) {
+		this.readcount = readcount;
+	}
+	public String getComent() {
+		return coment;
+	}
+	public void setComent(String coment) {
+		this.coment = coment;
+	}
 	public String getLevel() {
 		return level;
 	}
@@ -109,7 +123,7 @@ public class BoardBean {
 	public String toString() {
 		return "BoardBean [num=" + num + ", name=" + name + ", address=" + address + ", lat=" + lat + ", lng=" + lng
 				+ ", toilet=" + toilet + ", park=" + park + ", water=" + water + ", fishing=" + fishing + ", field="
-				+ field + ", land=" + land + ", filename=" + filename + ", date=" + date + ", level=" + level +"]";
+				+ field + ", land=" + land + ", filename=" + filename + ", date=" + date + ", level=" + level +", readcount=" + readcount + ", coment=" + coment +"]";
 	}
 	
 }

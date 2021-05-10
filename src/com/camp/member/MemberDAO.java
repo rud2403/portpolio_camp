@@ -304,6 +304,53 @@ public class MemberDAO {
 	}
 	// infoMemeber() 끝
 
+	
+	// infopreMember(MemberBean mb) 시작
+		public int infopreMember(MemberBean mb) {
+			int check = -1;
+
+			try {
+				// DB접속 후
+				// 1 드라이버 로드
+				// 2 디비 연결
+				// => 한번에 처리하는 메소드로 변경
+				conn = getConnection();
+
+				// 3. sql작성 & pstmt 객체생성
+				sql = "select pw from camp_member where id = ? ";
+
+				pstmt = conn.prepareStatement(sql);
+				// ? 채우기
+
+				pstmt.setString(1, mb.getId());
+				// 4. sql 실행
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					// 아이디가 있는 경우
+					if (mb.getPw().equals(rs.getString("pw"))) {
+						// 비밀번호 같음
+						
+						check = 1; 
+					}
+					
+					System.out.println("회원 비밀번호 확인 완료" + check);
+
+				}
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); 
+				
+			} finally{
+				closeDB();
+			}
+
+			return check;
+			
+		}
+		// infopreMember(MemberBean mb) 끝
+	
 
 	
 	
