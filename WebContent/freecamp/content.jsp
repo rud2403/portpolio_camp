@@ -120,12 +120,35 @@
 	<!-- 위치 및 난이도 줄 끝 -->
 	
 	
-	<!-- 주변환경 줄 시작 -->
-	<div class="row text-center mt-3 mx-3">
+	<!-- 알림글 제목 줄 시작 -->
+	<div class="row">
+		<div class="col-4"></div>
+		<div class="col-4 pt-4 m-2 text-center">
+			<h2>알립니다 !</h2>
+		</div>
+		<div class="col-4"></div>		
+	</div>
+	<!-- 알림글 제목 줄 끝 -->	
+
+
+	<!-- 알림글 내용 시작 -->		
+	<div class="row text-center">
+		<div class="col-2"></div>
+		<div class="col-8 p-4 m-2 text-center">
+			자연을 빌려 쓴 댓가로 해당 장소를 청소하는 미덕을 가집시다. 남이 버린 쓰레기까지 되가져오는 캠퍼가 됩시다.<br>
+			바닥에 불피우는 행위 금지!, 쓰레기는 집으로!, 머문 자리는 아니온 듯!
+		</div>
+		<div class="col-2"></div>	
+	</div>
+	<!-- 알림글 내용 끝 -->	
 	
-	<div class="card">
+	
+	<!-- 주변환경 줄 시작 -->
+	<div class="row text-center mt-5 mx-3">
+	
+	<div class="card mb-3">
 		<div class="card-header">
-	    주변 환경
+	    	<%=bb.getName() %> 주변 환경
 	  	</div>
 	  <div class="card-body">
 	    <blockquote class="blockquote mb-0">
@@ -177,29 +200,7 @@
 	  </div>
 	</div>
 	</div>
-	<!-- 주변환경 줄 끝 -->
-	
-	
-	<!-- 알림글 제목 줄 시작 -->
-	<div class="row">
-		<div class="col-4"></div>
-		<div class="col-4 pt-4 m-2 text-center">
-			<h4>알립니다 !</h4>
-		</div>
-		<div class="col-4"></div>		
-	</div>
-	<!-- 알림글 제목 줄 끝 -->
-	
-	<!-- 알림글 내용 시작 -->		
-	<div class="row text-center">
-		<div class="col-2"></div>
-		<div class="col-8 p-4 m-2 text-center">
-			자연을 빌려 쓴 댓가로 해당 장소를 청소하는 미덕을 가집시다. 남이 버린 쓰레기까지 되가져오는 캠퍼가 됩시다.<br>
-			바닥에 불피우는 행위 금지!, 쓰레기는 집으로!, 머문 자리는 아니온 듯!
-		</div>
-		<div class="col-2"></div>	
-	</div>
-	<!-- 알림글 내용 끝 -->		
+	<!-- 주변환경 줄 끝 -->	
 	
 	
 	<!-- 갤러리 제목 시작 -->			
@@ -225,7 +226,7 @@
 	<div class="row">
 		<div class="col-4"></div>
 		<div class="col-4 pt-4 m-2 text-center">
-			<h4>날씨</h4>
+			<h4>날씨 정보</h4>
 		</div>
 	</div>
 	<!-- 날씨 제목 시작 -->				
@@ -241,12 +242,12 @@
 	<!-- 날씨 내용 끝 -->					
 
 	<!-- 댓글 제목 시작 -->						
-	<div class="row">
-		<div class="col-4"></div>
-		<div class="col-4 pt-4 m-2 text-center">
-			<h4>댓글</h4>
-		</div>
-	</div>
+<!-- 	<div class="row"> -->
+<!-- 		<div class="col-4"></div> -->
+<!-- 		<div class="col-4 pt-4 m-2 text-center"> -->
+<!-- 			<h4>댓글</h4> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
 	<!-- 댓글 제목 끝 -->						
 	
 	
