@@ -248,7 +248,7 @@
 	     	<div class="row" >
 		     	<div class="col-1"></div>
 		     	<div class="col-4">
-	     			<input class="btn btn-light btn-sm m-2" id="loc<%=bb.getNum() %>" type="button" value="상세보기" onclick="location.href='content.jsp?num=<%=bb.getNum()%>&pageNum=<%=pageNum%>'">
+	     			<input class="btn btn-light btn-sm m-2" type="button" value="상세보기" onclick="location.href='content.jsp?num=<%=bb.getNum()%>&pageNum=<%=pageNum%>'">
 	     		</div>
 	     		<div class="col-7"></div>
 	     	</div>	     		     	

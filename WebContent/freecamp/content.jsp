@@ -7,6 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>content</title>
+
+<!-- jquery 준비 시작 -->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<!-- jquery 준비 끝 -->
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
@@ -37,13 +42,38 @@
 	
 	%>
 
+	<script type="text/javascript">
+		<!-- jquery 시작 -->
+		$(function() {
+			$("#cc2").hide();
+			
+			$("#cc1").click(function(){
+				$("#cc2").click();
+			});
+
+		});
+	</script>
+		<!-- jquery 끝 -->
+
+
+
+
 	<!-- id 값 받아오기 시작 -->
 	<script type="text/javascript">
 		<%
 		String id = (String)session.getAttribute("id");
 		%>
+		
+	    function con() {
+	        if (!confirm("정말 삭제하시겠습니까?")) {
+	        	// 아니오 버튼 누를 시 창 닫음.
+	        } else {
+	            location.href="/Portpolio_camp/freecamp/deletePro.jsp?pageNum=<%=pageNum%>&num=<%=num%>";
+	  	    }
+	    }
 	</script>
 	<!-- id 값 받아오기 끝 -->
+
 
 <!-- navbar 시작 -->
  <jsp:include page="/navbar/navbar.jsp" />
@@ -67,11 +97,16 @@
 	
 	<!-- 조회수 및 수정 삭제 줄 시작 -->	
 	<div class="row">
-		<%if(id.equals("admin")){ %>
+		<%
+		try {
+		if(id.equals("admin")){ %>
 		<div class="col-1 text-center">
-			<button class="btn btn-light btn-sm" type="button">수정</button> / <button class="btn btn-light btn-sm" type="button">삭제</button>
+			<button class="btn btn-light btn-sm" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" >수정</button> / <button class="btn btn-light btn-sm" type="button" onclick="con()">삭제</button>
 		</div>
-		<%} %>
+		<%
+		}
+		}catch (Exception e) {
+		} %>
 		<div class="col-10 text-center">
 		</div>
 		<div class="col-1 text-center">
@@ -79,6 +114,334 @@
 		</div>
 	</div>
 	<!-- 조회수 및 수정 삭제 줄 끝 -->	
+	
+	
+	<!-- 페이지 수정 모달 시작 -->
+	
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-xl">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">무료캠핑장 - 글수정</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      
+	      
+		  <!-- 게시판 글 수정 폼 작성 시작 -->
+		  <form action="/Portpolio_camp/freecamp/updatePro.jsp?pageNum=<%=pageNum %>" method="post">
+		  	<input type="hidden" name="num" value="<%=bb.getNum()%>">
+	      	  <!-- 글수정 본문 시작 -->
+		      <div class="modal-body mx-5">
+   					<div class="row text-center">
+			       		<div class="col-4"></div>
+			       		<div class="col-4"><h4>위치</h4></div>
+			       		<div class="col-4"></div>
+					</div>
+		      
+			       <div class="form-floating mb-3">
+					  <input type="text" class="form-control" id="floatingInput" placeholder="캠핑지명" name="name" value="<%=bb.getName()%>">
+					  <label for="floatingInput">캠핑지명</label>
+					</div>
+					
+			       	<!-- 우편번호 시작 -->
+						<input type="text" id="sample6_address" placeholder="주소" name="address" class="form-control"  value="<%=bb.getAddress()%>"><br>
+						<input type="button" class="btn btn-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+						
+						<input type="hidden" id="sample6_postcode" placeholder="우편번호">
+						<input type="hidden" id="sample6_detailAddress" placeholder="상세주소">
+						<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
+					<!-- 우편번호 끝 -->
+					
+					<!-- 위도 경도 시작 -->
+					<div class="row my-3">
+						<div class="col">
+							<input type="text" class="form-control" id="floatingInput" placeholder="위도" name="lat"  value="<%=bb.getLat()%>">
+						</div>
+						<div class="col">
+							<input type="text" class="form-control" id="floatingInput" placeholder="경도" name="lng"  value="<%=bb.getLng()%>">
+						</div>
+					</div>
+			       	<!-- 위도 경도 끝 -->
+			       	
+			       	<!-- 난이도 시작 -->
+					<hr>
+					<div class="row text-center">
+			       		<div class="col-4"></div>
+			       		<div class="col-4"><h4>난이도</h4></div>
+			       		<div class="col-4"></div>
+					</div>			       	
+			       	<div class="row">
+			       	<select class="form-select" aria-label="Default select example" name="level" >
+			       	<%if(bb.getLevel().equals("상")){ %>
+					  <option value="상" selected>상</option>
+					  <option value="중">중</option>
+					  <option value="하">하</option>
+			       	<%}else if(bb.getLevel().equals("중")){ %>
+					  <option value="상">상</option>
+					  <option value="중" selected>중</option>
+					  <option value="하">하</option>
+			       	<%}else{ %>
+					  <option value="상">상</option>
+					  <option value="중">중</option>
+					  <option value="하" selected>하</option>
+			       	<%} %>
+					</select>			       	
+			       	</div>
+			       	<!-- 난이도 끝 -->
+			       	
+			       	<hr>
+			       	<!-- 주변환경 텍스트 시작 -->
+			       	<div class="row text-center">
+			       		<div class="col-4"></div>
+			       		<div class="col-4"><h4>주변 환경</h4></div>
+			       		<div class="col-4"></div>			       		
+			       	</div>
+			       	<!-- 주변환경 텍스트 끝 -->
+			       	
+			       	<!-- CheckBox 시작 -->
+			       	<!-- row 시작 -->
+			       	<div class="row m-3">
+			       	<div class="col m-2">
+			       		<h5>화장실</h5>
+			       		 <%if(bb.getToilet().equals("y")){ %>
+			       		 <div class="form-check">
+						  <input class="form-check-input" type="radio" name="toilet" id="exampleRadios1" value="y" checked>
+						  <label class="form-check-label" for="exampleRadios1">
+						    있음
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="toilet" id="exampleRadios2" value="n">
+						  <label class="form-check-label" for="exampleRadios2">
+						    없음
+						  </label>
+						</div>
+						<%}else{ %>
+			       		 <div class="form-check">
+						  <input class="form-check-input" type="radio" name="toilet" id="exampleRadios1" value="y">
+						  <label class="form-check-label" for="exampleRadios1">
+						    있음
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="toilet" id="exampleRadios2" value="n" checked>
+						  <label class="form-check-label" for="exampleRadios2">
+						    없음
+						  </label>
+						</div>						
+						<%} %>
+					</div>
+						
+			       	<div class="col m-2">
+			       		<h5>주차장</h5>
+			       		 <%if(bb.getToilet().equals("y")){ %>
+			        	<div class="form-check">
+						  <input class="form-check-input" type="radio" name="park" id="exampleRadios1" value="y" checked>
+						  <label class="form-check-label" for="exampleRadios1">
+						    있음
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="park" id="exampleRadios2" value="n">
+						  <label class="form-check-label" for="exampleRadios2">
+						    없음
+						  </label>
+						</div>
+						<%}else{ %>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="park" id="exampleRadios1" value="y">
+						  <label class="form-check-label" for="exampleRadios1">
+						    있음
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="park" id="exampleRadios2" value="n" checked>
+						  <label class="form-check-label" for="exampleRadios2">
+						    없음
+						  </label>
+						</div>
+						<%} %>
+					</div>
+			       	<div class="col m-2">
+			       		<h5>물놀이</h5>
+			       		<%if(bb.getToilet().equals("y")){ %>
+			       		 <div class="form-check">
+						  <input class="form-check-input" type="radio" name="water" id="exampleRadios1" value="y" checked>
+						  <label class="form-check-label" for="exampleRadios1">
+						    있음
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="water" id="exampleRadios2" value="n">
+						  <label class="form-check-label" for="exampleRadios2">
+						    없음
+						  </label>
+						</div>
+						<%}else{ %>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="water" id="exampleRadios1" value="y">
+						  <label class="form-check-label" for="exampleRadios1">
+						    있음
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="water" id="exampleRadios2" value="n" checked>
+						  <label class="form-check-label" for="exampleRadios2">
+						    없음
+						  </label>
+						</div>
+						<%} %>
+					</div>
+			       	<div class="col m-2">
+			       		<h5>낚시</h5>
+			       		<%if(bb.getToilet().equals("y")){ %>
+			       		 <div class="form-check">
+						  <input class="form-check-input" type="radio" name="fishing" id="exampleRadios1" value="y" checked>
+						  <label class="form-check-label" for="exampleRadios1">
+						    있음
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="fishing" id="exampleRadios2" value="n">
+						  <label class="form-check-label" for="exampleRadios2">
+						    없음
+						  </label>
+						</div>
+						<%}else{ %>
+			       		 <div class="form-check">
+						  <input class="form-check-input" type="radio" name="fishing" id="exampleRadios1" value="y">
+						  <label class="form-check-label" for="exampleRadios1">
+						    있음
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="fishing" id="exampleRadios2" value="n" checked>
+						  <label class="form-check-label" for="exampleRadios2">
+						    없음
+						  </label>
+						</div>
+						<%} %>						
+					</div>																			
+			       </div>
+			      	<!-- row1 끝 -->
+			      	<!-- row2 시작 -->
+			      	<div class="row text-center">
+			      		<div class="col-1">
+			      			<h5>필드</h5>
+			      		</div>
+			      		<div class="col-5">
+			      			<%if(bb.getField().equals("바다")){ %>
+			      			<select class="form-select" aria-label="Default select example" name="field">
+							  <option value="바다" selected>바다</option>
+							  <option value="산" >산</option>
+							  <option value="계곡">계곡</option>
+							  <option value="기타">기타</option>
+							</select>
+							<%}else if(bb.getField().equals("산")){ %>
+			      			<select class="form-select" aria-label="Default select example" name="field">
+							  <option value="바다">바다</option>
+							  <option value="산" selected>산</option>
+							  <option value="계곡">계곡</option>
+							  <option value="기타">기타</option>
+							</select>
+							<%}else if(bb.getField().equals("계곡")){ %>
+			      			<select class="form-select" aria-label="Default select example" name="field">
+							  <option value="바다">바다</option>
+							  <option value="산">산</option>
+							  <option value="계곡" selected>계곡</option>
+							  <option value="기타">기타</option>
+							</select>												
+							<%}else{ %>					
+			      			<select class="form-select" aria-label="Default select example" name="field">
+							  <option value="바다">바다</option>
+							  <option value="산">산</option>
+							  <option value="계곡">계곡</option>
+							  <option value="기타" selected>기타</option>
+							</select>												
+							<%} %>							
+			      		</div>
+			      		<div class="col-1">
+			      			<h5>바닥</h5>
+			      		</div>
+			      		<div class="col-5">
+			      		
+			      			<%if(bb.getLand().equals("흙")){ %>			      		
+			      			<select class="form-select" aria-label="Default select example" name="land">
+							  <option value="흙" selected>흙</option>
+							  <option value="진흙">진흙</option>
+							  <option value="잔디">잔디</option>
+							  <option value="모래">모래</option>
+							  <option value="기타">기타</option>							  
+							</select>
+							<%}else if(bb.getLand().equals("진흙")){ %>
+			      			<select class="form-select" aria-label="Default select example" name="land">
+							  <option value="흙">흙</option>
+							  <option value="진흙" selected>진흙</option>
+							  <option value="잔디">잔디</option>
+							  <option value="모래">모래</option>
+							  <option value="기타">기타</option>							  
+							</select>							
+							<%}else if(bb.getLand().equals("잔디")){ %>
+			      			<select class="form-select" aria-label="Default select example" name="land">
+							  <option value="흙">흙</option>
+							  <option value="진흙">진흙</option>
+							  <option value="잔디" selected>잔디</option>
+							  <option value="모래">모래</option>
+							  <option value="기타">기타</option>							  
+							</select>							
+							<%}else if(bb.getLand().equals("모래")){ %>
+			      			<select class="form-select" aria-label="Default select example" name="land">
+							  <option value="흙">흙</option>
+							  <option value="진흙">진흙</option>
+							  <option value="잔디">잔디</option>
+							  <option value="모래" selected>모래</option>
+							  <option value="기타">기타</option>							  
+							</select>	
+							<%}else{ %>					
+			      			<select class="form-select" aria-label="Default select example" name="land">
+							  <option value="흙">흙</option>
+							  <option value="진흙">진흙</option>
+							  <option value="잔디">잔디</option>
+							  <option value="모래">모래</option>
+							  <option value="기타" selected>기타</option>							  
+							</select>
+							<%} %>
+			      		</div>			      		
+			      	</div>
+			       	<!-- row2 끝 -->
+			       	
+			       	<hr>
+			       	
+					<div class="row text-center">
+			       		<div class="col-4"></div>
+			       		<div class="col-4"><h4>사진 첨부</h4></div>
+			       		<div class="col-4"></div>			       		
+			       	</div>
+			       	
+			       	<!-- row3 시작 -->
+			       	<div class="row mt-2 mb-3">
+						<input class="form-control" type="file" id="formFile" name="filename">
+			       	</div>
+			       	<!-- row3 끝 -->
+			  </div>
+			  <!-- 글수정 본문 끝 -->
+	      
+	      
+		      <div class="modal-footer">
+		      	<button type="submit" class="btn btn-primary">수정</button>
+			  	<button type="reset" class="btn btn-secondary" data-bs-dismiss="modal" id="cc1">취소</button>
+			  	<button type="reset" id="cc2">취소2</button>
+		      </div>
+	      </form>
+	      <!-- 게시판 글수정 폼 작성 끝 -->
+	      
+	      
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 페이지 수정 모달 끝 -->
 	
 	<hr>
 	
@@ -278,27 +641,10 @@
 		<div class="col-2"></div>
 	</div>
 	<!-- 댓글 제목 끝 -->						
-
-
-
-
-<%=bb.getNum() %>
-<%=bb.getName() %>
-<%=bb.getAddress() %>
-<%=bb.getLat() %>
-<%=bb.getLng() %>
-<%=bb.getToilet() %>
-<%=bb.getPark() %>
-<%=bb.getWater() %>
-<%=bb.getFishing() %>
-<%=bb.getField() %>
-<%=bb.getLand() %>
-<%=bb.getLand() %>
-<%=bb.getFilename() %>
-<%=bb.getLevel() %>
-<%=bb.getReadcount() %>
-<%=bb.getComent() %>
-<%=bb.getDate() %>
+	
+	<div class="row text-center">
+		<div><button type="button" class="btn btn-secondary" onclick="location.href='/Portpolio_camp/freecamp/freeForm.jsp?pageNum=<%=pageNum %>'">목록으로</button></div>
+	</div>
 
 
 

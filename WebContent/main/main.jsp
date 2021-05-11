@@ -14,11 +14,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 <!-- 부트스트랩 끝 -->
 </head>
-<body class="pb-1" style="background-color: #F2F2F2;">
 
+<body class="pb-1" style="background-color: #F2F2F2;">
 <!-- navbar 시작 -->
  <jsp:include page="/navbar/navbar.jsp" />
- 
 <!-- navbar 끝 -->
 
 

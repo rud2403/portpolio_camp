@@ -443,5 +443,129 @@ public class BoardDAO {
 		// getBoard(int num) 끝
 		
 		
+		// updateBoard(BoardBean bb) 시작
+		public int updateBoard(BoardBean bb){
+			
+			int check = -1;
+			
+			try {
+				// 1, 2 디비 연결
+				conn = getConnection();
+				
+				// 3 sql 작성(select - 본인확인) & pstmt 객체
+				sql = "select * from camp_camp where num=?";
+				
+				
+				pstmt = conn.prepareStatement(sql);
+								
+				pstmt.setInt(1, bb.getNum());
+
+				//4 sql 실행
+
+				rs = pstmt.executeQuery();
+				
+				//5 데이터 처리
+				if(rs.next()){
+					// 글이 있음
+					
+					// sql (update-글 수정) & pstmtm 객체
+					sql = "update camp_camp set name=?, address=?, lat=?, lng=?, toilet=?, park=?, water=?, fishing=?, field=?, land=?, filename=?, level=? where num=?";
+					
+					pstmt = conn.prepareStatement(sql);
+					
+					// ? 채우기
+
+					pstmt.setString(1, bb.getName());
+					pstmt.setString(2, bb.getAddress());
+					pstmt.setString(3, bb.getLat());
+					pstmt.setString(4, bb.getLng());
+					pstmt.setString(5, bb.getToilet());
+					pstmt.setString(6, bb.getPark());
+					pstmt.setString(7, bb.getWater());
+					pstmt.setString(8, bb.getFishing());
+					pstmt.setString(9, bb.getField());
+					pstmt.setString(10, bb.getLand());
+					pstmt.setString(11, bb.getFilename());
+					pstmt.setString(12, bb.getLevel());
+					pstmt.setInt(13, bb.getNum());
+					
+					
+					// 4 sql 실행
+					pstmt.executeUpdate();
+					
+					
+					check = 0;
+					
+					//check = 1;
+											
+				}else{
+					// 글이 없음
+					check = -1;
+				}
+				
+				System.out.println(" 글 수정 완료 !" + check);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally{
+				closeDB();
+			}			
+			return check;
+
+		}
+		// updateBoard(BoardBean bb) 끝		
+		
+		
+		// deleteBoard(BoardBean bb) 시작
+		public int deleteBoard(BoardBean bb){
+			int check = -1;
+			
+			
+			try {
+				// 1, 2 디비 연결
+				conn = getConnection();
+				// 3 sql 생성 &pstmt 객체 생성
+				sql="select * from camp_camp where num=?";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				System.out.println("@@@@@@@##########################가져온 넘버의 값은 : " + bb.getNum());
+				
+				pstmt.setInt(1, bb.getNum());
+				
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()){
+					sql = "delete from camp_camp where num=?";
+					pstmt = conn.prepareStatement(sql);
+					
+					
+					pstmt.setInt(1, bb.getNum());
+					
+					pstmt.executeUpdate();
+
+					
+					check = 0;
+						
+					System.out.println("중간점검22222222222222" + check);
+				}else{
+					check = -1;
+				}
+				
+				System.out.println("글 삭제 완료" + check);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				closeDB();
+			}
+
+			
+			return check;
+		}
+		// deleteBoard(BoardBean bb) 끝		
+		
 }
 // BoardDAO 끝

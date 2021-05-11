@@ -48,8 +48,6 @@ function check1(){
 		return false;
 		// 비밀번호 공백 시 차단
 	} // if
-		
-	
 	
 }
 </script>
