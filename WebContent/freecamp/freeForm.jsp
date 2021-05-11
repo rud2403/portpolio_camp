@@ -503,6 +503,8 @@
 			       	<!-- row3 시작 -->
 			       	<div class="row mt-2 mb-3">
 						<input class="form-control" type="file" id="formFile" name="filename">
+						<input class="form-control" type="file" id="formFile" name="filename2">
+						<input class="form-control" type="file" id="formFile" name="filename3">
 			       	</div>
 			       	<!-- row3 끝 -->
 			  </div>

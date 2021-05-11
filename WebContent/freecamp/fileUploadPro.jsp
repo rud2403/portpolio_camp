@@ -61,9 +61,13 @@
 	
 	// 서버에 올라가는 파일의 이름(중복처리)
 	String filename = multi.getFilesystemName("filename");
+	String filename2 = multi.getFilesystemName("filename2");
+	String filename3 = multi.getFilesystemName("filename3");
 	
 	// 서버에 올라가는 파일이름 X 파일자체의 이름
 	String oFileName = multi.getOriginalFileName("filename");
+	String oFileName2 = multi.getOriginalFileName("filename2");
+	String oFileName3 = multi.getOriginalFileName("filename3");
 	
 	%>
 
@@ -81,6 +85,8 @@
 		<input type="hidden" name="field" value="<%=field %>">
 		<input type="hidden" name="land" value="<%=land %>">
 		<input type="hidden" name="filename" value="<%=filename %>">
+		<input type="hidden" name="filename2" value="<%=filename2 %>">
+		<input type="hidden" name="filename3" value="<%=filename3 %>">		
 		<input type="hidden" name="level" value="<%=level %>">
 		
 		

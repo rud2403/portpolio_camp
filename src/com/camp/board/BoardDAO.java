@@ -118,7 +118,7 @@ public class BoardDAO {
 			System.out.println(" 글 번호 : " + num);
 
 			// 3 sql 작성 (insert) & pstmt 객체 생성
-			sql = "insert into camp_camp values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ?, ? ,?)";
+			sql = "insert into camp_camp values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ?, ? ,?, ?, ?)";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -137,6 +137,9 @@ public class BoardDAO {
 			pstmt.setString(13, bb.getLevel());
 			pstmt.setInt(14, bb.getReadcount());
 			pstmt.setString(15, bb.getComent());
+			pstmt.setString(16, bb.getFilename2());
+			pstmt.setString(17, bb.getFilename3());
+
 			
 
 			// 4 sql 실행
@@ -246,6 +249,9 @@ public class BoardDAO {
 					bb.setLevel(rs.getString("level"));
 					bb.setReadcount(rs.getInt("readcount"));
 					bb.setComent(rs.getString("coment"));
+					bb.setFilename2(rs.getString("filename2"));
+					bb.setFilename2(rs.getString("filename3"));
+
 					
 
 					// Bean -> ArrayList 한칸에 저장
@@ -325,6 +331,7 @@ public class BoardDAO {
 					bb.setReadcount(rs.getInt("readcount"));
 					bb.setComent(rs.getString("coment"));
 
+					
 					// Bean -> ArrayList 한칸에 저장
 					BoardList.add(bb);
 
@@ -424,7 +431,11 @@ public class BoardDAO {
 					bb.setDate(rs.getDate("date"));
 					bb.setLevel(rs.getString("level"));
 					bb.setReadcount(rs.getInt("readcount"));
-					bb.setComent(rs.getString("coment"));
+					bb.setComent(rs.getString("coment"));					
+					bb.setFilename2(rs.getString("filename2"));
+					bb.setFilename3(rs.getString("filename3"));
+					
+					
 				}
 				
 				System.out.println(" 글 번호에 해당하는 글정보 저장 완료");
@@ -548,7 +559,6 @@ public class BoardDAO {
 					
 					check = 0;
 						
-					System.out.println("중간점검22222222222222" + check);
 				}else{
 					check = -1;
 				}
