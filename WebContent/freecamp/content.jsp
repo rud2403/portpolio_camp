@@ -766,11 +766,13 @@
 		</div>
 		<div class="col-2"></div>
 	</div>
-	<!-- 댓글 제목 끝 -->						
-	
+	<!-- 댓글 제목 끝 -->
+							
+ 	<!-- 목록으로 row 시작 -->
 	<div class="row text-center">
 		<div><button type="button" class="btn btn-secondary" onclick="location.href='/Portpolio_camp/freecamp/freeForm.jsp?pageNum=<%=pageNum %>'">목록으로</button></div>
 	</div>
+ 	<!-- 목록으로 row 끝 -->
 
 
 

@@ -111,6 +111,10 @@
 				$("#cc2").click();
 			});
 
+			$("#back").click(function(){
+				history.back();
+			});
+			
 		});
 	</script>
 		<!-- jquery 끝 -->
@@ -173,41 +177,155 @@
 	
 	<hr>
 	
-	<!-- 위치 및 난이도 줄 시작 -->
+	<!-- 위치 및 삽니다,팝니다 row 시작 -->
 	<div class="row">
 		<!-- 위치 칼럼 시작 -->
 		<div class="col-4 px-3">
 			<div class="row">
-				<div class="px-4 m-2"><%=bb.getAddress() %></div>
+				<div class="px-4 m-3"><h4><%=bb.getId()%> | <%=bb.getAddress() %></h4></div>
 			</div>
 		</div>
-		<!-- 위치 칼럼 끝 -->
+		<!-- 위치 row 끝 -->
 		
-		<!-- 난이도 칼럼 시작 -->
-		<div class="col-7 text-center"></div>
-		<div class="col-1">
+		<!-- 삽니다 col 시작 -->
+		<div class="col-5 text-center"></div>
+		<div class="col-3">
 			<div class="row text-center px-4 m-1">
-			<%if(bb.getKind().equals("삽니다")){ %>
-					<div>
-						<span class="badge bg-danger p-3">
-								삽니다
-					 	</span>
+			<%if(bb.getTrade().equals("택배") && bb.getKind().equals("삽니다")){ %>
+			 		<div class="col-3">
+			 			<h5><span class="badge bg-warning p-3 mx-3">택배</span></h5>
+			 		</div>
+			 		 <div class="col-4">
+						
+						<h5><span class="badge bg-danger p-3">삽니다</span></h5>
 					 </div>
+					 <div class="col-5 mt-1">
+					 	<h3>₩<%=bb.getPrice() %></h3>
+					 </div>
+					  
+			 <%}else if(bb.getTrade().equals("택배") && bb.getKind().equals("팝니다")){ %>
+			 		<div class="col-3">
+			 			<h5><span class="badge bg-warning p-3 mx-3">택배</span></h5>
+			 		</div>					 			 
+					 <div class="col-4">
+						<h5><span class="badge bg-primary p-3">팝니다</span></h5>
+					 </div>
+					 <div class="col-5 mt-1">
+					 	<h3>₩<%=bb.getPrice() %></h3>
+					 </div>
+			 <%}else if(bb.getTrade().equals("직거래") && bb.getKind().equals("삽니다")){ %>
+			 		<div class="col-3">
+			 			<h5><span class="badge bg-warning p-3">직거래</span></h5>
+			 		</div>
+			 		 <div class="col-4">
+						
+						<h5><span class="badge bg-danger p-3">삽니다</span></h5>
+					 </div>
+					 <div class="col-5 mt-1">
+					 	<h3>₩<%=bb.getPrice() %></h3>
+					 </div>		 
 			 <%}else{ %>
-					<div>
-						<span class="badge bg-primary p-3">
-								팝니다
-					 	</span>
+			 		<div class="col-3">
+			 			<h5><span class="badge bg-warning p-3">직거래</span></h5>
+			 		</div>					 			 
+					 <div class="col-4">
+						<h5><span class="badge bg-primary p-3">팝니다</span></h5>
+					 </div>
+					 <div class="col-5 mt-1">
+					 	<h3>₩<%=bb.getPrice() %></h3>
 					 </div>			 
 			 <%} %>
 			</div>
 		</div>
-		<!-- 난이도 칼럼 끝 -->
+		<!-- 삽니다,팝니다 col 끝 -->
 		
-<!-- 	</div> -->
-<!-- 	<!-- 위치 및 난이도 줄 끝 -->
+	</div>
+	<!-- 위치 및 삽니다,팝니다 row 끝 -->
+	
+	<hr>
+	
+	<!-- coment row 시작 -->
+	<div class="row m-5">
+		<%=bb.getComent() %>
+	</div>
+	<!-- coment row 끝 -->
+	
+	<!-- 사진 파일 row 시작 -->
+	
+	<div class="row">
+		<div class="col-2"></div>
+		<%if(!bb.getFilename().equals("null")){ %>
+			<div class="col-8 p-4 m-2 text-center">
+			<%if(bb.getFilename2().equals("null")){ %>
+			
+			<div id="carouselExampleIndicators" class="carousel slide m-3" data-bs-ride="carousel">
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="400">
+			    </div>
+			</div>		
+			
+			
+			<%}else if(bb.getFilename3().equals("null")){ %>
+			
+			<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="400">
+			    </div>
+			    <div class="carousel-item">
+			      <img src="/Portpolio_camp/upload/<%=bb.getFilename2() %>" class="d-block w-100" alt="..." width="300" height="400">
+			    </div>
+				<div class="carousel-item">
+			      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="400">
+			    </div>
+			  </div>
+			  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			    <span class="visually-hidden">Previous</span>
+			  </a>
+			  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			    <span class="visually-hidden">Next</span>
+			  </a>
+			</div>
 	
 	
+			
+			<%}else{ %>
+			
+			<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="400">
+			    </div>
+			    <div class="carousel-item">
+			      <img src="/Portpolio_camp/upload/<%=bb.getFilename2() %>" class="d-block w-100" alt="..." width="300" height="400">
+			    </div>
+			    <div class="carousel-item">
+			      <img src="/Portpolio_camp/upload/<%=bb.getFilename3() %>" class="d-block w-100" alt="..." width="300" height="400">
+			    </div>
+			  </div>
+			  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			    <span class="visually-hidden">Previous</span>
+			  </a>
+			  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			    <span class="visually-hidden">Next</span>
+			  </a>
+			</div>
+			
+			
+			<%} %>
+		<%} %>
+
+		<div class="col-2"></div>
+	</div>	
+	</div>
+	<!-- 사진 파일 row 끝 -->
+	
+
 <!-- 	<!-- 알림글 제목 줄 시작 -->
 <!-- 	<div class="row"> -->
 <!-- 		<div class="col-4"></div> -->
@@ -391,19 +509,19 @@
 <!-- 		</div> -->
 <!-- 		<div class="col-2"></div> -->
 <!-- 	</div> -->
-<!-- 	<!-- 날씨 내용 끝 -->					 -->
+<!-- 	<!-- 날씨 내용 끝 -->					 
 
-<!-- 	<!-- 댓글 제목 시작 -->						 -->
-<!-- <!-- 	<div class="row"> --> -->
-<!-- <!-- 		<div class="col-4"></div> --> -->
-<!-- <!-- 		<div class="col-4 pt-4 m-2 text-center"> --> -->
-<!-- <!-- 			<h4>댓글</h4> --> -->
-<!-- <!-- 		</div> --> -->
-<!-- <!-- 	</div> --> -->
-<!-- 	<!-- 댓글 제목 끝 -->						 -->
+<!-- 	<!-- 댓글 제목 시작 -->						 
+<!-- <!-- 	<div class="row"> --> 
+<!-- <!-- 		<div class="col-4"></div> -->
+<!-- <!-- 		<div class="col-4 pt-4 m-2 text-center"> -->
+<!-- <!-- 			<h4>댓글</h4> --> 
+<!-- <!-- 		</div> --> 
+<!-- <!-- 	</div> --> 
+<!-- 	<!-- 댓글 제목 끝 -->						 
 	
 	
-<!-- 	<!-- 댓글 내용 시작 -->							 -->
+<!-- 	<!-- 댓글 내용 시작 -->							 
 <!-- 	<div class="row"> -->
 <!-- 		<div class="col-2"></div> -->
 <!-- 		<div class="col-8 p-4 m-2 text-center"> -->
@@ -415,11 +533,11 @@
 <!-- 		</div> -->
 <!-- 		<div class="col-2"></div> -->
 <!-- 	</div> -->
-<!-- 	<!-- 댓글 제목 끝 -->						 -->
+<!-- 	<!-- 댓글 제목 끝 -->						 
 	
 <!-- 	<div class="row text-center"> -->
 <%-- 		<div><button type="button" class="btn btn-secondary" onclick="location.href='/Portpolio_camp/freecamp/freeForm.jsp?pageNum=<%=pageNum %>'">목록으로</button></div> --%>
-	</div>
+
 
 
 
@@ -428,11 +546,12 @@
 
 </div>
 <!-- container 끝 -->	
+<hr>
+ 	<!-- 목록으로 row 시작 -->
+	<div class="row text-center m-5">
+		<div><button id="back" type="button" class="btn btn-secondary">목록으로</button></div>
+	</div>
 
-<!-- footer 시작 -->
-<div class="row">
- <jsp:include page="/footer/footer.jsp" />
-</div>
-<!-- footer 끝 -->
+ 	<!-- 목록으로 row 끝 -->
 </body>
 </html>

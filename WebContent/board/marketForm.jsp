@@ -31,6 +31,10 @@
 		
 			$("#dd").click(function(){
 				location.href="/Portpolio_camp/board/BuyForm.jsp";
+			});	
+			
+			$("#x").click(function(){
+				$("#fr1").submit();
 			});			
 			
 		});
@@ -141,8 +145,7 @@
 	
 	// 삽니다의 경우
 	// ArrayList buyList = bdao.getBuyList(startRow, pageSize);
-	
-	
+		
 	%>
 	<!-- camp_sell 데이터 가져오기 시작 -->
 
@@ -308,13 +311,23 @@
 		      <th scope="col">조회수</th>
 		    </tr>
 		  </thead>
+		
+
+
+		  
+		  
 		  <tbody>
 		  
 		<%for(int i = 0;i < boardList.size(); i++){ 
 			BoardBean bb = (BoardBean)boardList.get(i);
 		%>
+	
+
+			
 		    <tr>
+		    
 		      <td>
+		      	
 		      	 <%if(bb.getKind().equals("팝니다")){ %>
 		     	 <span class="badge bg-primary">팝니다</span>
 		     	 <%}else{%>
@@ -322,8 +335,9 @@
 		     	 <%} %>
 		      </td>
 		      <td>
+
 		      	<%if(bb.getState().equals("거래중")){ %>
-			    	<a href="/Portpolio_camp/board/content.jsp?num=<%=bb.getNum()%>&pageNum=<%=pageNum%>" style="text-decoration-line: none; color: black;"><%=bb.getName() %></a>		      	
+			    	<a  href="/Portpolio_camp/board/content.jsp?num=<%=bb.getNum()%>&pageNum=<%=pageNum%>" style="text-decoration-line: none; color: black;"><%=bb.getName() %></a>		      	
 			    <%}else{ %>
 			    	<div class="text-decoration-line-through"><%=bb.getName() %><span class="badge bg-success">거래완료</span></div>
 			    <%} %> 
@@ -331,8 +345,10 @@
 		      <td><%=bb.getId() %></td>
 		      <td><%=bb.getDate() %></td>
 		      <td><%=bb.getReadcount() %></td>	      
-		    </tr>
-		 <%} %>   
+		    </tr>  
+		    
+		 <%} %> 
+		  
 		  </tbody>
 		</table>
 	<!-- table 끝 -->
@@ -340,7 +356,8 @@
 	<!-- 테이블 row 끝 -->
 
 
-	<!-- 페이지 버튼 row 시작 -->
+
+<!-- 	<!-- 페이지 버튼 row 시작 -->
 	<div class="row">
 		<div class="col-5"></div>
 			<div class="col-3">
@@ -364,8 +381,9 @@
 			</div>
 		<div class="col-4"></div>
 	</div>
-	<!-- 페이지 버튼 row 끝 -->
-	
+<!-- 	<!-- 페이지 버튼 row 끝 -->
+
+
 	
 </div>
 <!-- container 끝 -->	

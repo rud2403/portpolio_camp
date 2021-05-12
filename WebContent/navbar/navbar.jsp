@@ -15,7 +15,7 @@
 		$('#sub_1').hide();
 		
 		$('#menu_1').mouseover(function(){
-			$('#sub_1').slideDown();
+			$('#sub_1').slideDown('fast');
 		});
 		
 		$('#menu_2').mouseleave(function(){
@@ -35,7 +35,7 @@
  String id = (String)session.getAttribute("id");
 %>
 
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #E9E9E9 ;">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #E9E9E9;">
   <div class="container-fluid">
     <a class="navbar-brand" href="/Portpolio_camp/main/main.jsp">CampMap</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,9 +81,11 @@
           <a class="nav-link active" aria-current="page" href="#">유료 캠핑장</a>
         </li>
         
+        
+        
         <li class="nav-item" id="menu_2">
           <a class="nav-link active" id="menu_1" aria-current="page" href="/Portpolio_camp/board/marketForm.jsp">캠핑 장터</a>
-	    	<ul id="sub_1">
+	    	<ul class="px-3 py-1" id="sub_1" style="list-style:none; background-color: #E9E9E9;">
 				<li><a href="/Portpolio_camp/board/BuyForm.jsp" style="text-decoration-line: none; color: black;">삽니다</a></li>
 				<li><a href="/Portpolio_camp/board/SellForm.jsp" style="text-decoration-line: none; color: black;">팝니다</a></li>
 			</ul>
@@ -93,7 +95,9 @@
           <a class="nav-link active" aria-current="page" href="/Portpolio_camp/board/freeboardForm.jsp">자유게시판</a>
         </li>        
       </ul>
-      
+ 
+ 
+     
 	   
       <%
       if(session.getAttribute("id") != null){
