@@ -89,6 +89,8 @@ public class BoardDAO {
 	}
 	// closeDB() 끝
 	
+	
+	// insertBoard(BoardBean bb) 시작
 	public void insertBoard(BoardBean bb) {
 
 		int num = 0;
@@ -164,7 +166,86 @@ public class BoardDAO {
 		}
 
 	}
-	// insertBoard() 끝
+	// insertBoard(BoardBean bb) 끝
+	
+	
+	// insertmarketBoard(BoardBean bb) 시작
+	public void insertmarketBoard(BoardBean bb) {
+
+		int num = 0;
+
+		try {
+			// 1 드라이버 로드
+			// 2 디비 연결
+			// => 한번에 처리하는 메소드로 변경
+			conn = getConnection();
+
+			// 3 sql (글 번호를 계산하는 구문)
+			sql = "select max(num) from camp_sell";
+
+			pstmt = conn.prepareStatement(sql);
+
+			// 4 sql 실행
+			rs = pstmt.executeQuery();
+
+			// 5 데이터 처리
+			// max(num) - sql 함수를 실행했을 경우 커서 이동 가능(데이터 여부 상관없음)
+			// num - sql 칼럼의 경우 커서 이동 불가능
+			if (rs.next()) {
+				// num = rs.getInt("mxa(num)") + 1;
+				num = rs.getInt(1) + 1;
+			}
+
+			System.out.println(" 글 번호 : " + num);
+
+			// 3 sql 작성 (insert) & pstmt 객체 생성
+			sql = "insert into camp_sell values(?, ?, ?, ?, ?, ?, now(), ?, ? ,?, ?, ?, ?, ?, ?, ?)";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, num);
+			pstmt.setString(2, bb.getName());
+			pstmt.setString(3, bb.getId());
+			pstmt.setString(4, bb.getPw());		
+			pstmt.setString(5, bb.getComent());	
+			pstmt.setInt(6, bb.getReadcount());
+			pstmt.setString(7, bb.getIp());
+			pstmt.setString(8, bb.getAddress());
+			pstmt.setString(9, bb.getKind());
+			pstmt.setString(10, bb.getPrice());
+			pstmt.setString(11, bb.getTrade());
+			pstmt.setString(12, bb.getState());
+			pstmt.setString(13, bb.getFilename());
+			pstmt.setString(14, bb.getFilename2());
+			pstmt.setString(15, bb.getFilename3());
+	
+			
+
+			// 4 sql 실행
+
+			pstmt.executeUpdate();
+
+			System.out.println("sql구문 실행 완료 : 글쓰기 완료");
+
+		} catch (SQLException e) {
+			System.out.println("디비 연결 실패 !!");
+			e.printStackTrace();
+		} finally {
+			// 자원해제
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+	// insertmarketBoard(BoardBean bb) 끝	
+	
+	
 	
 	// getBoardCount() 시작
 		public int getBoardCount() {
@@ -204,6 +285,47 @@ public class BoardDAO {
 
 		}
 		// getBoardCount() 끝
+		
+		
+		// getBoardCount() 시작
+		public int getMarketCount() {
+
+			int cnt = 0;
+
+			try {
+				// 1, 2 드라이버로드, 디비연결
+				conn = getConnection();
+
+				// 3 sql 작성(select) & pstmt 객체 생성
+				sql = "select count(*) from camp_sell";
+
+				pstmt = conn.prepareStatement(sql);
+
+				// 4 sql 실행
+				rs = pstmt.executeQuery();
+
+				// 5 데이터 처리
+				if (rs.next()) {
+					cnt = rs.getInt(1);
+				} // try
+
+				System.out.println("SQL 구문 실행 완료!");
+				System.out.println(" 글 개수 : " + cnt + "개");
+
+			} catch (Exception e) {
+				System.out.println(" 게시판 글 개수 에러 발생 !!");
+				e.printStackTrace();
+			} finally {
+
+				closeDB();
+
+			}
+
+			return cnt;
+
+		}
+		// getBoardCount() 끝		
+		
 	
 		// getBoardList() 시작
 		public ArrayList getBoardList() {
@@ -272,6 +394,71 @@ public class BoardDAO {
 			return BoardListAll;
 		 }
 		// getBoardList() 끝
+		
+		
+		public ArrayList getMarketList() {
+			// DB데이터 1행의 정보를 BoardBean에 저장 -> ArrayList 한칸에 저장
+
+			// 게시판의 글 정보를 모두 저장하는 가변길이 배열
+			ArrayList BoardListAll = new ArrayList();
+
+			// 게시판 글 1개의 정보를 저장하는 객체
+			BoardBean bb = null;
+
+			try {
+				// 1, 2 드라이버 로드, 디비 열결
+				conn = getConnection();
+
+				// 3sql 구문 & pstmtm객체
+				sql = "select * from camp_sell";
+
+				//
+				pstmt = conn.prepareStatement(sql);
+
+				rs = pstmt.executeQuery();
+
+				// 5 데이터 처리
+				while (rs.next()) {
+					// 데이터 있을 때 bb 객체 생성
+					bb = new BoardBean();
+
+					// DB정보를 Bean에 저장하기
+					bb.setNum(rs.getInt("num"));
+					bb.setName(rs.getString("name"));
+					bb.setId(rs.getString("id"));
+					bb.setPw(rs.getString("pw"));
+					bb.setComent(rs.getString("coment"));
+					bb.setReadcount(rs.getInt("readcount"));
+					bb.setDate(rs.getDate("date"));
+					bb.setAddress(rs.getString("address"));
+					bb.setKind(rs.getString("kind"));
+					bb.setPrice(rs.getString("price"));
+					bb.setTrade(rs.getString("trade"));
+					bb.setState(rs.getString("state"));
+					bb.setFilename(rs.getString("filename"));
+					bb.setFilename2(rs.getString("filename2"));
+					bb.setFilename3(rs.getString("filename3"));
+
+					
+
+					// Bean -> ArrayList 한칸에 저장
+					BoardListAll.add(bb);
+
+				} // while
+				
+				System.out.println(" 게시판 모든 정보 저장완료 ");
+				System.out.println(" 총 " + BoardListAll.size() + " 개");
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				closeDB();
+			}
+
+			return BoardListAll;
+		 }
+		// getMarketList() 끝		
 		
 		
 		// getBoardList(int startRow, int pageSize) 시작
@@ -350,9 +537,245 @@ public class BoardDAO {
 			return BoardList;
 		}
 		// getBoardList(int startRow, int pageSize) 끝
+
+		
+		// getBoardList(int startRow, int pageSize) 시작
+		public ArrayList getMarketList(int startRow, int pageSize) {
+			// DB데이터 1행의 정보를 BoardBean에 저장 -> ArrayList 한칸에 저장
+
+			// 게시판의 글 정보를 원하는 만큼 저장하는 가변길이 배열
+			ArrayList BoardList = new ArrayList();
+
+			// 게시판 글 1개의 정보를 저장하는 객체
+			BoardBean bb = null;
+
+			try {
+				// 1, 2 드라이버 로드, 디비 열결
+				conn = getConnection();
+
+				// 3sql 구문 & pstmtm객체
+				// 글 정보 정렬 - re_ref 값을 최신글 위쪽으로 정렬(내림차순)
+				//				- re_seq 값을 사용 (오름 차순)
+				//				- limit a, b (a 시작, b 개수)
+				//				ex) 1번글 -> 0번 인덱스
+				
+				
+				sql = "select * from camp_sell "
+						+ "order by num desc"
+						+ " limit ?,?";
+				
+
+				//
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setInt(1, startRow-1);
+				pstmt.setInt(2, pageSize);
+				
+				rs = pstmt.executeQuery();
+
+				// 5 데이터 처리
+				while (rs.next()) {
+					// 데이터 있을 때 bb 객체 생성
+					bb = new BoardBean();
+
+					// DB정보를 Bean에 저장하기
+					bb.setNum(rs.getInt("num"));
+					bb.setName(rs.getString("name"));
+					bb.setId(rs.getString("id"));
+					bb.setPw(rs.getString("pw"));
+					bb.setComent(rs.getString("coment"));
+					bb.setReadcount(rs.getInt("readcount"));
+					bb.setDate(rs.getDate("date"));
+					bb.setAddress(rs.getString("address"));
+					bb.setKind(rs.getString("kind"));
+					bb.setPrice(rs.getString("price"));
+					bb.setTrade(rs.getString("trade"));
+					bb.setState(rs.getString("state"));
+					bb.setFilename(rs.getString("filename"));
+					bb.setFilename2(rs.getString("filename2"));
+					bb.setFilename3(rs.getString("filename3"));
+
+					
+					// Bean -> ArrayList 한칸에 저장
+					BoardList.add(bb);
+
+				} // while
+				
+				System.out.println(" 게시판 모든 정보 저장완료 ");
+				System.out.println(" 총 " + BoardList.size() + " 개");
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				closeDB();
+			}
+
+			return BoardList;
+		}
+		// getBoardList(int startRow, int pageSize) 끝
+
 		
 		
+		///////////////// 삽니다의 경우만 띄우기 ///////////////////////////////////////////////////////////
+		// getBuyList(int startRow, int pageSize) 시작
+				public ArrayList getBuyList(int startRow, int pageSize) {
+					// DB데이터 1행의 정보를 BoardBean에 저장 -> ArrayList 한칸에 저장
+
+					// 게시판의 글 정보를 원하는 만큼 저장하는 가변길이 배열
+					ArrayList BoardList = new ArrayList();
+
+					// 게시판 글 1개의 정보를 저장하는 객체
+					BoardBean bb = null;
+
+					try {
+						// 1, 2 드라이버 로드, 디비 열결
+						conn = getConnection();
+
+						// 3sql 구문 & pstmtm객체
+						// 글 정보 정렬 - re_ref 값을 최신글 위쪽으로 정렬(내림차순)
+						//				- re_seq 값을 사용 (오름 차순)
+						//				- limit a, b (a 시작, b 개수)
+						//				ex) 1번글 -> 0번 인덱스
+						
+						
+						sql = "select * from camp_sell where kind ='삽니다' "
+								+ "order by num desc"
+								+ " limit ?,?";
+						
+
+						//
+						pstmt = conn.prepareStatement(sql);
+
+						pstmt.setInt(1, startRow-1);
+						pstmt.setInt(2, pageSize);
+						
+						rs = pstmt.executeQuery();
+
+						// 5 데이터 처리
+						while (rs.next()) {
+							// 데이터 있을 때 bb 객체 생성
+							bb = new BoardBean();
+
+							// DB정보를 Bean에 저장하기
+							bb.setNum(rs.getInt("num"));
+							bb.setName(rs.getString("name"));
+							bb.setId(rs.getString("id"));
+							bb.setPw(rs.getString("pw"));
+							bb.setComent(rs.getString("coment"));
+							bb.setReadcount(rs.getInt("readcount"));
+							bb.setDate(rs.getDate("date"));
+							bb.setAddress(rs.getString("address"));
+							bb.setKind(rs.getString("kind"));
+							bb.setPrice(rs.getString("price"));
+							bb.setTrade(rs.getString("trade"));
+							bb.setState(rs.getString("state"));
+							bb.setFilename(rs.getString("filename"));
+							bb.setFilename2(rs.getString("filename2"));
+							bb.setFilename3(rs.getString("filename3"));
+
+							
+							// Bean -> ArrayList 한칸에 저장
+							BoardList.add(bb);
+
+						} // while
+						
+						System.out.println(" 게시판 모든 정보 저장완료 ");
+						System.out.println(" 총 " + BoardList.size() + " 개");
+
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} finally {
+						closeDB();
+					}
+
+					return BoardList;
+				}
+				// getBuyList(int startRow, int pageSize) 끝
+				///////////// 삽니다의 경우만 띄우기 //////////////////////////////////////
 		
+				///////////////// 팝니다의 경우만 띄우기 ///////////////////////////////////////////////////////////
+				// getSellList(int startRow, int pageSize) 시작
+				public ArrayList getSellList(int startRow, int pageSize) {
+					// DB데이터 1행의 정보를 BoardBean에 저장 -> ArrayList 한칸에 저장
+
+					// 게시판의 글 정보를 원하는 만큼 저장하는 가변길이 배열
+					ArrayList BoardList = new ArrayList();
+
+					// 게시판 글 1개의 정보를 저장하는 객체
+					BoardBean bb = null;
+
+					try {
+						// 1, 2 드라이버 로드, 디비 열결
+						conn = getConnection();
+
+						// 3sql 구문 & pstmtm객체
+						// 글 정보 정렬 - re_ref 값을 최신글 위쪽으로 정렬(내림차순)
+						//				- re_seq 값을 사용 (오름 차순)
+						//				- limit a, b (a 시작, b 개수)
+						//				ex) 1번글 -> 0번 인덱스
+						
+						
+						sql = "select * from camp_sell where kind ='팝니다' "
+								+ "order by num desc"
+								+ " limit ?,?";
+						
+
+						//
+						pstmt = conn.prepareStatement(sql);
+
+						pstmt.setInt(1, startRow-1);
+						pstmt.setInt(2, pageSize);
+						
+						rs = pstmt.executeQuery();
+
+						// 5 데이터 처리
+						while (rs.next()) {
+							// 데이터 있을 때 bb 객체 생성
+							bb = new BoardBean();
+
+							// DB정보를 Bean에 저장하기
+							bb.setNum(rs.getInt("num"));
+							bb.setName(rs.getString("name"));
+							bb.setId(rs.getString("id"));
+							bb.setPw(rs.getString("pw"));
+							bb.setComent(rs.getString("coment"));
+							bb.setReadcount(rs.getInt("readcount"));
+							bb.setDate(rs.getDate("date"));
+							bb.setAddress(rs.getString("address"));
+							bb.setKind(rs.getString("kind"));
+							bb.setPrice(rs.getString("price"));
+							bb.setTrade(rs.getString("trade"));
+							bb.setState(rs.getString("state"));
+							bb.setFilename(rs.getString("filename"));
+							bb.setFilename2(rs.getString("filename2"));
+							bb.setFilename3(rs.getString("filename3"));
+
+							
+							// Bean -> ArrayList 한칸에 저장
+							BoardList.add(bb);
+
+						} // while
+						
+						System.out.println(" 게시판 모든 정보 저장완료 ");
+						System.out.println(" 총 " + BoardList.size() + " 개");
+
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} finally {
+						closeDB();
+					}
+
+					return BoardList;
+				}
+				// getSellList(int startRow, int pageSize) 끝
+				///////////// 팝니다의 경우만 띄우기 //////////////////////////////////////
+				
+				
+				
+				
 		// updateReadcount(int num) 시작
 		public void updateReadcount(int num){
 			
@@ -387,7 +810,42 @@ public class BoardDAO {
 			
 		}
 		// updateReadcount(int num) 끝
+
 		
+		// updateMarketReadcount(int num) 시작
+				public void updateMarketReadcount(int num){
+					
+					try {
+					// 1,2 디비 연결
+					conn = getConnection();
+					
+					
+					// 3 sql 구문 작성(update) & pstmt 객체
+					sql = "update camp_sell set readcount = readcount + 1 where num=?";
+					
+					
+					pstmt = conn.prepareStatement(sql);
+					
+					pstmt.setInt(1, num);
+					
+					//4 sql 실행
+					
+					pstmt.execute();
+					
+					System.out.println("글 조회수 증가 완료");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}finally{
+						closeDB();
+					}
+					
+					
+					// 4 sql 실행
+					
+					
+				}
+				// updateMarketReadcount(int num) 끝
 		
 		
 		// getBoard(int num) 시작
@@ -452,6 +910,70 @@ public class BoardDAO {
 
 		}
 		// getBoard(int num) 끝
+
+		
+		// getBoard(int num) 시작
+		public BoardBean getMarket(int num){
+
+			BoardBean bb = null;
+			
+			try {
+				
+				// 1, 2 디비 연결
+				conn = getConnection();
+				
+				// 3 sql 작성(select) & pstmt 객체
+				sql = "select * from camp_sell where num=?";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, num);
+				
+				// 4 sql 실행
+				
+				rs = pstmt.executeQuery();
+				
+				// 5 데이터 처리
+				if(rs.next()){
+					
+					bb = new BoardBean();
+					
+					bb.setNum(rs.getInt("num"));
+					bb.setName(rs.getString("name"));
+					bb.setId(rs.getString("id"));
+					bb.setPw(rs.getString("pw"));
+					bb.setComent(rs.getString("coment"));
+					bb.setReadcount(rs.getInt("readcount"));
+					bb.setDate(rs.getDate("date"));
+					bb.setAddress(rs.getString("address"));
+					bb.setKind(rs.getString("kind"));
+					bb.setPrice(rs.getString("price"));
+					bb.setTrade(rs.getString("trade"));
+					bb.setState(rs.getString("state"));
+					bb.setFilename(rs.getString("filename"));
+					bb.setFilename2(rs.getString("filename2"));
+					bb.setFilename3(rs.getString("filename3"));
+					
+					
+				}
+				
+				System.out.println(" 글 번호에 해당하는 글정보 저장 완료");
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				closeDB();
+			}
+			
+			return bb;
+			
+
+		}
+		// getMarket(int num) 끝		
+		
+		
+		
 		
 		
 		// updateBoard(BoardBean bb) 시작
@@ -480,7 +1002,7 @@ public class BoardDAO {
 					// 글이 있음
 					
 					// sql (update-글 수정) & pstmtm 객체
-					sql = "update camp_camp set name=?, address=?, lat=?, lng=?, toilet=?, park=?, water=?, fishing=?, field=?, land=?, filename=?, level=? where num=?";
+					sql = "update camp_camp set name=?, address=?, lat=?, lng=?, toilet=?, park=?, water=?, fishing=?, field=?, land=?, filename=?, level=?, filename2=?, filename3=? where num=?";
 					
 					pstmt = conn.prepareStatement(sql);
 					
@@ -498,7 +1020,9 @@ public class BoardDAO {
 					pstmt.setString(10, bb.getLand());
 					pstmt.setString(11, bb.getFilename());
 					pstmt.setString(12, bb.getLevel());
-					pstmt.setInt(13, bb.getNum());
+					pstmt.setString(13, bb.getFilename2());
+					pstmt.setString(14, bb.getFilename3());
+					pstmt.setInt(15, bb.getNum());
 					
 					
 					// 4 sql 실행

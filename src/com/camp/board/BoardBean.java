@@ -5,27 +5,50 @@ import java.sql.Date;
 public class BoardBean {
 
 	
-	private int num;
-	private String name;
-	private String address;
-	private String lat;
-	private String lng;
-	private String toilet;
-	private String park;
-	private String water;
-	private String fishing;
-	private String field;
-	private String land;
-	private Date date;
-	private String level;
-	private int readcount;
-	private String coment;
-	private String filename;
-	private String filename2;
-	private String filename3;
-	private String kind;
-	private String ip;
+	private int num; // 게시글 번호
+	private String name; // camp_camp - 캠핑지 이름,
+	private String address; // camp_camp - 캠핑지 주소,
+	private String lat; // 위도
+	private String lng; // 경도
+	private String toilet; // 화장실 유무
+	private String park; // 주차 가능여부
+	private String water; // 물놀이 가능여부
+	private String fishing; // 낚시 가능여부
+	private String field; // 캠핑지 주변환경 종류 ( ex) 바다, 강 등)
+	private String land; // 캠핑지 땅바닥 종류 ( ex) 흙, 진흙 등)
+	private Date date; // 게시글 작성 날짜
+	private String level; // 캠핑지 난이도
+	private int readcount; // 조회수
+	private String coment; // 게시글 본문
+	private String filename; // 사진 파일1
+	private String filename2; // 사진 파일2
+	private String filename3; // 사진 파일3
+	private String kind; // 팝니다, 삽니다 구분
+	private String ip; // 게시판 ip
+	private String price; // 장터게시판 가격
+	private String trade; // 직거래인지 택배거래인지 표시
+	private String state; // 거래 완료인지 상태 표시
+	private String id; // Session을 통해 받아오는 글쓴이 아이디
+	private String pw; // 게시글 수정, 삭제를 위해 session으로 받아 올 글쓴이 비밀번호 (수정, 삭제 할 때 입력한 비밀번호와 세션에 남아있는 pw가 일치하면 글 수정, 삭제)
 	
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
+	}
+	public String getTrade() {
+		return trade;
+	}
+	public void setTrade(String trade) {
+		this.trade = trade;
+	}
 	public String getFilename2() {
 		return filename2;
 	}
@@ -62,10 +85,6 @@ public class BoardBean {
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
-
-	private String id;
-	private String pw;
-	
 	public int getReadcount() {
 		return readcount;
 	}
@@ -169,7 +188,7 @@ public class BoardBean {
 				+ ", toilet=" + toilet + ", park=" + park + ", water=" + water + ", fishing=" + fishing + ", field="
 				+ field + ", land=" + land + ", filename=" + filename + ", date=" + date + ", level=" + level +", readcount=" 
 				+ readcount + ", coment=" + coment + ", filename2=" + filename2 + ", filename3=" + filename3 + ", kind=" 
-				+ kind + ", ip=" + ip + ", id=" + id + ", pw=" + pw +"]";
+				+ kind + ", ip=" + ip + ", id=" + id + ", pw=" + pw + ", price=" + price + ", trade=" + trade +  ", state=" + state + "]";
 	}
 	
 }

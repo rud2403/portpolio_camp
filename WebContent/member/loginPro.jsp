@@ -41,6 +41,7 @@
 		if(check > 0){
 
 			session.setAttribute("id", mb.getId());
+			session.setAttribute("pw", mb.getPw());
 
 			// main.jsp 페이지 이동
 			response.sendRedirect("/Portpolio_camp/main/main.jsp");

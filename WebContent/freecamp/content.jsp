@@ -481,7 +481,9 @@
 			       	
 			       	<!-- row3 시작 -->
 			       	<div class="row mt-2 mb-3">
-						<input class="form-control" type="file" id="formFile" name="filename">
+						<input class="form-control m-1" type="file" id="formFile" name="filename">
+						<input class="form-control m-1" type="file" id="formFile" name="filename2">
+						<input class="form-control m-1" type="file" id="formFile" name="filename3">						
 			       	</div>
 			       	<!-- row3 끝 -->
 			  </div>
@@ -513,8 +515,8 @@
 				<div class="px-4 m-2"><%=bb.getAddress() %></div>
 			</div>
 			<div class="row m-1">
-				<div class="col-3"><span class="badge rounded-pill bg-primary">경도</span> <%=bb.getLat() %> </div>
-				<div class="col-9"><span class="badge rounded-pill bg-danger">위도</span> <%=bb.getLng() %></div>
+				<div class="col-3"><span class="badge rounded-pill bg-primary">위도</span> <%=bb.getLng() %></div>
+				<div class="col-9"><span class="badge rounded-pill bg-danger">경도</span> <%=bb.getLat() %> </div>
 			</div>
 		</div>
 		<!-- 위치 칼럼 끝 -->
@@ -704,17 +706,7 @@
 		
 		<%} %>
 		
-				
-		
-		
-		
-		
-		
-		
-		
-<%-- 			<img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="rounded" width="400px" height="300px" alt="..."> --%>
-<%-- 			<img src="/Portpolio_camp/upload/<%=bb.getFilename2() %>" class="rounded" width="400px" height="300px" alt="..."> --%>
-<%--  			<img src="/Portpolio_camp/upload/<%=bb.getFilename3() %>" class="rounded" width="400px" height="300px" alt="..."> --%>
+
 		<div class="col-2"></div>
 	</div>
 	<!-- 갤러리 내용 끝 -->			

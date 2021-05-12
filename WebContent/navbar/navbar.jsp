@@ -5,8 +5,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-</style>
+
+<!-- jquery 준비 시작 -->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<!-- jquery 준비 끝 -->
+
+<script type="text/javascript">
+	$(function (){
+		$('#sub_1').hide();
+		
+		$('#menu_1').mouseover(function(){
+			$('#sub_1').slideDown();
+		});
+		
+		$('#menu_2').mouseleave(function(){
+			$('#sub_1').hide();
+		});
+
+	});
+
+</script>
+
+
 
 </head>
 <body>
@@ -22,8 +42,8 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      
+    
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 pb-3" style="height:40px;">      
       	<%
          if(session.getAttribute("id") == null){
         %>
@@ -60,9 +80,15 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">유료 캠핑장</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/Portpolio_camp/board/commuForm.jsp">캠핑 장터</a>
+        
+        <li class="nav-item" id="menu_2">
+          <a class="nav-link active" id="menu_1" aria-current="page" href="/Portpolio_camp/board/marketForm.jsp">캠핑 장터</a>
+	    	<ul id="sub_1">
+				<li><a href="/Portpolio_camp/board/BuyForm.jsp" style="text-decoration-line: none; color: black;">삽니다</a></li>
+				<li><a href="/Portpolio_camp/board/SellForm.jsp" style="text-decoration-line: none; color: black;">팝니다</a></li>
+			</ul>
         </li>
+        
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/Portpolio_camp/board/freeboardForm.jsp">자유게시판</a>
         </li>        
