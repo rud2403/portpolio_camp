@@ -182,7 +182,7 @@
 	      	  <!-- 글쓰기 본문 시작 -->
 		      <div class="modal-body mx-5">
 		      
-		      	   <input type="hidden" name="state" value="거래중"> <!-- 기본값으로 "거래중"전달 추후 페이지 수정에서 "거래완료"변경 가능 -->
+		      	   <input type="hidden" name="state" value="거래중">
 			       <div class="form-floating mb-3">
 					  <input type="text" class="form-control" id="floatingInput" placeholder="캠핑지명" name="name">
 					  <label for="floatingInput">제목</label>
@@ -331,7 +331,7 @@
 		      	<%if(bb.getState().equals("거래중")){ %>
 			    	<a  href="/Portpolio_camp/board/content.jsp?num=<%=bb.getNum()%>&pageNum=<%=pageNum%>" style="text-decoration-line: none; color: black;"><%=bb.getName() %></a>		      	
 			    <%}else{ %>
-			    	<div class="text-decoration-line-through"><%=bb.getName() %><span class="badge bg-success">거래완료</span></div>
+			    	<div class="text-decoration-line-through"><a  href="/Portpolio_camp/board/content.jsp?num=<%=bb.getNum()%>&pageNum=<%=pageNum%>" style="text-decoration-line: none; color: black;"><%=bb.getName() %></a><span class="badge bg-success">거래완료</span></div>
 			    <%} %> 
 		      </td>
 		      <td><%=bb.getId() %></td>

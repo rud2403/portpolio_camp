@@ -8,8 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<h1>WebContent/board/updatePro.jsp</h1>
 	<%
 		// 한글 처리
 		request.setCharacterEncoding("utf-8");

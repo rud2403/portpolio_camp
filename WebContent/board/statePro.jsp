@@ -8,7 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%
+
+<%
 		// 한글 처리
 		request.setCharacterEncoding("utf-8");
 	
@@ -32,7 +33,7 @@
 	
 	// 해당 글 정보를 사용해서 글 내용 수정 
 	
-		int check = bdao.updateBoard(bb);
+		int check = bdao.stateBoard(bb);
 	
 	System.out.println("수정 현황 : " + check);
 	
@@ -44,7 +45,7 @@
 		%>
 		<script type="text/javascript">
 			alert("정보 수정완료! ");
-			location.href="/Portpolio_camp/freecamp/freeForm.jsp?pageNum=<%=pageNum%>";
+			location.href="/Portpolio_camp/board/marketForm.jsp?pageNum=<%=pageNum%>";
 		</script>
 		<%
 	// -1 (없는글 접근 - 수정실패)

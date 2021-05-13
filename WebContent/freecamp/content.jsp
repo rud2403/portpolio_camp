@@ -159,19 +159,18 @@
 	<div class="row">
 		<%
 		try {
-		if(id.equals("admin")){ %>
-		<div class="col-1 text-center">
-			<button class="btn btn-light btn-sm" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" >수정</button> / <button class="btn btn-light btn-sm" type="button" onclick="con()">삭제</button>
-		</div>
+			if(id.equals("admin")){ %>
+				<div class="col-1 text-center">
+					<button class="btn btn-light btn-sm" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" >수정</button> / <button class="btn btn-light btn-sm" type="button" onclick="con()">삭제</button>
+				</div>
 		<%
-		}
+			}
 		}catch (Exception e) {
-		} %>
-		<div class="col-10 text-center">
-		</div>
-		<div class="col-1 text-center">
-			조회수 <%=bb.getReadcount() %>
-		</div>
+			} %>
+			<div class="col-10 text-center"></div>
+			<div class="col-1 text-center">
+				조회수 <%=bb.getReadcount() %>
+			</div>
 	</div>
 	<!-- 조회수 및 수정 삭제 줄 끝 -->	
 	

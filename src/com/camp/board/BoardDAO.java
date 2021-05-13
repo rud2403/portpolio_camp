@@ -1050,6 +1050,106 @@ public class BoardDAO {
 
 		}
 		// updateBoard(BoardBean bb) 끝		
+
+		
+		
+		
+		// stateBoard(BoardBean bb) 시작
+		public int stateBoard(BoardBean bb){
+			
+			int check = -1;
+			
+			try {
+				// 1, 2 디비 연결
+				conn = getConnection();
+				System.out.println("stateBoard의 넘버 숫자는 !@!@!@!@!@!@!@!@: " +bb.getNum());
+				// 3 sql 작성(select - 본인확인) & pstmt 객체
+				sql = "select * from camp_sell where num=?";
+				
+				
+				pstmt = conn.prepareStatement(sql);
+								
+				pstmt.setInt(1, bb.getNum());
+
+				//4 sql 실행
+
+				rs = pstmt.executeQuery();
+				
+				//5 데이터 처리
+				if(rs.next()){
+					// 글이 있음
+					
+					// sql (update-글 수정) & pstmtm 객체
+					sql = "update camp_sell set state='거래완료' where num=?";
+					
+					pstmt = conn.prepareStatement(sql);
+					
+					pstmt.setInt(1, bb.getNum());
+					
+					// 4 sql 실행
+					pstmt.executeUpdate();
+					
+					
+					check = 0;
+					
+					//check = 1;
+											
+				}else{
+					// 글이 없음
+					check = -1;
+				}
+				
+				System.out.println(" 글 수정 완료 !" + check);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally{
+				closeDB();
+			}			
+			return check;
+
+		}
+		// stateBoard(BoardBean bb) 끝			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 
 		// updateMarketBoard(BoardBean bb) 시작
@@ -1173,7 +1273,57 @@ public class BoardDAO {
 			
 			return check;
 		}
-		// deleteBoard(BoardBean bb) 끝		
+		// deleteBoard(BoardBean bb) 끝
+		
+		
+		// deleteMarket(BoardBean bb) 시작
+		public int deleteMarket(BoardBean bb){
+			int check = -1;
+			
+			try {
+				// 1, 2 디비 연결
+				conn = getConnection();
+				// 3 sql 생성 &pstmt 객체 생성
+				sql="select * from camp_sell where num=?";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				System.out.println("@@@@@@@##########################가져온 넘버의 값은 : " + bb.getNum());
+				
+				pstmt.setInt(1, bb.getNum());
+				
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()){
+					sql = "delete from camp_sell where num=?";
+					pstmt = conn.prepareStatement(sql);
+					
+					
+					pstmt.setInt(1, bb.getNum());
+					
+					pstmt.executeUpdate();
+
+					
+					check = 0;
+						
+				}else{
+					check = -1;
+				}
+				
+				System.out.println("글 삭제 완료" + check);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				closeDB();
+			}
+
+			
+			return check;
+		}
+		// deleteMarket(BoardBean bb) 끝
 		
 }
 // BoardDAO 끝

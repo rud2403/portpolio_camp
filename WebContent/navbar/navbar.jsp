@@ -110,7 +110,7 @@
         </li>
         
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/Portpolio_camp/board/freeboardForm.jsp">자유게시판</a>
+          <a class="nav-link active" aria-current="page" href="/Portpolio_camp/freeboard/freeboardForm.jsp">자유게시판</a>
         </li>        
       </ul>
  

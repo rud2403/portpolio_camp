@@ -319,7 +319,7 @@
 		      	<%if(bb.getState().equals("거래중")){ %>
 			    	<a href="/Portpolio_camp/board/content.jsp?num=<%=bb.getNum()%>&pageNum=<%=pageNum%>" style="text-decoration-line: none; color: black;"><%=bb.getName() %></a>		      	
 			    <%}else{ %>
-			    	<div class="text-decoration-line-through"><%=bb.getName() %><span class="badge bg-success">거래완료</span></div>
+			    	<div class="text-decoration-line-through"><a  href="/Portpolio_camp/board/content.jsp?num=<%=bb.getNum()%>&pageNum=<%=pageNum%>" style="text-decoration-line: none; color: black;"><%=bb.getName() %></a><span class="badge bg-success">거래완료</span></div>
 			    <%} %> 
 		      </td>
 		      <td><%=bb.getId() %></td>
