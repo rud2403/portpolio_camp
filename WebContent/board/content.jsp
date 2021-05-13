@@ -2,6 +2,7 @@
 <%@page import="com.camp.board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,6 +23,33 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 <!-- 부트 스트랩 끝 -->
+
+	<script type="text/javascript">
+		<!-- jquery 시작 -->
+		$(function() {
+			$("#cc2").hide();
+			
+			$("#cc1").click(function(){
+				$("#cc2").click();
+			});
+
+			$("#back").click(function(){
+				history.back();
+			});
+			
+			// 디비에 있는 pw값과 input으로 받아오는 pw값이 다를 경우 다르다 하기
+// 			$("#correct").click(function() {
+// 				var pw1 = $("#pw").val();
+// 				var pw2;
+// 				if(pw1 != pw2){
+// 					alert("비밀번호가 다릅니다.");
+// 				}
+// 			});
+			
+		});
+	</script>
+		<!-- jquery 끝 -->
+
 
 <!-- 우편번호 스크립트 시작 -->
 <script>
@@ -80,6 +108,7 @@
 </head>
 <body>
 
+
 <%
 		// 페이지 이동 시 전달정보가 있으면 항상 먼저 저장
 		// num, pageNum
@@ -102,22 +131,7 @@
 	
 	%>
 
-	<script type="text/javascript">
-		<!-- jquery 시작 -->
-		$(function() {
-			$("#cc2").hide();
-			
-			$("#cc1").click(function(){
-				$("#cc2").click();
-			});
 
-			$("#back").click(function(){
-				history.back();
-			});
-			
-		});
-	</script>
-		<!-- jquery 끝 -->
 
 
 
@@ -173,6 +187,157 @@
 		</div>
 	</div>
 	<!-- 조회수 및 수정 삭제 줄 끝 -->	
+
+	
+	<!-- 페이지 수정 모달 시작 -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-xl">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h2 class="modal-title" id="exampleModalLabel">캠핑장터 - 글수정 </h2>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      
+	      <!-- 캠핑 장터 글 수정 폼 작성 시작 -->
+		  <form action="/Portpolio_camp/board/fileupdateUploadPro.jsp" method="post" enctype="multipart/form-data">
+		  	<input type="hidden" name="num" value="<%=bb.getNum()%>">
+		  	<input type="hidden" name="pageNum" value="<%=pageNum%>">
+		  	
+	      	  <!-- 글수정 본문 시작 -->
+		      <div class="modal-body mx-5">
+		      
+			      <div class="row">
+			      <div class="col-2 mt-1"><h5>비밀번호 확인</h5></div>
+			      <div class="col-4 mr-3">
+				      	<input type="text" class="form-control" id="pw" placeholder="글쓴이 비밀번호 확인" name="pw">
+				  </div>
+			      <div class="col-6"></div>
+		      </div>
+		      
+		      	<hr>
+		      
+		      	   <input type="hidden" name="state" value="거래중"> <!-- 기본값으로 "거래중"전달 추후 페이지 수정에서 "거래완료"변경 가능 -->
+			       <div class="form-floating mb-3">
+					  <input type="text" class="form-control" id="floatingInput" placeholder="캠핑지명" name="name" value="<%=bb.getName()%>">
+					  <label for="floatingInput">제목</label>
+					</div>
+					
+					<!-- 구분 시작 -->
+					<div class="row my-2">
+						<div class="col-4">
+							<b>구분</b>
+							<%if(bb.getKind().equals("삽니다")){ %>
+						 		<input type="radio" class="btn-check" name="kind" id="option1" autocomplete="off" value="삽니다" checked >
+								<label class="btn btn-outline-danger btn-sm" for="option1">삽니다</label>
+								
+								<input type="radio" class="btn-check" name="kind" id="option2" autocomplete="off" value="팝니다" >
+								<label class="btn btn-outline-danger btn-sm" for="option2" >팝니다</label>
+							<%}else{ %>
+						 		<input type="radio" class="btn-check" name="kind" id="option1" autocomplete="off" value="삽니다"  >
+								<label class="btn btn-outline-danger btn-sm" for="option1">삽니다</label>
+								
+								<input type="radio" class="btn-check" name="kind" id="option2" autocomplete="off" value="팝니다" checked>
+								<label class="btn btn-outline-danger btn-sm" for="option2" >팝니다</label>								
+							<%} %>			
+						<div class="col-4">
+						</div>
+						<div class="col-4">
+						</div>
+						</div>
+					</div>
+					<!-- 구분 끝 -->
+
+					<!-- 거래방식 시작 -->
+					<div class="row my-2">
+						<div class="col-4">
+							<b>거래 방식</b>
+							<%if(bb.getTrade().equals("직거래")){ %>
+						 		<input type="radio" class="btn-check" name="trade" id="option3" autocomplete="off" value="직거래" checked>
+								<label class="btn btn-outline-warning btn-sm" for="option3" value="직거래">직거래</label>
+								
+								<input type="radio" class="btn-check" name="trade" id="option4" autocomplete="off" value="택배">
+								<label class="btn btn-outline-warning btn-sm" for="option4" value="택배">택배</label>
+							<%}else{ %>
+						 		<input type="radio" class="btn-check" name="trade" id="option3" autocomplete="off" value="직거래">
+								<label class="btn btn-outline-warning btn-sm" for="option3" value="직거래">직거래</label>
+								
+								<input type="radio" class="btn-check" name="trade" id="option4" autocomplete="off" value="택배" checked>
+								<label class="btn btn-outline-warning btn-sm" for="option4" value="택배">택배</label>							
+							<%} %>			
+						<div class="col-4">
+						</div>
+						<div class="col-4">
+						</div>
+						</div>
+					</div>
+					<!-- 거래방식 끝 -->
+					
+					<!-- 금액 시작 -->
+					<div class="row">
+						<div class="form-floating mb-3">
+						  <input type="text" class="form-control" id="floatingInput" placeholder="가격" name="price" value="<%=bb.getPrice()%>">
+						  <label for="floatingInput">&nbsp;가격</label>
+						</div>	
+					</div>
+					<!-- 금액 시작 -->					
+					
+			       	<!-- 우편번호 시작 -->
+						<input type="text" id="sample6_address" placeholder="주소" name="address" class="form-control" value="<%=bb.getAddress()%>"><br>
+						<input type="button" class="btn btn-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+						
+						<input type="hidden" id="sample6_postcode" placeholder="우편번호">
+						<input type="hidden" id="sample6_detailAddress" placeholder="상세주소">
+						<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
+					<!-- 우편번호 끝 -->
+			       	
+			       	<!-- 글내용 시작 --><hr>
+					<div class="row text-center">
+			       		<div class="col-4"></div>
+			       		<div class="col-4"><h4>글내용</h4></div>
+			       		<div class="col-4"></div>
+					</div>			 
+					      	
+			       	<div class="row">
+						<div class="form-floating">
+						  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px" name="coment"><%=bb.getComent() %></textarea>
+						  <label for="floatingTextarea2"></label>
+						</div>
+			       	</div>
+			       	<!-- 글내용 끝 -->
+			       	
+			       	<hr>
+			       	
+					<div class="row text-center">
+			       		<div class="col-4"></div>
+			       		<div class="col-4"><h4>사진 첨부</h4></div>
+			       		<div class="col-4"></div>			       		
+			       	</div>
+			       	
+			       	<!-- row3 시작 -->
+			       	<div class="row mt-2 mb-3">
+						<input class="form-control m-1" type="file" id="formFile" name="filename">
+						<input class="form-control m-1" type="file" id="formFile" name="filename2">
+						<input class="form-control m-1" type="file" id="formFile" name="filename3">
+			       	</div>
+			       	<!-- row3 끝 -->
+			  </div>
+			  <!-- 글수정 본문 끝 -->
+			      
+
+		      <div class="modal-footer">
+		      	<button type="submit" class="btn btn-primary" id="correct">수정</button>
+			  	<button type="reset" class="btn btn-secondary" data-bs-dismiss="modal" id="cc1">취소</button>
+			  	<button type="reset" id="cc2">취소2</button>
+		      </div>
+	      </form>
+	     <!-- 캠핑장터 글 수정 폼 작성 끝 -->
+	      
+	    </div>
+	  </div>
+	</div>
+	<!-- 페이지 수정 모달 끝 -->
+	
+	
 	
 	
 	<hr>
@@ -200,7 +365,7 @@
 						<h5><span class="badge bg-danger p-3">삽니다</span></h5>
 					 </div>
 					 <div class="col-5 mt-1">
-					 	<h3>₩<%=bb.getPrice() %></h3>
+					 	<h3>₩<fmt:formatNumber value="<%=bb.getPrice() %>" pattern="#,###"/></h3>
 					 </div>
 					  
 			 <%}else if(bb.getTrade().equals("택배") && bb.getKind().equals("팝니다")){ %>
@@ -211,7 +376,7 @@
 						<h5><span class="badge bg-primary p-3">팝니다</span></h5>
 					 </div>
 					 <div class="col-5 mt-1">
-					 	<h3>₩<%=bb.getPrice() %></h3>
+					 	<h3>₩<fmt:formatNumber value="<%=bb.getPrice() %>" pattern="#,###"/></h3>
 					 </div>
 			 <%}else if(bb.getTrade().equals("직거래") && bb.getKind().equals("삽니다")){ %>
 			 		<div class="col-3">
@@ -222,7 +387,7 @@
 						<h5><span class="badge bg-danger p-3">삽니다</span></h5>
 					 </div>
 					 <div class="col-5 mt-1">
-					 	<h3>₩<%=bb.getPrice() %></h3>
+					 	<h3>₩<fmt:formatNumber value="<%=bb.getPrice() %>" pattern="#,###"/></h3>
 					 </div>		 
 			 <%}else{ %>
 			 		<div class="col-3">
@@ -232,7 +397,7 @@
 						<h5><span class="badge bg-primary p-3">팝니다</span></h5>
 					 </div>
 					 <div class="col-5 mt-1">
-					 	<h3>₩<%=bb.getPrice() %></h3>
+					 	<h3>₩<fmt:formatNumber value="<%=bb.getPrice() %>" pattern="#,###"/></h3>
 					 </div>			 
 			 <%} %>
 			</div>
@@ -252,7 +417,7 @@
 	
 	<!-- 사진 파일 row 시작 -->
 	
-	<div class="row">
+	<div class="row m-5">
 		<div class="col-2"></div>
 		<%if(!bb.getFilename().equals("null")){ %>
 			<div class="col-8 p-4 m-2 text-center">
@@ -261,7 +426,7 @@
 			<div id="carouselExampleIndicators" class="carousel slide m-3" data-bs-ride="carousel">
 			  <div class="carousel-inner">
 			    <div class="carousel-item active">
-			      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="400">
+			      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="250" height="300">
 			    </div>
 			</div>		
 			
@@ -271,13 +436,13 @@
 			<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 			  <div class="carousel-inner">
 			    <div class="carousel-item active">
-			      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="400">
+			      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="250" height="300">
 			    </div>
 			    <div class="carousel-item">
-			      <img src="/Portpolio_camp/upload/<%=bb.getFilename2() %>" class="d-block w-100" alt="..." width="300" height="400">
+			      <img src="/Portpolio_camp/upload/<%=bb.getFilename2() %>" class="d-block w-100" alt="..." width="250" height="300">
 			    </div>
 				<div class="carousel-item">
-			      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="400">
+			      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="250" height="300">
 			    </div>
 			  </div>
 			  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
@@ -297,13 +462,13 @@
 			<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 			  <div class="carousel-inner">
 			    <div class="carousel-item active">
-			      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="400">
+			      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="300">
 			    </div>
 			    <div class="carousel-item">
-			      <img src="/Portpolio_camp/upload/<%=bb.getFilename2() %>" class="d-block w-100" alt="..." width="300" height="400">
+			      <img src="/Portpolio_camp/upload/<%=bb.getFilename2() %>" class="d-block w-100" alt="..." width="300" height="300">
 			    </div>
 			    <div class="carousel-item">
-			      <img src="/Portpolio_camp/upload/<%=bb.getFilename3() %>" class="d-block w-100" alt="..." width="300" height="400">
+			      <img src="/Portpolio_camp/upload/<%=bb.getFilename3() %>" class="d-block w-100" alt="..." width="300" height="300">
 			    </div>
 			  </div>
 			  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
@@ -325,223 +490,6 @@
 	</div>
 	<!-- 사진 파일 row 끝 -->
 	
-
-<!-- 	<!-- 알림글 제목 줄 시작 -->
-<!-- 	<div class="row"> -->
-<!-- 		<div class="col-4"></div> -->
-<!-- 		<div class="col-4 pt-4 m-2 text-center"> -->
-<!-- 			<h2>알립니다 !</h2> -->
-<!-- 		</div> -->
-<!-- 		<div class="col-4"></div>		 -->
-<!-- 	</div> -->
-<!-- 	<!-- 알림글 제목 줄 끝 -->
-
-
-<!-- 	<!-- 알림글 내용 시작 -->
-<!-- 	<div class="row text-center"> -->
-<!-- 		<div class="col-2"></div> -->
-<!-- 		<div class="col-8 p-4 m-2 text-center"> -->
-<!-- 			자연을 빌려 쓴 댓가로 해당 장소를 청소하는 미덕을 가집시다. 남이 버린 쓰레기까지 되가져오는 캠퍼가 됩시다.<br> -->
-<!-- 			바닥에 불피우는 행위 금지!, 쓰레기는 집으로!, 머문 자리는 아니온 듯! -->
-<!-- 		</div> -->
-<!-- 		<div class="col-2"></div>	 -->
-<!-- 	</div> -->
-<!-- 	<!-- 알림글 내용 끝 -->
-	
-	
-<!-- 	<!-- 주변환경 줄 시작 -->
-<!-- 	<div class="row text-center mt-5 mx-3"> -->
-	
-<!-- 	<div class="card mb-3"> -->
-<!-- 		<div class="card-header"> -->
-<%-- 	    	<%=bb.getName() %> 주변 환경 --%>
-<!-- 	  	</div> -->
-<!-- 	  <div class="card-body"> -->
-<!-- 	    <blockquote class="blockquote mb-0"> -->
-<!-- 	      <div class="row"> -->
-<!-- 		      <div class="col"> -->
-<!-- 		      		필드<br> -->
-<%-- 					<%=bb.getField() %> --%>
-<!-- 				</div> -->
-<!-- 				<div class="col"> -->
-<!-- 					바닥<br> -->
-<%-- 					<%=bb.getLand() %> --%>
-					
-<!-- 				</div> -->
-<!-- 				<div class="col"> -->
-<!-- 					화장실<br> -->
-<%-- 					<%if(bb.getFishing().equals("y")){%> --%>
-<!-- 						있음 -->
-<%-- 						<%}else{%> --%>
-<!-- 						없음 -->
-<%-- 					<%} %> --%>
-<!-- 				</div> -->
-<!-- 				<div class="col"> -->
-<!-- 					주차장<br> -->
-<%-- 					<%if(bb.getFishing().equals("y")){%> --%>
-<!-- 						있음 -->
-<%-- 						<%}else{%> --%>
-<!-- 						없음 -->
-<%-- 					<%} %> --%>
-<!-- 				</div> -->
-<!-- 				<div class="col"> -->
-<!-- 					물놀이<br> -->
-<%-- 					<%if(bb.getFishing().equals("y")){%> --%>
-<!-- 						가능 -->
-<%-- 					<%}else{%> --%>
-<!-- 						불가능 -->
-<%-- 					<%} %> --%>
-<!-- 				</div> -->
-<!-- 				<div class="col"> -->
-<!-- 					낚시<br> -->
-<%-- 				<%if(bb.getFishing().equals("y")){%> --%>
-<!-- 						가능 -->
-<%-- 					<%}else{%> --%>
-<!-- 						불가능 -->
-<%-- 				<%} %> --%>
-<!-- 			 </div> -->
-<!-- 	      </div> -->
-	      
-<!-- 	    </blockquote> -->
-<!-- 	  </div> -->
-<!-- 	</div> -->
-<!-- 	</div> -->
-<!-- 	<!-- 주변환경 줄 끝 -->
-	
-	
-<!-- 	<!-- 갤러리 제목 시작 -->
-<!-- 	<div class="row"> -->
-<!-- 		<div class="col-4"></div> -->
-<!-- 		<div class="col-4 pt-4 m-2 text-center"> -->
-<!-- 			<h4>갤러리</h4> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!-- 	<!-- 갤러리 제목 끝 -->	
-
-<!-- 	<!-- 갤러리 내용 시작 -->
-<!-- 	<div class="row"> -->
-<!-- 		<div class="col-2"></div> -->
-<!-- 		<div class="col-8 p-4 m-2 text-center"> -->
-		
-		
-<%-- 		<%if(bb.getFilename2().equals("null")){ %> --%>
-		
-<!-- 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"> -->
-<!-- 		  <div class="carousel-inner"> -->
-<!-- 		    <div class="carousel-item active"> -->
-<%-- 		      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="400"> --%>
-<!-- 		    </div> -->
-<!-- 		</div>		 -->
-		
-		
-<%-- 		<%}else if(bb.getFilename3().equals("null")){ %> --%>
-		
-<!-- 		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel"> -->
-<!-- 		  <div class="carousel-inner"> -->
-<!-- 		    <div class="carousel-item active"> -->
-<%-- 		      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="400"> --%>
-<!-- 		    </div> -->
-<!-- 		    <div class="carousel-item"> -->
-<%-- 		      <img src="/Portpolio_camp/upload/<%=bb.getFilename2() %>" class="d-block w-100" alt="..." width="300" height="400"> --%>
-<!-- 		    </div> -->
-<!-- 			<div class="carousel-item"> -->
-<%-- 		      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="400"> --%>
-<!-- 		    </div> -->
-<!-- 		  </div> -->
-<!-- 		  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev"> -->
-<!-- 		    <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
-<!-- 		    <span class="visually-hidden">Previous</span> -->
-<!-- 		  </a> -->
-<!-- 		  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next"> -->
-<!-- 		    <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
-<!-- 		    <span class="visually-hidden">Next</span> -->
-<!-- 		  </a> -->
-<!-- 		</div> -->
-
-
-		
-<%-- 		<%}else{ %> --%>
-		
-<!-- 		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel"> -->
-<!-- 		  <div class="carousel-inner"> -->
-<!-- 		    <div class="carousel-item active"> -->
-<%-- 		      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="400"> --%>
-<!-- 		    </div> -->
-<!-- 		    <div class="carousel-item"> -->
-<%-- 		      <img src="/Portpolio_camp/upload/<%=bb.getFilename2() %>" class="d-block w-100" alt="..." width="300" height="400"> --%>
-<!-- 		    </div> -->
-<!-- 		    <div class="carousel-item"> -->
-<%-- 		      <img src="/Portpolio_camp/upload/<%=bb.getFilename3() %>" class="d-block w-100" alt="..." width="300" height="400"> --%>
-<!-- 		    </div> -->
-<!-- 		  </div> -->
-<!-- 		  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev"> -->
-<!-- 		    <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
-<!-- 		    <span class="visually-hidden">Previous</span> -->
-<!-- 		  </a> -->
-<!-- 		  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next"> -->
-<!-- 		    <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
-<!-- 		    <span class="visually-hidden">Next</span> -->
-<!-- 		  </a> -->
-<!-- 		</div> -->
-		
-		
-<%-- 		<%} %> --%>
-		
-
-<!-- 		<div class="col-2"></div> -->
-<!-- 	</div> -->
-<!-- 	<!-- 갤러리 내용 끝 -->			 
-
-<!-- 	<!-- 날씨 제목 시작 -->				 
-<!-- 	<div class="row"> -->
-<!-- 		<div class="col-4"></div> -->
-<!-- 		<div class="col-4 pt-4 m-2 text-center"> -->
-<!-- 			<h4>날씨 정보</h4> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!-- 	<!-- 날씨 제목 시작 -->				 
-
-<!-- 	<!-- 날씨 내용 시작 -->					 
-<!-- 	<div class="row"> -->
-<!-- 		<div class="col-2"></div> -->
-<!-- 		<div class="col-8 p-4 m-2 text-center"> -->
-<!-- 			날씨 api 넣기 -->
-<!-- 		</div> -->
-<!-- 		<div class="col-2"></div> -->
-<!-- 	</div> -->
-<!-- 	<!-- 날씨 내용 끝 -->					 
-
-<!-- 	<!-- 댓글 제목 시작 -->						 
-<!-- <!-- 	<div class="row"> --> 
-<!-- <!-- 		<div class="col-4"></div> -->
-<!-- <!-- 		<div class="col-4 pt-4 m-2 text-center"> -->
-<!-- <!-- 			<h4>댓글</h4> --> 
-<!-- <!-- 		</div> --> 
-<!-- <!-- 	</div> --> 
-<!-- 	<!-- 댓글 제목 끝 -->						 
-	
-	
-<!-- 	<!-- 댓글 내용 시작 -->							 
-<!-- 	<div class="row"> -->
-<!-- 		<div class="col-2"></div> -->
-<!-- 		<div class="col-8 p-4 m-2 text-center"> -->
-<!-- 			<div id="disqus_thread"></div> -->
-<!-- 			<script> -->
-
-<!-- 			</script> -->
-<!-- 			<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> -->
-<!-- 		</div> -->
-<!-- 		<div class="col-2"></div> -->
-<!-- 	</div> -->
-<!-- 	<!-- 댓글 제목 끝 -->						 
-	
-<!-- 	<div class="row text-center"> -->
-<%-- 		<div><button type="button" class="btn btn-secondary" onclick="location.href='/Portpolio_camp/freecamp/freeForm.jsp?pageNum=<%=pageNum %>'">목록으로</button></div> --%>
-
-
-
-
-
 
 
 </div>

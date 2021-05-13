@@ -189,8 +189,10 @@
 	      
 	      
 		  <!-- 게시판 글 수정 폼 작성 시작 -->
-		  <form action="/Portpolio_camp/freecamp/updatePro.jsp?pageNum=<%=pageNum %>" method="post">
+		  <form action="/Portpolio_camp/freecamp/fileupdateUploadPro.jsp" method="post" enctype="multipart/form-data">
 		  	<input type="hidden" name="num" value="<%=bb.getNum()%>">
+		  	<input type="hidden" name="pageNum" value="<%=pageNum%>">
+		  	
 	      	  <!-- 글수정 본문 시작 -->
 		      <div class="modal-body mx-5">
    					<div class="row text-center">
@@ -768,11 +770,9 @@
 	</div>
 	<!-- 댓글 제목 끝 -->
 							
- 	<!-- 목록으로 row 시작 -->
-	<div class="row text-center">
-		<div><button type="button" class="btn btn-secondary" onclick="location.href='/Portpolio_camp/freecamp/freeForm.jsp?pageNum=<%=pageNum %>'">목록으로</button></div>
-	</div>
- 	<!-- 목록으로 row 끝 -->
+							
+
+
 
 
 
@@ -781,11 +781,11 @@
 
 </div>
 <!-- container 끝 -->	
-
-<!-- footer 시작 -->
-<div class="row">
- <jsp:include page="/footer/footer.jsp" />
-</div>
-<!-- footer 끝 -->
+	<hr>
+ 	<!-- 목록으로 row 시작 -->
+	<div class="row text-center">
+		<div><button type="button" class="btn btn-secondary" onclick="location.href='/Portpolio_camp/freecamp/freeForm.jsp?pageNum=<%=pageNum %>'">목록으로</button></div>
+	</div>
+ 	<!-- 목록으로 row 끝 -->
 </body>
 </html>

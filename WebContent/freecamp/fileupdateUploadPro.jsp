@@ -15,23 +15,6 @@
 		})
 	</script>
 
-	<script type="text/javascript">
-		<%
-		String id = (String)session.getAttribute("id");
-		String pw = (String)session.getAttribute("pw");
-		
-		
-		if (id == null) {
-			//로그인 x
-			System.out.println("[info.jsp] : 아이디 없음 -> 로그인페이지 이동");
-			response.sendRedirect("/Portpolio_camp/member/loginForm.jsp");
-		}
-		
-		%>
-	</script>
-
-
-
 
 </head>
 <body>
@@ -61,15 +44,19 @@
 	System.out.println("파일이 업로드 됐습니다.");
 	
 	// 이전 페이지에서 전달해 준 정보를 출력s
-
 	String name = multi.getParameter("name");
-	String coment = multi.getParameter("coment");
 	String address = multi.getParameter("address");
-	int price = Integer.parseInt(multi.getParameter("price"));
-	String trade = multi.getParameter("trade");
-	String kind = multi.getParameter("kind");
-	String state = multi.getParameter("state");
-	
+	String lat = multi.getParameter("lat");
+	String lng = multi.getParameter("lng");
+	String toilet = multi.getParameter("toilet");
+	String park = multi.getParameter("park");
+	String water = multi.getParameter("water");
+	String fishing = multi.getParameter("fishing");
+	String field = multi.getParameter("field");
+	String land = multi.getParameter("land");
+	String level = multi.getParameter("level");
+	int num = Integer.parseInt(multi.getParameter("num"));
+	String pageNum = multi.getParameter("pageNum");
 	
 	//String filename = multi.getParameter("filename");
 	
@@ -87,20 +74,23 @@
 
 	<hr>
 	
-	<form id="fr" name="fr" action="/Portpolio_camp/board/writemarketPro.jsp" method="post">
+	<form id="fr" name="fr" action="/Portpolio_camp/freecamp/updatePro.jsp" method="post">
 		<input type="hidden" name="name" value="<%=name %>">
-		<input type="hidden" name="id" value="<%=id %>">		
-		<input type="hidden" name="pw" value="<%=pw %>">		
-		<input type="hidden" name="coment" value="<%=coment %>">
 		<input type="hidden" name="address" value="<%=address %>">
-		<input type="hidden" name="price" value="<%=price %>">
-		<input type="hidden" name="kind" value="<%=kind %>">
-		<input type="hidden" name="state" value="<%=state %>">
-		<input type="hidden" name="trade" value="<%=trade %>">
+		<input type="hidden" name="lat" value="<%=lat %>">
+		<input type="hidden" name="lng" value="<%=lng %>">
+		<input type="hidden" name="toilet" value="<%=toilet %>">
+		<input type="hidden" name="park" value="<%=park %>">
+		<input type="hidden" name="water" value="<%=water %>">
+		<input type="hidden" name="fishing" value="<%=fishing %>">
+		<input type="hidden" name="field" value="<%=field %>">
+		<input type="hidden" name="land" value="<%=land %>">
 		<input type="hidden" name="filename" value="<%=filename %>">
 		<input type="hidden" name="filename2" value="<%=filename2 %>">
 		<input type="hidden" name="filename3" value="<%=filename3 %>">		
-		
+		<input type="hidden" name="level" value="<%=level %>">
+		<input type="hidden" name="num" value="<%=num%>">
+		<input type="hidden" name="pageNum" value="<%=pageNum%>">
 		
 		
 	</form>

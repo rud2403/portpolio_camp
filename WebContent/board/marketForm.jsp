@@ -16,26 +16,20 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 <!-- 부트스트랩 끝 -->
 
-	<!-- jquery 준비 시작 -->
-	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-	<!-- jquery 준비 끝 -->
+<!-- jquery 준비 시작 -->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<!-- jquery 준비 끝 -->
 	
 	<!-- jquery 시작 -->
 	<script type="text/javascript">
 		$(function() {
+			//취소버튼 2 숨기기
 			$("#cc2").hide();
 			
+			//취소버튼 1 눌렸을때 2도 함께 클릭
 			$("#cc1").click(function(){
 				$("#cc2").click();
-			});
-		
-			$("#dd").click(function(){
-				location.href="/Portpolio_camp/board/BuyForm.jsp";
-			});	
-			
-			$("#x").click(function(){
-				$("#fr1").submit();
-			});			
+			});		
 			
 		});
 	</script>
@@ -231,7 +225,7 @@
 					<!-- 금액 시작 -->
 					<div class="row">
 						<div class="form-floating mb-3">
-						  <input type="text" class="form-control" id="floatingInput" placeholder="가격" name="price">
+						  <input type="number" class="form-control" id="floatingInput" placeholder="가격" name="price">
 						  <label for="floatingInput">&nbsp;가격</label>
 						</div>	
 					</div>
@@ -321,8 +315,6 @@
 		<%for(int i = 0;i < boardList.size(); i++){ 
 			BoardBean bb = (BoardBean)boardList.get(i);
 		%>
-	
-
 			
 		    <tr>
 		    

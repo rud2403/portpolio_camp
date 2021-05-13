@@ -25,7 +25,7 @@ public class BoardBean {
 	private String filename3; // 사진 파일3
 	private String kind; // 팝니다, 삽니다 구분
 	private String ip; // 게시판 ip
-	private String price; // 장터게시판 가격
+	private int price; // 장터게시판 가격
 	private String trade; // 직거래인지 택배거래인지 표시
 	private String state; // 거래 완료인지 상태 표시
 	private String id; // Session을 통해 받아오는 글쓴이 아이디
@@ -37,10 +37,10 @@ public class BoardBean {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public String getPrice() {
+	public int getPrice() {
 		return price;
 	}
-	public void setPrice(String price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 	public String getTrade() {

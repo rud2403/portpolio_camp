@@ -212,7 +212,7 @@ public class BoardDAO {
 			pstmt.setString(7, bb.getIp());
 			pstmt.setString(8, bb.getAddress());
 			pstmt.setString(9, bb.getKind());
-			pstmt.setString(10, bb.getPrice());
+			pstmt.setInt(10, bb.getPrice());
 			pstmt.setString(11, bb.getTrade());
 			pstmt.setString(12, bb.getState());
 			pstmt.setString(13, bb.getFilename());
@@ -432,7 +432,7 @@ public class BoardDAO {
 					bb.setDate(rs.getDate("date"));
 					bb.setAddress(rs.getString("address"));
 					bb.setKind(rs.getString("kind"));
-					bb.setPrice(rs.getString("price"));
+					bb.setPrice(rs.getInt("price"));
 					bb.setTrade(rs.getString("trade"));
 					bb.setState(rs.getString("state"));
 					bb.setFilename(rs.getString("filename"));
@@ -588,7 +588,7 @@ public class BoardDAO {
 					bb.setDate(rs.getDate("date"));
 					bb.setAddress(rs.getString("address"));
 					bb.setKind(rs.getString("kind"));
-					bb.setPrice(rs.getString("price"));
+					bb.setPrice(rs.getInt("price"));
 					bb.setTrade(rs.getString("trade"));
 					bb.setState(rs.getString("state"));
 					bb.setFilename(rs.getString("filename"));
@@ -667,7 +667,7 @@ public class BoardDAO {
 							bb.setDate(rs.getDate("date"));
 							bb.setAddress(rs.getString("address"));
 							bb.setKind(rs.getString("kind"));
-							bb.setPrice(rs.getString("price"));
+							bb.setPrice(rs.getInt("price"));
 							bb.setTrade(rs.getString("trade"));
 							bb.setState(rs.getString("state"));
 							bb.setFilename(rs.getString("filename"));
@@ -745,7 +745,7 @@ public class BoardDAO {
 							bb.setDate(rs.getDate("date"));
 							bb.setAddress(rs.getString("address"));
 							bb.setKind(rs.getString("kind"));
-							bb.setPrice(rs.getString("price"));
+							bb.setPrice(rs.getInt("price"));
 							bb.setTrade(rs.getString("trade"));
 							bb.setState(rs.getString("state"));
 							bb.setFilename(rs.getString("filename"));
@@ -947,7 +947,7 @@ public class BoardDAO {
 					bb.setDate(rs.getDate("date"));
 					bb.setAddress(rs.getString("address"));
 					bb.setKind(rs.getString("kind"));
-					bb.setPrice(rs.getString("price"));
+					bb.setPrice(rs.getInt("price"));
 					bb.setTrade(rs.getString("trade"));
 					bb.setState(rs.getString("state"));
 					bb.setFilename(rs.getString("filename"));
@@ -984,7 +984,7 @@ public class BoardDAO {
 			try {
 				// 1, 2 디비 연결
 				conn = getConnection();
-				
+				System.out.println("넘버 숫자는 #################: " +bb.getNum());
 				// 3 sql 작성(select - 본인확인) & pstmt 객체
 				sql = "select * from camp_camp where num=?";
 				
@@ -1024,6 +1024,7 @@ public class BoardDAO {
 					pstmt.setString(14, bb.getFilename3());
 					pstmt.setInt(15, bb.getNum());
 					
+			
 					
 					// 4 sql 실행
 					pstmt.executeUpdate();
@@ -1049,6 +1050,79 @@ public class BoardDAO {
 
 		}
 		// updateBoard(BoardBean bb) 끝		
+		
+
+		// updateMarketBoard(BoardBean bb) 시작
+		public int updateMarketBoard(BoardBean bb){
+			
+			int check = -1;
+			
+			try {
+				// 1, 2 디비 연결
+				conn = getConnection();
+				System.out.println("넘버 숫자는 @@@@@@@@@@@@@@@@@@@: " + bb.getNum());
+
+				// 3 sql 작성(select - 본인확인) & pstmt 객체
+				sql = "select * from camp_sell where num=?";
+				
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				
+				pstmt.setInt(1, bb.getNum());
+
+				//4 sql 실행
+				rs = pstmt.executeQuery();
+
+				//5 데이터 처리
+				if(rs.next()){
+					// 글이 있음
+					
+					// sql (update-글 수정) & pstmtm 객체
+					sql = "update camp_sell set name=?, kind=?, trade=?, price=?, address=?, coment=?, filename=?, filename2=?, filename3=? where num=?";
+					
+					pstmt = conn.prepareStatement(sql);
+					
+					// ? 채우기
+
+					pstmt.setString(1, bb.getName());
+					pstmt.setString(2, bb.getKind());
+					pstmt.setString(3, bb.getTrade());
+					pstmt.setInt(4, bb.getPrice());
+					pstmt.setString(5, bb.getAddress());
+					pstmt.setString(6, bb.getComent());
+					pstmt.setString(7, bb.getFilename());
+					pstmt.setString(8, bb.getFilename2());
+					pstmt.setString(9, bb.getFilename3());
+					pstmt.setInt(10, bb.getNum());
+
+	
+					
+					// 4 sql 실행
+					pstmt.executeUpdate();
+					
+					
+					check = 0;
+					
+					//check = 1;
+											
+				}else{
+					// 글이 없음
+					check = -1;
+				}
+				
+				System.out.println(" 글 수정 완료 !" + check);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally{
+				closeDB();
+			}			
+			return check;
+
+		}
+		// updateMarketBoard(BoardBean bb) 끝				
+		
 		
 		
 		// deleteBoard(BoardBean bb) 시작

@@ -69,6 +69,8 @@
 	String trade = multi.getParameter("trade");
 	String kind = multi.getParameter("kind");
 	String state = multi.getParameter("state");
+	int num = Integer.parseInt(multi.getParameter("num"));
+	String pageNum = multi.getParameter("pageNum");
 	
 	
 	//String filename = multi.getParameter("filename");
@@ -87,7 +89,7 @@
 
 	<hr>
 	
-	<form id="fr" name="fr" action="/Portpolio_camp/board/writemarketPro.jsp" method="post">
+	<form id="fr" name="fr" action="/Portpolio_camp/board/updatePro.jsp" method="post">
 		<input type="hidden" name="name" value="<%=name %>">
 		<input type="hidden" name="id" value="<%=id %>">		
 		<input type="hidden" name="pw" value="<%=pw %>">		
@@ -100,7 +102,8 @@
 		<input type="hidden" name="filename" value="<%=filename %>">
 		<input type="hidden" name="filename2" value="<%=filename2 %>">
 		<input type="hidden" name="filename3" value="<%=filename3 %>">		
-		
+		<input type="hidden" name="num" value="<%=num%>">
+		<input type="hidden" name="pageNum" value="<%=pageNum%>">		
 		
 		
 	</form>
