@@ -117,6 +117,7 @@ function check1(){
    <div class="form-floating mb-3">
     <input type="text" class="form-control" id="floatingInput" placeholder="ID" name="id">
     <label for="floatingInput">ID</label>
+    <span id="idcheck">사용가능한 아이디입니다.</span>
    </div>
    
    
@@ -129,6 +130,7 @@ function check1(){
    <div class="form-floating">
     <input type="password" class="form-control" id="floatingPassword" placeholder="Password Confirm" name="pw2">
     <label for="floatingPassword">Password Confirm</label>
+    <span id="idcheck">비밀번호가 일치합니다.</span>
    </div>  
    
    
