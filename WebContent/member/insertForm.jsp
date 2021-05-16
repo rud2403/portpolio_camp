@@ -5,11 +5,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회원가입</title>
+<!-- 부트스트랩 시작 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+<!-- 부트스트랩 끝-->
 
+<!-- jquery 준비 시작 -->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<!-- jquery 준비 끝 -->
 
 <script type="text/javascript">
 
@@ -115,9 +120,10 @@ function check1(){
  
    <!-- 아이디 --> 
    <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="floatingInput" placeholder="ID" name="id">
+    <input type="text" class="form-control" id="id" placeholder="ID" name="id">
     <label for="floatingInput">ID</label>
-    <span id="idcheck">사용가능한 아이디입니다.</span>
+    <span id="idcheck1" style="color: green; display: none;">사용가능한 아이디입니다.</span>
+    <span id="idcheck2" style="color: red; display: none;">이미 존재하는 아이디 입니다.</span>    
    </div>
    
    
@@ -130,7 +136,7 @@ function check1(){
    <div class="form-floating">
     <input type="password" class="form-control" id="floatingPassword" placeholder="Password Confirm" name="pw2">
     <label for="floatingPassword">Password Confirm</label>
-    <span id="idcheck">비밀번호가 일치합니다.</span>
+    <span id="pwcheck" style="color: red; display: none;">비밀번호가 일치합니다.</span>
    </div>  
    
    
@@ -163,10 +169,27 @@ function check1(){
  <!-- 컨테이너 종료 -->
 
 	
-
 <!-- footer 시작 -->
 <jsp:include page="/footer/footer.jsp" />
 <!-- footer 끝 -->
+
+<!-- 아이디 중복검사 시작 -->
+<script type="text/javascript">
+// 	$('#idinput').on("propertychange change keyup paste input", function(){
+
+// 		var memberId = $('#idinput').val();
+// 		var data = {memberId : memberId}
+		
+// 		$.ajax({
+// 			type : "post",
+// 			url : "/member/memberIdChk",
+// 			data : data
+// 		});
+		
+// 	});
+
+</script>
+<!-- 아이디 중복검사 끝 -->
 	
 </body>
 </html>
