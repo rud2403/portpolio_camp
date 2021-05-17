@@ -19,6 +19,7 @@
 
 <!-- container 시작 -->	
 <div class="container-fluid">	
+
 <div class="row">
 	<div class="col-6 text-center" style="background-color: #2EFEC8;">
 		ㅇㅇ

@@ -33,12 +33,12 @@
 	// 기본적으로 숨기게 하는 기능
 // 	document.getElementById("sub_1").style.display="none";
 	
-	function func1() {
+	function nfunc1() {
 		//마우스 올렸을 때 보이게 하기
 		document.getElementById("sub_1").style.display="block";
 	}
 	
-	function func2() {
+	function nfunc2() {
 		// 마우스 땔 때 none하기
 		document.getElementById("sub_1").style.display="none";
 
@@ -101,7 +101,7 @@
         
         
         
-        <li class="nav-item" id="menu_2"  onmouseover="func1()" onmouseout="func2()">
+        <li class="nav-item" id="menu_2"  onmouseover="nfunc1()" onmouseout="nfunc2()">
           <a class="nav-link active" id="menu_1" aria-current="page" href="/Portpolio_camp/board/marketForm.jsp">캠핑 장터</a>
 	    	<ul class="px-3 py-1" id="sub_1" style="list-style:none; background-color: #E9E9E9; display: none;">
 				<li><a href="/Portpolio_camp/board/BuyForm.jsp" style="text-decoration-line: none; color: black;">삽니다</a></li>

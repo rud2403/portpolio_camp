@@ -25,7 +25,7 @@
 
 		// 해당 글 정보를 사용해서 글 내용 수정 
 
-		int check = bdao.deleteMarket(bb);
+		int check = bdao.deletefreeBoard(bb);
 		// 처리 결과에 따른 페이지 이동
 		System.out.println("삭제 현황 : " + check);
 
@@ -37,7 +37,7 @@
 		%>
 		<script type="text/javascript">
 			alert("글 삭제완료. ");
-			location.href="/Portpolio_camp/board/marketForm.jsp?pageNum=<%=pageNum%>";
+			location.href="/Portpolio_camp/freeboard/freeboardForm.jsp?pageNum=<%=pageNum%>";
 		</script>
 		<%
 		} else {

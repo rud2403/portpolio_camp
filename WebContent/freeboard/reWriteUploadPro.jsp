@@ -30,8 +30,6 @@
 	</script>
 
 
-
-
 </head>
 <body>
 	
@@ -60,15 +58,12 @@
 	System.out.println("파일이 업로드 됐습니다.");
 	
 	// 이전 페이지에서 전달해 준 정보를 출력s
-
 	String name = multi.getParameter("name");
 	String coment = multi.getParameter("coment");
-	String address = multi.getParameter("address");
-	int price = Integer.parseInt(multi.getParameter("price"));
-	String trade = multi.getParameter("trade");
-	String kind = multi.getParameter("kind");
-	String state = multi.getParameter("state");
-	
+	int re_ref = Integer.parseInt(multi.getParameter("re_ref"));
+	int re_lev = Integer.parseInt(multi.getParameter("re_lev"));
+	int re_seq = Integer.parseInt(multi.getParameter("re_seq"));
+
 	
 	//String filename = multi.getParameter("filename");
 	
@@ -86,21 +81,17 @@
 
 	<hr>
 	
-	<form id="fr" name="fr" action="/Portpolio_camp/board/writemarketPro.jsp" method="post">
+	<form id="fr" name="fr" action="/Portpolio_camp/freeboard/reWritePro.jsp" method="post">
 		<input type="hidden" name="name" value="<%=name %>">
-		<input type="hidden" name="id" value="<%=id %>">		
-		<input type="hidden" name="pw" value="<%=pw %>">		
+		<input type="hidden" name="id" value="<%=id %>">
+		<input type="hidden" name="pw" value="<%=pw %>">
 		<input type="hidden" name="coment" value="<%=coment %>">
-		<input type="hidden" name="address" value="<%=address %>">
-		<input type="hidden" name="price" value="<%=price %>">
-		<input type="hidden" name="kind" value="<%=kind %>">
-		<input type="hidden" name="state" value="<%=state %>">
-		<input type="hidden" name="trade" value="<%=trade %>">
 		<input type="hidden" name="filename" value="<%=filename %>">
 		<input type="hidden" name="filename2" value="<%=filename2 %>">
-		<input type="hidden" name="filename3" value="<%=filename3 %>">		
-		
-		
+		<input type="hidden" name="filename3" value="<%=filename3 %>">
+		<input type="hidden" name="re_ref" value="<%=re_ref %>">
+		<input type="hidden" name="re_lev" value="<%=re_lev %>">
+		<input type="hidden" name="re_seq" value="<%=re_seq %>">
 		
 	</form>
 

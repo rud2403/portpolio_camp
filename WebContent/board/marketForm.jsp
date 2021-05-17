@@ -136,9 +136,6 @@
 	// 디비에 저장된 모든 글 중에서 원하는 만큼만 가져오기.(페이지 사이즈만큼)
 	ArrayList boardList = bdao.getMarketList(startRow, pageSize);
 	
-	
-	// 삽니다의 경우
-	// ArrayList buyList = bdao.getBuyList(startRow, pageSize);
 		
 	%>
 	<!-- camp_sell 데이터 가져오기 시작 -->
@@ -159,9 +156,9 @@
 <!-- 제목 row 끝 -->
 
 <!-- 글쓰기 버튼 row 시작 -->
-<div class="row">
-	<div class="col-4"></div>
-	<div class="col-7"></div>
+<div class="row text-center">
+	<div class="col-1"></div>
+	<div class="col-10">게시글 총 개수 [<%=cnt %>]</div>
 	<div class="col-1">
 		<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">글쓰기</button>
 	</div>
@@ -327,7 +324,6 @@
 		     	 <%} %>
 		      </td>
 		      <td>
-
 		      	<%if(bb.getState().equals("거래중")){ %>
 			    	<a  href="/Portpolio_camp/board/content.jsp?num=<%=bb.getNum()%>&pageNum=<%=pageNum%>" style="text-decoration-line: none; color: black;"><%=bb.getName() %></a>		      	
 			    <%}else{ %>

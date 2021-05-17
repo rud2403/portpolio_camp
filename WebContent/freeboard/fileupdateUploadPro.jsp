@@ -20,6 +20,7 @@
 		String id = (String)session.getAttribute("id");
 		String pw = (String)session.getAttribute("pw");
 		
+		
 		if (id == null) {
 			//로그인 x
 			System.out.println("[info.jsp] : 아이디 없음 -> 로그인페이지 이동");
@@ -63,12 +64,8 @@
 
 	String name = multi.getParameter("name");
 	String coment = multi.getParameter("coment");
-	String address = multi.getParameter("address");
-	int price = Integer.parseInt(multi.getParameter("price"));
-	String trade = multi.getParameter("trade");
-	String kind = multi.getParameter("kind");
-	String state = multi.getParameter("state");
-	
+	int num = Integer.parseInt(multi.getParameter("num"));
+	String pageNum = multi.getParameter("pageNum");	
 	
 	//String filename = multi.getParameter("filename");
 	
@@ -86,21 +83,16 @@
 
 	<hr>
 	
-	<form id="fr" name="fr" action="/Portpolio_camp/board/writemarketPro.jsp" method="post">
+	<form id="fr" name="fr" action="/Portpolio_camp/freeboard/updatePro.jsp" method="post">
 		<input type="hidden" name="name" value="<%=name %>">
-		<input type="hidden" name="id" value="<%=id %>">		
-		<input type="hidden" name="pw" value="<%=pw %>">		
+		<input type="hidden" name="id" value="<%=id %>">
+		<input type="hidden" name="pw" value="<%=pw %>">
 		<input type="hidden" name="coment" value="<%=coment %>">
-		<input type="hidden" name="address" value="<%=address %>">
-		<input type="hidden" name="price" value="<%=price %>">
-		<input type="hidden" name="kind" value="<%=kind %>">
-		<input type="hidden" name="state" value="<%=state %>">
-		<input type="hidden" name="trade" value="<%=trade %>">
 		<input type="hidden" name="filename" value="<%=filename %>">
 		<input type="hidden" name="filename2" value="<%=filename2 %>">
-		<input type="hidden" name="filename3" value="<%=filename3 %>">		
-		
-		
+		<input type="hidden" name="filename3" value="<%=filename3 %>">	
+		<input type="hidden" name="num" value="<%=num%>">
+		<input type="hidden" name="pageNum" value="<%=pageNum%>">			
 		
 	</form>
 

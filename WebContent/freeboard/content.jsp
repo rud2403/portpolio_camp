@@ -24,60 +24,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 <!-- 부트 스트랩 끝 -->
 
-<!-- 우편번호 스크립트 시작 -->
-<script>
-
-    function sample6_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
-
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
-
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if(data.userSelectedType === 'R'){
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-    	                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if(data.buildingName !== '' && data.apartment === 'Y'){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("sample6_extraAddress").value = extraAddr;
-                
-                } else {
-                    document.getElementById("sample6_extraAddress").value = '';
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("sample6_address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
-            }
-        }).open();
-    }
-    
-</script>	
-<!-- 우편번호 스크립트 끝 -->
-
 </head>
 <body>
 
@@ -88,6 +34,11 @@
 		
 		int num = Integer.parseInt(request.getParameter("num"));
 		String pageNum = request.getParameter("pageNum");
+		int re_ref = Integer.parseInt(request.getParameter("re_ref"));
+		int re_lev = Integer.parseInt(request.getParameter("re_lev"));
+		int re_seq = Integer.parseInt(request.getParameter("re_seq"));
+
+
 		
 		// BoardDAO 객체 생성
 		
@@ -96,11 +47,11 @@
 		
 		
 		// 글 조회수 1증가 (DB 처리)
- 		bdao.updateMarketReadcount(num);
+ 		bdao.updatefreeBoardReadcount(num);
 		
 		
  		//DB에서 글 번호(null)에 해당하는 글 정보를 모두 가져와서 출력
- 		BoardBean bb = bdao.getMarket(num);
+ 		BoardBean bb = bdao.getfreeBoard(num);
 	
 	%>
 
@@ -116,7 +67,7 @@
 	        if (!confirm("정말 삭제하시겠습니까?")) {
 	        	// 아니오 버튼 누를 시 창 닫음.
 	        } else {
-	            location.href="/Portpolio_camp/board/deletePro.jsp?pageNum=<%=pageNum%>&num=<%=num%>";
+	            location.href="/Portpolio_camp/freeboard/deletePro.jsp?pageNum=${param.pageNum}&num=${param.num}";
 	  	    }
 	    }
 	</script>
@@ -130,10 +81,19 @@
 			$("#cc1").click(function(){
 				$("#cc2").click();
 			});
+			
+			$("#cc4").hide();
+			
+			$("#cc3").click(function(){
+				$("#cc4").click();
+			});
 
 			$("#back").click(function(){
 				history.back();
 			});
+
+			
+			
 			
 			// 디비에 있는 pw값(bb.getPw)와 input으로 받아오는 pw값이 다를 경우 다르다 하기
 // 			$("#correct").click(function() {
@@ -143,10 +103,7 @@
 // 					alert("비밀번호가 다릅니다.");
 // 				}
 // 			});
-			
-			$("#tsuccess").click(function() {
-				location.href="/Portpolio_camp/board/statePro.jsp?pageNum=<%=pageNum%>&num=<%=num%>"
-			});
+	
 			
 		});
 	</script>
@@ -177,19 +134,11 @@
 	<%if(bb.getId().equals(id)){ %>
 	<div class="row">
 		<div class="col-1 text-center">
-		<%if(bb.getState().equals("거래중")){ %>
 			<button class="btn btn-light btn-sm" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" >수정</button>
 			 / 
-		<%}else{ %>
-		<%} %>	 
 			 <button class="btn btn-light btn-sm" type="button" onclick="con()">삭제</button>
 		</div>
-		<div class="col-10">
-		<%if(bb.getState().equals("거래중")){ %>
-					<button type="button" class="btn btn-success" id="tsuccess">거래 완료</button>
-		<%}else{ %>
-		<%} %>
-		</div>
+		<div class="col-10"></div>
 		<div class="col-1">
 			조회수 <%=bb.getReadcount() %>
 		</div>
@@ -210,62 +159,19 @@
 	
 	<hr>
 	
-	<!-- 위치 및 삽니다,팝니다 row 시작 -->
+	<!-- 위치 row 시작 -->
 	<div class="row">
 		<!-- 위치 col 시작 -->
 		<div class="col-4 px-3">
 			<div class="row">
-				<div class="px-4 m-3"><h4><%=bb.getId()%> | <%=bb.getAddress() %></h4></div>
+				<div class="px-4 m-3"><h4><%=bb.getId()%></h4></div>
 			</div>
 		</div>
 		<!-- 위치 col 끝 -->
-		
-		<!-- 삽니다 col 시작 -->
 		<div class="col-4 text-center"></div>
-		<div class="col-4">
-			<div class="row text-center px-4 m-1">
-			
-			
-			<%if(bb.getState().equals("거래중")){ %>
-					<div class="col-4"></div>	
-			<%}else{ %> 		
-			 		<div class="col-4">
-			 			<h5><span class="badge bg-success p-3 mx-3">거래완료</span></h5>
-			 		</div>			
-			<%} %>
-			
-			<%if(bb.getTrade().equals("택배")){ %>
-			 		<div class="col-2">
-			 			<h5><span class="badge bg-warning p-3 mx-3">택배</span></h5>
-			 		</div>
-			<%}else{ %>
-			 		<div class="col-2">
-			 			<h5><span class="badge bg-warning p-3">직거래</span></h5>
-			 		</div>			
-			<%} %> 	
-			
-			
-			<%if(bb.getKind().equals("삽니다")){ %>	
-			 		 <div class="col-3">
-						<h5><span class="badge bg-danger p-3">삽니다</span></h5>
-					 </div>
-			<%}else{ %>
-					 <div class="col-3">
-						<h5><span class="badge bg-primary p-3">팝니다</span></h5>
-					 </div>			
-			<%} %>		 
-			
-			
-					 <div class="col-3 mt-1">
-					 	<h3>₩<fmt:formatNumber value="<%=bb.getPrice() %>" pattern="#,###"/></h3>
-					 </div>
-			 
-			</div>
-		</div>
-		<!-- 삽니다,팝니다 col 끝 -->
-		
+		<div class="col-4"></div>
 	</div>
-	<!-- 위치 및 삽니다,팝니다 row 끝 -->
+	<!-- 위치 row 끝 -->
 	
 	<hr>
 	
@@ -357,92 +263,21 @@
 	  <div class="modal-dialog modal-xl">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h2 class="modal-title" id="exampleModalLabel">캠핑장터 - 글수정 </h2>
+	        <h2 class="modal-title" id="exampleModalLabel">자유게시판 - 글수정 </h2>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      
 	      <!-- 캠핑 장터 글 수정 폼 작성 시작 -->
-		  <form action="/Portpolio_camp/board/fileupdateUploadPro.jsp" method="post" enctype="multipart/form-data">
+		  <form action="/Portpolio_camp/freeboard/fileupdateUploadPro.jsp" method="post" enctype="multipart/form-data">
 		  	<input type="hidden" name="num" value="<%=bb.getNum()%>">
-		  	<input type="hidden" name="pageNum" value="<%=pageNum%>">
+		  	<input type="hidden" name="pageNum" value="<%=pageNum%>">	  	
 		  	
 	      	  <!-- 글수정 본문 시작 -->
 		      <div class="modal-body mx-5">
-		      
-		      
-		      	   <input type="hidden" name="state" value="거래중">
 			       <div class="form-floating mb-3">
 					  <input type="text" class="form-control" id="floatingInput" placeholder="캠핑지명" name="name" value="<%=bb.getName()%>">
 					  <label for="floatingInput">제목</label>
-					</div>
-					
-					<!-- 구분 시작 -->
-					<div class="row my-2">
-						<div class="col-4">
-							<b>구분</b>
-							<%if(bb.getKind().equals("삽니다")){ %>
-						 		<input type="radio" class="btn-check" name="kind" id="option1" autocomplete="off" value="삽니다" checked >
-								<label class="btn btn-outline-danger btn-sm" for="option1">삽니다</label>
-								
-								<input type="radio" class="btn-check" name="kind" id="option2" autocomplete="off" value="팝니다" >
-								<label class="btn btn-outline-danger btn-sm" for="option2" >팝니다</label>
-							<%}else{ %>
-						 		<input type="radio" class="btn-check" name="kind" id="option1" autocomplete="off" value="삽니다"  >
-								<label class="btn btn-outline-danger btn-sm" for="option1">삽니다</label>
-								
-								<input type="radio" class="btn-check" name="kind" id="option2" autocomplete="off" value="팝니다" checked>
-								<label class="btn btn-outline-danger btn-sm" for="option2" >팝니다</label>								
-							<%} %>			
-						<div class="col-4">
-						</div>
-						<div class="col-4">
-						</div>
-						</div>
-					</div>
-					<!-- 구분 끝 -->
-
-					<!-- 거래방식 시작 -->
-					<div class="row my-2">
-						<div class="col-4">
-							<b>거래 방식</b>
-							<%if(bb.getTrade().equals("직거래")){ %>
-						 		<input type="radio" class="btn-check" name="trade" id="option3" autocomplete="off" value="직거래" checked>
-								<label class="btn btn-outline-warning btn-sm" for="option3" value="직거래">직거래</label>
-								
-								<input type="radio" class="btn-check" name="trade" id="option4" autocomplete="off" value="택배">
-								<label class="btn btn-outline-warning btn-sm" for="option4" value="택배">택배</label>
-							<%}else{ %>
-						 		<input type="radio" class="btn-check" name="trade" id="option3" autocomplete="off" value="직거래">
-								<label class="btn btn-outline-warning btn-sm" for="option3" value="직거래">직거래</label>
-								
-								<input type="radio" class="btn-check" name="trade" id="option4" autocomplete="off" value="택배" checked>
-								<label class="btn btn-outline-warning btn-sm" for="option4" value="택배">택배</label>							
-							<%} %>			
-						<div class="col-4">
-						</div>
-						<div class="col-4">
-						</div>
-						</div>
-					</div>
-					<!-- 거래방식 끝 -->
-					
-					<!-- 금액 시작 -->
-					<div class="row">
-						<div class="form-floating mb-3">
-						  <input type="text" class="form-control" id="floatingInput" placeholder="가격" name="price" value="<%=bb.getPrice()%>">
-						  <label for="floatingInput">&nbsp;가격</label>
-						</div>	
-					</div>
-					<!-- 금액 시작 -->					
-					
-			       	<!-- 우편번호 시작 -->
-						<input type="text" id="sample6_address" placeholder="주소" name="address" class="form-control" value="<%=bb.getAddress()%>"><br>
-						<input type="button" class="btn btn-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-						
-						<input type="hidden" id="sample6_postcode" placeholder="우편번호">
-						<input type="hidden" id="sample6_detailAddress" placeholder="상세주소">
-						<input type="hidden" id="sample6_extraAddress" placeholder="참고항목">
-					<!-- 우편번호 끝 -->
+					</div>					
 			       	
 			       	<!-- 글내용 시작 --><hr>
 					<div class="row text-center">
@@ -494,11 +329,91 @@
 </div>
 <!-- container 끝 -->	
 <hr>
- 	<!-- 목록으로 row 시작 -->
+ 	<!-- 목록으로, 답글쓰기 row 시작 -->
 	<div class="row text-center m-5">
-		<div><button id="back" type="button" class="btn btn-secondary">목록으로</button></div>
+		<div>
+			<button class="btn btn-secondary" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal2">답글쓰기</button>
+			<button id="back" type="button" class="btn btn-secondary">목록으로</button>
+		</div>
 	</div>
+ 	<!-- 목록으로, 답글쓰기  row 끝 -->
+ 	
+ 	
+ 	
+ 	
+	<!-- 답글쓰기 모달 시작 -->
+	<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-xl">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h2 class="modal-title" id="exampleModalLabel">자유게시판 - 답글쓰기 </h2>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      
+	      <!-- 자유게시판 답글 쓰기 폼 작성 시작 -->
+		  <form action="/Portpolio_camp/freeboard/reWriteUploadPro.jsp" method="post" enctype="multipart/form-data">
+		  	<input type="hidden" name="num" value="<%=bb.getNum()%>">
+		  	<input type="hidden" name="pageNum" value="<%=pageNum%>">	  	
+			<input type="hidden" name="re_ref" value="<%=re_ref%>">
+			<input type="hidden" name="re_lev" value="<%=re_lev%>">
+			<input type="hidden" name="re_seq" value="<%=re_seq%>">
+		  	
+	      	  <!-- 답글 쓰기 본문 시작 -->
+		      <div class="modal-body mx-5">
+		      
+		      
+			       <div class="form-floating mb-3">
+					  <input type="text" class="form-control" id="floatingInput" placeholder="답글 제목" name="name">
+					  <label for="floatingInput">답글 제목</label>
+					</div>					
+			       	
+			       	<!-- 글내용 시작 --><hr>
+					<div class="row text-center">
+			       		<div class="col-4"></div>
+			       		<div class="col-4"><h4>답글 내용</h4></div>
+			       		<div class="col-4"></div>
+					</div>			 
+					      	
+			       	<div class="row">
+						<div class="form-floating">
+						  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 400px" name="coment"></textarea>
+						  <label for="floatingTextarea2"></label>
+						</div>
+			       	</div>
+			       	<!-- 글내용 끝 -->
+			       	
+			       	<hr>
+			       	
+					<div class="row text-center">
+			       		<div class="col-4"></div>
+			       		<div class="col-4"><h4>사진 첨부</h4></div>
+			       		<div class="col-4"></div>			       		
+			       	</div>
+			       	
+			       	<!-- row3 시작 -->
+			       	<div class="row mt-2 mb-3">
+						<input class="form-control m-1" type="file" id="formFile" name="filename" >
+						<input class="form-control m-1" type="file" id="formFile" name="filename2">
+						<input class="form-control m-1" type="file" id="formFile" name="filename3">
+			       	</div>
+			       	<!-- row3 끝 -->
+			  </div>
+			  <!-- 답글 쓰기 본문 끝 -->
+			      
 
- 	<!-- 목록으로 row 끝 -->
+		      <div class="modal-footer">
+		      	<button type="submit" class="btn btn-primary" id="correct">답글 쓰기</button>
+			  	<button type="reset" class="btn btn-secondary" data-bs-dismiss="modal" id="cc3">취소</button>
+			  	<button type="reset" id="cc4">취소2</button>
+		      </div>
+	      </form>
+	     <!-- 자유게시판 답글 쓰기 폼 작성 끝 -->
+	      
+	    </div>
+	  </div>
+	</div>
+	<!-- 답글쓰기 모달 끝 -->
+ 	
+ 	
 </body>
 </html>

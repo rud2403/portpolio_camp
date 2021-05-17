@@ -30,7 +30,28 @@ public class BoardBean {
 	private String state; // 거래 완료인지 상태 표시
 	private String id; // Session을 통해 받아오는 글쓴이 아이디
 	private String pw; // 게시글 수정, 삭제를 위해 session으로 받아 올 글쓴이 비밀번호 (수정, 삭제 할 때 입력한 비밀번호와 세션에 남아있는 pw가 일치하면 글 수정, 삭제)
+	private int re_ref; // 부모글(원글)에서 달린 답변글을 표기하기 위한 그룹번호
+	private int re_lev; // 답글의 들여쓰기, 일반글은 0 (들여쓰기 없음)
+	private int re_seq; // 답글의 순서, 일반글 0
 	
+	public int getRe_ref() {
+		return re_ref;
+	}
+	public void setRe_ref(int re_ref) {
+		this.re_ref = re_ref;
+	}
+	public int getRe_lev() {
+		return re_lev;
+	}
+	public void setRe_lev(int re_lev) {
+		this.re_lev = re_lev;
+	}
+	public int getRe_seq() {
+		return re_seq;
+	}
+	public void setRe_seq(int re_seq) {
+		this.re_seq = re_seq;
+	}
 	public String getState() {
 		return state;
 	}
@@ -186,9 +207,11 @@ public class BoardBean {
 	public String toString() {
 		return "BoardBean [num=" + num + ", name=" + name + ", address=" + address + ", lat=" + lat + ", lng=" + lng
 				+ ", toilet=" + toilet + ", park=" + park + ", water=" + water + ", fishing=" + fishing + ", field="
-				+ field + ", land=" + land + ", filename=" + filename + ", date=" + date + ", level=" + level +", readcount=" 
-				+ readcount + ", coment=" + coment + ", filename2=" + filename2 + ", filename3=" + filename3 + ", kind=" 
-				+ kind + ", ip=" + ip + ", id=" + id + ", pw=" + pw + ", price=" + price + ", trade=" + trade +  ", state=" + state + "]";
+				+ field + ", land=" + land + ", date=" + date + ", level=" + level + ", readcount=" + readcount
+				+ ", coment=" + coment + ", filename=" + filename + ", filename2=" + filename2 + ", filename3="
+				+ filename3 + ", kind=" + kind + ", ip=" + ip + ", price=" + price + ", trade=" + trade + ", state="
+				+ state + ", id=" + id + ", pw=" + pw + ", re_ref=" + re_ref + ", re_lev=" + re_lev + ", re_seq="
+				+ re_seq + "]";
 	}
 	
 }
