@@ -1,3 +1,4 @@
+<%@page import="com.camp.member.MemberDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -41,63 +42,27 @@
 		
 		System.out.println("전달된 수정할 정보 : " +mb);
 		
+		MemberDAO bdao = new MemberDAO();
 		
-
-		// DB접속 후
-		final String DRIVER = "com.mysql.jdbc.Driver";
-		final String DBURL = "jdbc:mysql://localhost:3306/portpolio_camp";
-		final String DBID = "root";
-	 	final String DBPW = "1234";
-	 	
-	 	// 1. 드라이버 로드
-	 	
-	 	Class.forName(DRIVER);
-	 	
-	 	// 2. 디비연결
-	 	Connection conn = DriverManager.getConnection(DBURL, DBID, DBPW);
+		int check = bdao.updateName(mb);
 		
-	 	// 3. sql작성 & pstmt 객체생성
-	 	String sql = "select name from camp_member where id = ? ";
-
-	 	PreparedStatement pstmt = conn.prepareStatement(sql);
-	 	
-	 	// ? 채우기
-	 	pstmt.setString(1, mb.getId());
-	 	
-	 	// 4. sql 실행
-	 	ResultSet rs = pstmt.executeQuery();
-	 	
-
-	 	// 5. 데이터 처리
-	 		// 아이디가 있는 경우
-		 	if(rs.next()){
+		System.out.println("이름 수정 현황 : " + check);
+		
+	
+		
+		
+ 			if(check == 0){	
+		 					 			
+	 			//페이지 이동
+	 			//response.sendRedirect("/Portpolio_camp/member/manageForm.jsp");
+	 			
+		 		%>
+		 		<script type="text/javascript">
+	 			alert(" 이름 변경완료 ");
+	 			location.href="/Portpolio_camp/member/manageForm.jsp";
+	 			</script>
 		 		
-		 			
-		 			// sql 구문 작성 & pstmt 객체
-		 			sql = "update camp_member set name = ? where id = ? ";
-		 			
-		 			pstmt = conn.prepareStatement(sql);
-		 				// sql문 하나당 pstmt하나 따라와야함
-		 			
-		 			// ? 채우기
-		 			pstmt.setString(1, name);
-		 			pstmt.setString(2, mb.getId());
-		
-		 			// sql 실행
-		 			
-		 			pstmt.executeUpdate();
-		 			
-		 			
-		 			//페이지 이동
-		 			//response.sendRedirect("/Portpolio_camp/member/manageForm.jsp");
-		 			
-			 		%>
-			 		<script type="text/javascript">
-		 			alert(" 이름 변경완료 ");
-		 			location.href="/Portpolio_camp/member/manageForm.jsp";
-		 			</script>
-			 		
-			 		<%
+		 		<%
 
 		 		
 		 	}else{

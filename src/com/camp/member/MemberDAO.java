@@ -1,6 +1,7 @@
 package com.camp.member;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -352,7 +353,305 @@ public class MemberDAO {
 		// infopreMember(MemberBean mb) 끝
 	
 
+	// updateEmail() 시작
+	public int updateEmail(MemberBean mb){		
+		int check = -1;
+		
+		try{
+			
+			// DB접속 후
+			final String DRIVER = "com.mysql.jdbc.Driver";
+			final String DBURL = "jdbc:mysql://localhost:3306/portpolio_camp";
+			final String DBID = "root";
+		 	final String DBPW = "1234";
+		 	
+		 	// 1. 드라이버 로드
+		 	
+		 	Class.forName(DRIVER);
+		 	
+		 	// 2. 디비연결
+		 	Connection conn = DriverManager.getConnection(DBURL, DBID, DBPW);
+			
+		 	// 3. sql작성 & pstmt 객체생성
+		 	String sql = "select email from camp_member where id = ? ";
+
+		 	PreparedStatement pstmt = conn.prepareStatement(sql);
+		 	
+		 	// ? 채우기
+		 	pstmt.setString(1, mb.getId());
+		 	
+		 	// 4. sql 실행
+		 	ResultSet rs = pstmt.executeQuery();
+		 	
+
+		 	// 5. 데이터 처리
+	 		// 아이디가 있는 경우
+		 	if(rs.next()){
+		 		
+		 			
+	 			// sql 구문 작성 & pstmt 객체
+	 			sql = "update camp_member set email = ? where id = ? ";
+	 			
+	 			pstmt = conn.prepareStatement(sql);
+	 				// sql문 하나당 pstmt하나 따라와야함
+	 			
+	 			// ? 채우기
+	 			pstmt.setString(1, mb.getEmail());
+	 			pstmt.setString(2, mb.getId());
 	
+	 			// sql 실행
+	 			
+	 			pstmt.executeUpdate();
+	 			
+	 			check = 0;
+
+				System.out.println("이메일 변경 완료" + check);
+
+		 		}
+			}catch (Exception e) {
+				e.printStackTrace(); 
+				
+			}finally{
+				closeDB();
+			}
+			
+			
+			return check;
+		}
+		// updateEmail() 끝
+
 	
+	// updateName() 시작
+		public int updateName(MemberBean mb){		
+			int check = -1;
+			
+			try{
+				
+				// DB접속 후
+				final String DRIVER = "com.mysql.jdbc.Driver";
+				final String DBURL = "jdbc:mysql://localhost:3306/portpolio_camp";
+				final String DBID = "root";
+			 	final String DBPW = "1234";
+			 	
+			 	// 1. 드라이버 로드
+			 	
+			 	Class.forName(DRIVER);
+			 	
+			 	// 2. 디비연결
+			 	Connection conn = DriverManager.getConnection(DBURL, DBID, DBPW);
+				
+			 	// 3. sql작성 & pstmt 객체생성
+			 	String sql = "select name from camp_member where id = ? ";
+
+			 	PreparedStatement pstmt = conn.prepareStatement(sql);
+			 	
+			 	// ? 채우기
+			 	pstmt.setString(1, mb.getId());
+			 	
+			 	// 4. sql 실행
+			 	ResultSet rs = pstmt.executeQuery();
+			 	
+
+			 // 5. 데이터 처리
+		 		// 아이디가 있는 경우
+			 	if(rs.next()){
+			 		
+			 			
+			 			// sql 구문 작성 & pstmt 객체
+			 			sql = "update camp_member set name = ? where id = ? ";
+			 			
+			 			pstmt = conn.prepareStatement(sql);
+			 				// sql문 하나당 pstmt하나 따라와야함
+			 			
+			 			// ? 채우기
+			 			pstmt.setString(1, mb.getName());
+			 			pstmt.setString(2, mb.getId());
+			
+			 			// sql 실행
+			 			
+			 			pstmt.executeUpdate();
+		 			
+		 			check = 0;
+
+					System.out.println("이름 변경 완료" + check);
+
+			 		}
+				}catch (Exception e) {
+					e.printStackTrace(); 
+					
+				}finally{
+					closeDB();
+				}
+				
+				
+				return check;
+			}	
+		// updateName() 끝
+
+
+		// updatePhone() 시작
+		public int updatePhone(MemberBean mb){		
+			int check = -1;
+			
+			try{
+				
+				// DB접속 후
+				final String DRIVER = "com.mysql.jdbc.Driver";
+				final String DBURL = "jdbc:mysql://localhost:3306/portpolio_camp";
+				final String DBID = "root";
+			 	final String DBPW = "1234";
+			 	
+			 	// 1. 드라이버 로드
+			 	
+			 	Class.forName(DRIVER);
+			 	
+			 	// 2. 디비연결
+			 	Connection conn = DriverManager.getConnection(DBURL, DBID, DBPW);
+				
+			 // 3. sql작성 & pstmt 객체생성
+			 	String sql = "select phone from camp_member where id = ? ";
+
+			 	PreparedStatement pstmt = conn.prepareStatement(sql);
+			 	
+			 	// ? 채우기
+			 	pstmt.setString(1, mb.getId());
+			 	
+			 	// 4. sql 실행
+			 	ResultSet rs = pstmt.executeQuery();
+			 	
+
+			 	// 5. 데이터 처리
+			 		// 아이디가 있는 경우
+				 	if(rs.next()){
+				 						 			
+			 			// sql 구문 작성 & pstmt 객체
+			 			sql = "update camp_member set phone = ? where id = ? ";
+			 			
+			 			pstmt = conn.prepareStatement(sql);
+			 				// sql문 하나당 pstmt하나 따라와야함
+			 			
+			 			// ? 채우기
+			 			pstmt.setString(1, mb.getPhone());
+			 			pstmt.setString(2, mb.getId());
+			
+			 			// sql 실행
+			 			
+			 			pstmt.executeUpdate();
+		 			
+			 			check = 0;
+
+			 			System.out.println("전화번호 변경 완료" + check);
+
+			 		}
+				}catch (Exception e) {
+					e.printStackTrace(); 
+					
+				}finally{
+					closeDB();
+				}
+				
+				
+				return check;
+			}	
+		// updatePhone() 끝	
+		
+		
+		
+		// updatePw() 시작
+//				public int updatePw(MemberBean mb){		
+//					int check = -1;
+//					
+//
+//
+//					
+//					//String pw1 = request.getParameter("pw1");
+//					//String pw2 = request.getParameter("pw2");
+//					
+//					try{
+//						
+//						// DB접속 후
+//						final String DRIVER = "com.mysql.jdbc.Driver";
+//						final String DBURL = "jdbc:mysql://localhost:3306/portpolio_camp";
+//						final String DBID = "root";
+//					 	final String DBPW = "1234";
+//					 	
+//					 	// 1. 드라이버 로드
+//					 	
+//					 	Class.forName(DRIVER);
+//					 	
+//					 	// 2. 디비연결
+//					 	Connection conn = DriverManager.getConnection(DBURL, DBID, DBPW);
+//						
+//					 // 3. sql작성 & pstmt 객체생성
+//					 	String sql = "select pw from camp_member where id = ? ";
+//
+//					 	PreparedStatement pstmt = conn.prepareStatement(sql);
+//					 	
+//					 	// ? 채우기
+//					 	pstmt.setString(1, mb.getId());
+//					 	
+//					 	// 4. sql 실행
+//					 	ResultSet rs = pstmt.executeQuery();
+//					 	
+//
+//					 	// 5. 데이터 처리
+//						 	if(rs.next()){
+//						 		// 아이디가 있는 경우
+//						 		
+//						 		
+//						 		if(mb.getPw().equals(rs.getString("pw"))){
+//						 			// 비밀번호 같음
+//						 			
+//						 			
+//						 			// 새 비밀번호 일치 확인
+//						 			if(pw1.equals(pw2)){
+//						 				
+//						 			// sql 구문 작성 & pstmt 객체
+//						 			sql = "update camp_member set pw = ? where id = ? ";
+//						 			
+//						 			pstmt = conn.prepareStatement(sql);
+//						 				// sql문 하나당 pstmt하나 따라와야함
+//						 			
+//						 			// ? 채우기
+//						 			pstmt.setString(1, pw1);
+//						 			pstmt.setString(2, mb.getId());
+//						
+//						 			// sql 실행
+//						 			
+//						 			pstmt.executeUpdate();
+//				 			
+//						 			check = 0;
+//	
+//						 			System.out.println("전화번호 변경 완료" + check);
+//
+//							 		}else{
+//							 			check = -1;
+//							 			// 새 비밀번호가 다르다.
+//							 		}
+//						 		
+//						 		}else{
+//						 			check = -2;
+//						 			//현재 비밀번호가 다르다.
+//						 		}
+//						 		
+//						 	}else{
+//						 		check = -3;
+//						 		// 아이디가 없다.
+//						 	}
+//						}catch (Exception e) {
+//							e.printStackTrace(); 
+//							
+//						}finally{
+//							closeDB();
+//						}
+//						
+//						
+//						return check;
+//					}	
+				// updatePw() 끝		
+	
+		
+		
+		
 }
 // class MemberDAO 끝

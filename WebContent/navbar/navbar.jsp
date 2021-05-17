@@ -93,14 +93,8 @@
           <a class="nav-link active" aria-current="page" href="#">|</a>
         </li>        
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/Portpolio_camp/freecamp/freeForm.jsp">무료 캠핑장</a>
+          <a class="nav-link active" aria-current="page" href="/Portpolio_camp/freecamp/freeForm.jsp">캠핑 List</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">유료 캠핑장</a>
-        </li>
-        
-        
-        
         <li class="nav-item" id="menu_2"  onmouseover="nfunc1()" onmouseout="nfunc2()">
           <a class="nav-link active" id="menu_1" aria-current="page" href="/Portpolio_camp/board/marketForm.jsp">캠핑 장터</a>
 	    	<ul class="px-3 py-1" id="sub_1" style="list-style:none; background-color: #E9E9E9; display: none;">

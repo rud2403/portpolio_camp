@@ -24,15 +24,15 @@
 	 <jsp:setProperty property="*" name="bb"/>
 	
 	<%
-	 System.out.println("수정할 정보 : " + bb);
+	System.out.println("수정할 정보 : " + bb);
 	
 	// DB 처리 객체 BoardDAO 생성
 		
-		BoardDAO bdao = new BoardDAO();
+	BoardDAO bdao = new BoardDAO();
 	
 	// 해당 글 정보를 사용해서 글 내용 수정 
 	
-		int check = bdao.updateMarketBoard(bb);
+	int check = bdao.updateMarketBoard(bb);
 	
 	System.out.println("수정 현황 : " + check);
 	

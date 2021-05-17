@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>무료 캠핑장</title>
+	<title>캠핑 List</title>
 	
 	<!-- 부트스트랩 준비 시작 -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
@@ -190,7 +190,7 @@
 
 <!-- 왼쪽 col 시작 -->
     <div class="col-4 text-center">
-		<h3>무료 캠핑장 LIST</h3>
+		<h3>캠핑 LIST</h3>
 		<hr>
 	<div class="row">
 		<div class="col-4" >

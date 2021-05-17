@@ -213,7 +213,7 @@
 			wid = 10 * bb.getRe_lev(); 
 			%>
 			  <img alt="" src="level.gif" height="15" width="<%=wid%>">
- 			  <img alt="" src="re.gif">
+ 			  ┕
 			<%
 			}
 			%>

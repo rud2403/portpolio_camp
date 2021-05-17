@@ -162,7 +162,7 @@
 				      
 				      <!-- 가운데 부분 시작 -->
 				      <td>
-					      <form action="/Portpolio_camp/member/managepwPro.jsp" method="post">
+					      <form action="/Portpolio_camp/member/managepwPro2.jsp" method="post">
 					     	<input type="hidden" name="id" value="<%=mb.getId() %>">
 					      	<div id="i2" style="display: none;">
 					      		<div>현재 비밀번호 &nbsp;&nbsp;&nbsp;<input type="password" name="pw"></div><br>
