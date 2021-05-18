@@ -650,8 +650,191 @@ public class MemberDAO {
 //					}	
 				// updatePw() 끝		
 	
+
+		//	seachId(MemberBean mb) 시작
+		public int seachId(MemberBean mb){
+			int check = -1;
+
+			try {
+				// 1 드라이버 로드
+				// 2 디비 연결
+				// => 한번에 처리하는 메소드로 변경
+				conn = getConnection();
+
+				// 3 sql (회원 번호를 계산하는 구문)
+				sql = "select id from camp_member where name=? and email=?";
+
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setString(1, mb.getName());
+				pstmt.setString(2, mb.getEmail());				
+				
+				
+				// 4 sql 실행
+				rs = pstmt.executeQuery();
+
+				// 5 데이터 처리
+				// 데이터가 있을 경우
+				if (rs.next()) {
+				
+				// 3 sql 작성 (insert) & pstmt 객체 생성
+				sql = "select id from camp_member where name=? and email=?";
+
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setString(1, mb.getName());
+				pstmt.setString(2, mb.getEmail());
+				
+				// 4 sql 실행
+
+				mb.setId(rs.getString("id"));
+				
+				rs = pstmt.executeQuery();
+
+				
+				System.out.println("sql구문 실행 완료 : id찾기 완료");
+				check = 0;
+				
+				}else{
+					check = -1;
+				}
+			} catch (SQLException e) {
+				System.out.println("디비 연결 실패 !!");
+				e.printStackTrace();
+			} finally {
+				// 자원해제
+				closeDB();
+				}
+			return check;
+		}
+		//	seachId(MemberBean mb) 끝
+
+		
+		//	seachPw(MemberBean mb) 시작
+		public int seachPw(MemberBean mb){
+			int check = -1;
+
+			try {
+				// 1 드라이버 로드
+				// 2 디비 연결
+				// => 한번에 처리하는 메소드로 변경
+				conn = getConnection();
+
+				// 3 sql (회원 번호를 계산하는 구문)
+				sql = "select id, pw, name, email from camp_member where id=?";
+
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setString(1, mb.getId());
+				
+				
+				// 4 sql 실행
+				rs = pstmt.executeQuery();
+
+				// 5 데이터 처리
+				// 데이터가 있을 경우
+				if (rs.next()) {
+					// 아이디 있음
+				// 3 sql 작성 (insert) & pstmt 객체 생성
+					if (mb.getName().equals(rs.getString("name")) && mb.getEmail().equals(rs.getString("email"))) {
+						
+						sql = "select pw from camp_member where id=? and name=? and email=?";
+
+						pstmt = conn.prepareStatement(sql);
+		
+						pstmt.setString(1, mb.getId());
+						pstmt.setString(2, mb.getName());
+						pstmt.setString(3, mb.getEmail());
+						
+						// 4 sql 실행
+		
+						mb.setPw(rs.getString("pw"));
+						
+						rs = pstmt.executeQuery();
+		
+						
+						System.out.println("sql구문 실행 완료 : 비밀번호찾기 완료");
+						
+						// 아이디 있고 정보 맞음.
+						check = 0;
+					}else{
+					// 아이디는 있으나 이름또는 이메일 정보가 틀림
+					check = -1;
+					}
+				}else{
+					// 아이디가 존재하지 않습니다.
+					check = -2;
+				}
+			} catch (SQLException e) {
+				System.out.println("디비 연결 실패 !!");
+				e.printStackTrace();
+			} finally {
+				// 자원해제
+				closeDB();
+				}
+			return check;
+		}
+		//	seachPw(MemberBean mb) 끝
 		
 		
-		
+//		seachPw(MemberBean mb) 시작
+//			public int seachPw(MemberBean mb){
+//				int check = -1;
+//
+//				try {
+//					// 1 드라이버 로드
+//					// 2 디비 연결
+//					// => 한번에 처리하는 메소드로 변경
+//					conn = getConnection();
+//
+//					// 3 sql (회원 번호를 계산하는 구문)
+//					sql = "select pw from camp_member where id=? and name=? and email=?";
+//
+//					pstmt = conn.prepareStatement(sql);
+//
+//					pstmt.setString(1, mb.getId());
+//					pstmt.setString(2, mb.getName());
+//					pstmt.setString(3, mb.getEmail());				
+//					
+//					
+//					// 4 sql 실행
+//					rs = pstmt.executeQuery();
+//
+//					// 5 데이터 처리
+//					// 데이터가 있을 경우
+//					if (rs.next()) {
+//					
+//					// 3 sql 작성 (insert) & pstmt 객체 생성
+//						sql = "select pw from camp_member where id=? and name=? and email=?";
+//
+//					pstmt = conn.prepareStatement(sql);
+//
+//					pstmt.setString(1, mb.getId());
+//					pstmt.setString(2, mb.getName());
+//					pstmt.setString(3, mb.getEmail());
+//					
+//					// 4 sql 실행
+//
+//					mb.setPw(rs.getString("pw"));
+//					
+//					rs = pstmt.executeQuery();
+//
+//					
+//					System.out.println("sql구문 실행 완료 : 비밀번호찾기 완료");
+//					check = 0;
+//					
+//					}else{
+//						check = -1;
+//					}
+//				} catch (SQLException e) {
+//					System.out.println("디비 연결 실패 !!");
+//					e.printStackTrace();
+//				} finally {
+//					// 자원해제
+//					closeDB();
+//					}
+//				return check;
+//			}
+			//	seachPw(MemberBean mb) 끝				
 }
 // class MemberDAO 끝

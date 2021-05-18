@@ -44,8 +44,66 @@
 		var con = document.getElementById("i8");
 		con.style.display = (con.style.display != 'none') ? "none" : "block";
 	}
+	
+	// 비밀번호 유효성 검사
+	function pwcheck() {
+		if($("#pw").val() == ""){
+			alert("현재 비밀번호를 입력해주세요.");
+			$("#pw").focus();
+			return false;
+			}		
+		if($("#pw1").val() == ""){
+			alert("새 비밀번호를 입력해주세요.");
+			$("#pw1").focus();
+			return false;
+			}
+		if($("#pw2").val() == ""){
+			alert("새 비밀번호 확인을 입력해주세요.");
+			$("#pw2").focus();
+			return false;
+			}	
+	}
+	
+	// 이름 유효성 검사
+	function nmcheck() {
+		
+		if($("#name").val() == ""){
+			alert("이름을 입력해주세요.");
+			$("#name").focus();
+			return false;
+		}
+	}
+	
+	// 전화번호 유효성 검사
+	function phcheck() {
+		
+		if($("#phone").val() == ""){
+			alert("전화번호를 입력해주세요.");
+			$("#phone").focus();
+			return false;
+			}
+		
+		if($("#phone").val().length != 11){
+			alert("잘못된 전화번호 입니다.");
+			$("#phone").val("");
+			$("#phone").focus();
+			return false;
+		}
+	}
+	
+	// 전화번호 유효성 검사
+	function echeck(){
+		
+		if($("#email").val() == ""){
+			alert("이메일을 입력해주세요.");
+			$("#email").focus();
+			return false;
+			}
 
-
+	}	
+	
+	
+	
 </script>
 
 
@@ -162,12 +220,12 @@
 				      
 				      <!-- 가운데 부분 시작 -->
 				      <td>
-					      <form action="/Portpolio_camp/member/managepwPro2.jsp" method="post">
+					      <form action="/Portpolio_camp/member/managepwPro2.jsp" method="post" onsubmit="return pwcheck()">
 					     	<input type="hidden" name="id" value="<%=mb.getId() %>">
 					      	<div id="i2" style="display: none;">
-					      		<div>현재 비밀번호 &nbsp;&nbsp;&nbsp;<input type="password" name="pw"></div><br>
-					      		<div>새 비밀번호 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="pw1"></div><br>
-					      		<div>새 비밀번호 확인&nbsp;<input type="password" name="pw2"></div><br>
+					      		<div>현재 비밀번호 &nbsp;&nbsp;&nbsp;<input type="password" name="pw" id="pw"></div><br>
+					      		<div>새 비밀번호 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="pw1" id="pw1"></div><br>
+					      		<div>새 비밀번호 확인&nbsp;<input type="password" name="pw2" id="pw2"></div><br>
 					      		
 					   		<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
 					      	<input type="button" class="btn btn-outline-primary btn-sm" value="취소" onclick="func1();">	
@@ -196,10 +254,10 @@
 				      
 				      <!-- 가운데 부분 시작 -->
 				      <td>
-				      <form action="/Portpolio_camp/member/managenamePro.jsp" method="post">
+				      <form action="/Portpolio_camp/member/managenamePro.jsp" method="post" onsubmit="return nmcheck()">
 				      	<input type="hidden" name="id" value="<%=mb.getId() %>">
 				      		<div id="i4" style="display: none;">
-					      		<div><input type="text" name="name"></div><br>
+					      		<div><input type="text" name="name" id="name"></div><br>
 					      		
 						   		<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
 						      	<input type="button" class="btn btn-outline-primary btn-sm" value="취소" onclick="func2();">	
@@ -221,10 +279,10 @@
 				      <!-- 가운데 부분 시작 -->
 				      <td>
 				      
-					     <form action="/Portpolio_camp/member/managephonePro.jsp" method="post">
+					     <form action="/Portpolio_camp/member/managephonePro.jsp" method="post" onsubmit="return phcheck()">
 					     	<input type="hidden" name="id" value="<%=mb.getId() %>">
 					      		<div id="i6" style="display: none;">
-						      		<div><input type="text" name="phone"></div><br>
+						      		<div><input type="text" name="phone" id="phone"></div><br>
 						      		
 							   		<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
 							      	<input type="button" class="btn btn-outline-primary btn-sm" value="취소" onclick="func3();">	
@@ -248,10 +306,10 @@
 				      
 				      <td>
 				      
-					     <form action="/Portpolio_camp/member/manageemailPro.jsp" method="post">
+					     <form action="/Portpolio_camp/member/manageemailPro.jsp" method="post" onsubmit="return echeck()">
 					     	<input type="hidden" name="id" value="<%=mb.getId() %>">
 					      		<div id="i8" style="display: none;">
-						      		<div><input type="email" name="email"></div><br>
+						      		<div><input type="email" name="email" id="email"></div><br>
 						      		
 							   		<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
 							      	<input type="button" class="btn btn-outline-primary btn-sm" value="취소" onclick="func4();">	

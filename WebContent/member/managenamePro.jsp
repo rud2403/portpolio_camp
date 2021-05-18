@@ -27,7 +27,6 @@
 		request.setCharacterEncoding("utf-8");
 		
 		// 전달되는 정보(파라미터)를 저장 => 액션태그 사용 자바빈객체 저장
-				
 		String name = request.getParameter("name");
 
 		%>

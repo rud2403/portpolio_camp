@@ -23,6 +23,21 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 <!-- 부트 스트랩 끝 -->
 
+<!-- jquery 준비 시작 -->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<!-- jquery 준비 끝 -->
+
+<!-- jquery 코드 시작 -->
+<script type="text/javascript">
+	$(function() {
+		$('#like').click(function() {
+			alert("즐겨찾기");
+		});
+	});
+</script>
+<!-- jquery 코드 시작 -->
+
+
 <!-- 우편번호 스크립트 시작 -->
 <script>
 
@@ -157,20 +172,50 @@
 	
 	<!-- 조회수 및 수정 삭제 줄 시작 -->	
 	<div class="row">
-		<%
-		try {
-			if(id.equals("admin")){ %>
-				<div class="col-1 text-center">
-					<button class="btn btn-light btn-sm" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" >수정</button> / <button class="btn btn-light btn-sm" type="button" onclick="con()">삭제</button>
-				</div>
-		<%
-			}
-		}catch (Exception e) {
+				<%
+				try {
+					if(id.equals("admin")){ %>
+						<div class="col-1 text-center">
+							<button class="btn btn-light btn-sm" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" >수정</button> / <button class="btn btn-light btn-sm" type="button" onclick="con()">삭제</button>
+						</div>
+						<div class="col-9"></div>
+						<div class="col-1">
+							<button type="button" class="btn btn-outline-danger" id="like">♥ 즐겨찾기</button>
+						</div>			
+						<div class="col-1 mt-1">
+							<b>조회수 <%=bb.getReadcount() %></b>
+						</div>
+					<%
+					
+					}else{
+						%>
+						<div class="col-1 text-center"></div>
+						<div class="col-9"></div>
+						<div class="col-1">
+							<button type="button" class="btn btn-outline-danger active" id="like">♥ 즐겨찾기</button>
+						</div>			
+						<div class="col-1 mt-1">
+							<b>조회수 <%=bb.getReadcount() %></b>
+						</div>
+					<%
+						
+						
+					}
+				}catch (Exception e) {
+
+					%>
+						<div class="col-1 text-center"></div>
+						<div class="col-9"></div>
+						<div class="col-1">
+							<button type="button" class="btn btn-outline-danger active" id="like">♥ 즐겨찾기</button>
+						</div>			
+						<div class="col-1 mt-1">
+							<b>조회수 <%=bb.getReadcount() %></b>
+						</div>
+					<%
+				
 			} %>
-			<div class="col-10 text-center"></div>
-			<div class="col-1 text-center">
-				조회수 <%=bb.getReadcount() %>
-			</div>
+			
 	</div>
 	<!-- 조회수 및 수정 삭제 줄 끝 -->	
 	
@@ -642,9 +687,21 @@
 	<div class="row">
 		<div class="col-2"></div>
 		<div class="col-8 p-4 m-2 text-center">
+		<%
+		try{
+			 %>
+		<%if(bb.getFilename().equals("null")){ %>
+
+		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+		  <div class="carousel-inner">
+		    <div class="carousel-item active">
+		      <img src="https://allways.smotor.com/wp-content/uploads/2020/04/0429_%EC%BA%A0%ED%95%91_12.jpg" class="d-block w-100" alt="..." width="300" height="400">
+		    </div>
+		</div>		
+		</div>
 		
 		
-		<%if(bb.getFilename2().equals("null")){ %>
+		<%}else if(bb.getFilename2().equals("null")){ %>
 		
 		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 		  <div class="carousel-inner">
@@ -652,7 +709,7 @@
 		      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="400">
 		    </div>
 		</div>		
-		
+		</div>
 		
 		<%}else if(bb.getFilename3().equals("null")){ %>
 		
@@ -678,8 +735,6 @@
 		  </a>
 		</div>
 
-
-		
 		<%}else{ %>
 		
 		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -706,8 +761,11 @@
 		
 		
 		<%} %>
-		
-
+		<%
+		}catch(Exception e){
+			
+		}
+		 %>
 		<div class="col-2"></div>
 	</div>
 	<!-- 갤러리 내용 끝 -->			
@@ -779,7 +837,8 @@
 
 
 </div>
-<!-- container 끝 -->	
+<!-- container 끝 -->
+</div>	
 	<hr>
  	<!-- 목록으로 row 시작 -->
 	<div class="row text-center">

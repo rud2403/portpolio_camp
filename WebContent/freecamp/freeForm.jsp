@@ -226,8 +226,12 @@
 			BoardBean bb = (BoardBean)boardList.get(i);
 		%>
 	    <tr>
-	      <th class="pt-5 col-2" scope="row"><%=bb.getNum() %></th>	      
+	      <th class="pt-5 col-2" scope="row"><%=bb.getNum() %></th>
+	      <%if(bb.getFilename().equals("null")){ %>
+	      <td class="col-4"><img src="https://allways.smotor.com/wp-content/uploads/2020/04/0429_%EC%BA%A0%ED%95%91_12.jpg" class="d-block rounded" alt="..." width="90px" height="100px"></td>
+	      <%}else{ %>	      
 	      <td class="col-4"><img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block rounded" alt="..." width="90px" height="100px"></td>
+	      <%} %>
 	      <td class="pt-2 ml-3 col-6">
 	      	<div class="row" style='cursor:pointer;'>
 	      		<a id="ck<%=bb.getNum() %>"><%=bb.getName() %></a>

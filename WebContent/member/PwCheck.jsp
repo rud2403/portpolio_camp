@@ -18,27 +18,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!-- jquery 준비 끝 -->
 
-<script type="text/javascript">
-	function check1() {
-		if($("#id").val() == ""){
-			alert("아이디를 입력해주세요.");
-			$("#id").focus();
-			return false;
-			}		
-		if($("#name").val() == ""){
-			alert("이름를 입력해주세요.");
-			$("#name").focus();
-			return false;
-			}
-		if($("#email").val() == ""){
-			alert("이메일을 입력해주세요.");
-			$("#email").focus();
-			return false;
-			}		
-	}
-
-</script>
-
 
 <!-- 버튼 기능 시작 -->
 <script type="text/javascript">
@@ -48,6 +27,13 @@
 </head>
 
 <body>
+
+	<%
+	
+	String fpw = (String)session.getAttribute("fpw");
+	
+	%>
+
 
 <!-- navbar 시작 -->
 <jsp:include page="/navbar/navbar.jsp" />
@@ -69,41 +55,22 @@
  <!-- 텍스트 row 시작 -->
   <div class="row">
  	<h2 class="text-center p-5"> 비밀번호 찾기 </h2>
- 	<div class="text-center">가입하시 입력하신 아이디와 성함, 이메일로 비밀번호를 찾을 수 있습니다.</div>
- </div>
+ 	<div class="text-center"><h5>비밀번호는 <%=fpw %> 입니다.</h5></div>
+ 	<%
+		session.removeAttribute("fpw");
+	%> </div>
  <!-- 텍스트 row 끝 -->
  
  <!-- 이름, 이메일 input 시작 -->
  <div class="row">
-  <form class="row g-3" action="/Portpolio_camp/member/searchPwPro.jsp" method="post" name="fr" onsubmit="return check1()">
  
  <div class="col-3"></div>
-  <div class="col-6">
-  
-	<!-- 아이디 --> 
-   <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="id" placeholder="ID" name="id">
-    <label for="floatingInput">ID</label>
-   </div>  
-  
-   <!-- 이름 --> 
-   <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="name" placeholder="Name" name="name">
-    <label for="floatingInput">Name</label>
-   </div>
-   
-   <!-- 비밀번호 -->   
-   <div class="form-floating">
-    <input type="email" class="form-control" id="email" placeholder="Email" name="email">
-    <label for="floatingPassword">Email</label>
-   </div>
-	</div>
+  <div class="col-6"></div>
  <div class="col-3"></div>
  <!-- 이름, 이메일 input 끝 -->
 
   <!-- 제출 버튼 시작 -->   
    <div class="col-sm30 p-5" style="text-align:center;">
-    <input class="btn btn-primary btn-block" type="submit" value="비밀번호 찾기">
    </div>
   <!-- 제출 버튼 끝 -->
   
@@ -114,7 +81,6 @@
   	</div>
   </div>
 
-  </form>
  </div>
  
 </div>	

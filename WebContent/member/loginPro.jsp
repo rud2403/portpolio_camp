@@ -12,7 +12,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%
+		<%
 		// 한글처리
 		request.setCharacterEncoding("utf-8");
 		
@@ -26,13 +26,13 @@
 		<%
 		
 		System.out.println("전달 정보 : " + mb);
-		///////////////////////////////////////////////////
-		// DB이동 후 로그인 상태 판별
 		
+		///////////////////////////////////////////////////
+		
+		// DB이동 후 로그인 상태 판별
 		MemberDAO bdao = new MemberDAO();
 			
 		// 해당 글 정보를 사용해서 회원 정보 삭제
-		
 		int check = bdao.loginMember(mb);
 		
 		
