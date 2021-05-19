@@ -8,8 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>WebContent/board/deletePro.jsp</h1>
-
 	<%
 		// 전달 정보 저장 - pageNum
 		String pageNum = request.getParameter("pageNum");
@@ -38,7 +36,7 @@
 		if (check == 0) {
 		%>
 		<script type="text/javascript">
-			alert("정보 삭제완료! ");
+			alert("글 삭제완료! ");
 			location.href="/Portpolio_camp/freecamp/freeForm.jsp?pageNum=<%=pageNum%>";
 		</script>
 		<%

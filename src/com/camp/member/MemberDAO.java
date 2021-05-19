@@ -73,7 +73,7 @@ public class MemberDAO {
 	
 	// insertMember 메소드 시작
 	public void insertMember(MemberBean mb) {
-
+		int check = 0;
 		int num = 0;
 
 		try {
@@ -836,5 +836,56 @@ public class MemberDAO {
 //				return check;
 //			}
 			//	seachPw(MemberBean mb) 끝				
+		
+		
+	// checkId(MemberBean mb) 시작 (회원가입 시 아이디 중복체크)	
+	public int checkId(MemberBean mb){
+		int check = -1;
+
+		try {
+			// DB접속 후
+			// 1 드라이버 로드
+			// 2 디비 연결
+			// => 한번에 처리하는 메소드로 변경
+			conn = getConnection();
+
+			// 3. sql작성 & pstmt 객체생성
+			sql = "select id from camp_member where id=?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, mb.getId());
+			
+			// 4. sql 실행
+			rs = pstmt.executeQuery();
+
+			if(rs.next()){
+				// 아이디가 있다.
+					
+					check = -1; 
+				}
+				
+				else{
+				// 아이디가 없다.
+					check = 0;
+					
+				}
+				
+			
+			System.out.println("아이디 체크 완료" + check);
+
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); 
+			
+		} finally{
+			closeDB();
+		}
+		
+		return check;
+	}	
+		
+		
 }
 // class MemberDAO 끝

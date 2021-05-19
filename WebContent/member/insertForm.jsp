@@ -16,7 +16,110 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!-- jquery 준비 끝 -->
 
+</head>
+<body>
+
+<!-- 자바스크립트 시작 -->
 <script type="text/javascript">
+	// jquery 시작
+	$(function() {
+		// 아이디 중복체크 시작
+		var num = 0;
+
+		$('#id').keyup(function() {
+// 			alert("키업");
+
+			var id = $('#id').val();
+			$.ajax({
+				url : "memberIdChk.jsp",
+				type : "post",
+				data : {id:id},
+				success:function(data){
+// 					alert(data);
+					//아이디 값이 있을 때
+					if(id.length > 0){
+	  					if(data == 0){
+	  						num = 0;
+	  			 			$('#idcheck2').html("");
+	 						$('#idcheck1').html("사용가능한 아이디입니다." + num);
+	  					}else{
+	  						num = -1;
+	  			 			$('#idcheck1').html("");
+	  						$('#idcheck2').html("사용할 수 없는 아이디 입니다." + num);
+	  					}
+					//아이디 값이 없을 때	  					
+					}else{
+  			 			$('#idcheck1').html("");
+  			 			$('#idcheck2').html("");
+						
+					}
+				}
+			});
+		});
+		// 아이디 중복체크 끝
+
+		//비밀번호 일치 확인 시작1
+		$('#pw').keyup(function() {
+
+			var pw = $('#pw').val();
+			var pw2 = $('#pw2').val();
+			
+			$.ajax({
+				url : "memberPwChk.jsp",
+				type : "post",
+				data : {pw:pw,pw2:pw2},
+				success:function(data){
+					if(pw2.length > 0 && pw.length > 0){
+	  					if(data == 0){
+	  			 			$('#pwcheck2').html("");
+	 						$('#pwcheck1').html("비밀번호가 일치합니다.");
+	  					}else{
+	  			 			$('#pwcheck1').html("");
+	  						$('#pwcheck2').html("비밀번호가 다릅니다.");
+	  					}
+					}else{
+  			 			$('#pwcheck1').html("");
+  			 			$('#pwcheck2').html("");
+					}
+				}
+			});
+		});
+		// 비밀번호 일치 확인 끝1		
+		
+		
+		//비밀번호 일치 확인 시작2
+		$('#pw2').keyup(function() {
+
+			var pw = $('#pw').val();
+			var pw2 = $('#pw2').val();
+			
+			$.ajax({
+				url : "memberPwChk.jsp",
+				type : "post",
+				data : {pw:pw,pw2:pw2},
+				success:function(data){
+					if(pw2.length > 0 && pw.length > 0){
+	  					if(data == 0){
+	  			 			$('#pwcheck2').html("");
+	 						$('#pwcheck1').html("비밀번호가 일치합니다.");
+	  					}else{
+	  			 			$('#pwcheck1').html("");
+	  						$('#pwcheck2').html("비밀번호가 다릅니다.");
+	  					}
+					}else{
+  			 			$('#pwcheck1').html("");
+  			 			$('#pwcheck2').html("");					
+					}
+				}
+			});
+		});
+		// 비밀번호 일치 확인 끝2					
+
+	});
+	// jquery 끝
+
+	
+	
 
 function check1(){
 	//id의 정보가 입력이 돼있는지 아닌지 판단.
@@ -100,12 +203,13 @@ function check1(){
 		document.fr.email.focus();
 		return false;
 	} // if	
+
 	
-	
-}
-</script>
-</head>
-<body>
+}	
+	</script>
+<!-- 자바스크립트 끝 -->
+
+
 
 <!-- navbar 시작 -->
 <jsp:include page="/navbar/navbar.jsp" />
@@ -116,27 +220,28 @@ function check1(){
  
  <!-- 컨테이너 시작 -->
  <div class="container-md">
-  <form class="row g-3" action="insertPro.jsp" method="post" name="fr">
+  <form class="row g-3" action="insertPro.jsp" method="post" name="fr" id="fr">
  
    <!-- 아이디 --> 
    <div class="form-floating mb-3">
     <input type="text" class="form-control" id="id" placeholder="ID" name="id">
     <label for="floatingInput">ID</label>
-    <span id="idcheck1" style="color: green; display: none;">사용가능한 아이디입니다.</span>
-    <span id="idcheck2" style="color: red; display: none;">이미 존재하는 아이디 입니다.</span>    
+    <span id="idcheck1" style="color: green;"></span>
+    <span id="idcheck2" style="color: red;"></span>    
    </div>
    
    
    <!-- 비밀번호 -->   
    <div class="form-floating">
-    <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pw">
+    <input type="password" class="form-control" id="pw" placeholder="Password" name="pw">
     <label for="floatingPassword">Password</label>
    </div>
    <!-- 비밀번호 확인 -->
    <div class="form-floating">
-    <input type="password" class="form-control" id="floatingPassword" placeholder="Password Confirm" name="pw2">
+    <input type="password" class="form-control" id="pw2" placeholder="Password Confirm" name="pw2">
     <label for="floatingPassword">Password Confirm</label>
-    <span id="pwcheck" style="color: red; display: none;">비밀번호가 일치합니다.</span>
+    <span id="pwcheck1" style="color: green;"></span>
+    <span id="pwcheck2" style="color: red;"></span>    
    </div>  
    
    
@@ -161,7 +266,7 @@ function check1(){
 
   <!-- 제출 버튼 -->   
   <div class="col-sm30 p-5" style="text-align:center;">
-   <input class="btn btn-primary btn-block" type="submit" value="가입하기" onclick="return check1()">
+   <input class="btn btn-primary btn-block" type="submit" value="가입하기" onclick="return check1()" id="submit">
   </div>
 
  </form>
@@ -173,23 +278,7 @@ function check1(){
 <jsp:include page="/footer/footer.jsp" />
 <!-- footer 끝 -->
 
-<!-- 아이디 중복검사 시작 -->
-<script type="text/javascript">
-// 	$('#idinput').on("propertychange change keyup paste input", function(){
 
-// 		var memberId = $('#idinput').val();
-// 		var data = {memberId : memberId}
-		
-// 		$.ajax({
-// 			type : "post",
-// 			url : "/member/memberIdChk",
-// 			data : data
-// 		});
-		
-// 	});
-
-</script>
-<!-- 아이디 중복검사 끝 -->
 	
 </body>
 </html>

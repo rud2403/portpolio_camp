@@ -27,17 +27,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!-- jquery 준비 끝 -->
 
-<!-- jquery 코드 시작 -->
-<script type="text/javascript">
-	$(function() {
-		$('#like').click(function() {
-			alert("즐겨찾기");
-		});
-	});
-</script>
-<!-- jquery 코드 시작 -->
-
-
 <!-- 우편번호 스크립트 시작 -->
 <script>
 
@@ -118,36 +107,59 @@
 	%>
 
 	<script type="text/javascript">
-		<!-- jquery 시작 -->
-		$(function() {
-			$("#cc2").hide();
-			
-			$("#cc1").click(function(){
-				$("#cc2").click();
-			});
-
-		});
-	</script>
-		<!-- jquery 끝 -->
-
-
-
-
-	<!-- id 값 받아오기 시작 -->
-	<script type="text/javascript">
-		<%
-		String id = (String)session.getAttribute("id");
-		%>
-		
+	
+		<%String id = (String)session.getAttribute("id");%>	
+	
+		// 삭제버튼 기능 시작
 	    function con() {
 	        if (!confirm("정말 삭제하시겠습니까?")) {
 	        	// 아니오 버튼 누를 시 창 닫음.
 	        } else {
 	            location.href="/Portpolio_camp/freecamp/deletePro.jsp?pageNum=<%=pageNum%>&num=<%=num%>";
 	  	    }
-	    }
+	    }	
+		// 삭제버튼 기능 끝
+	    
+		// jquery 코드 시작
+		$(function() {
+			
+			// 글수정 모달 취소 기능 시작
+			$("#cc2").hide();
+			
+			$("#cc1").click(function(){
+				$("#cc2").click();
+			});			
+			// 글수정 모달 취소 기능 끝
+			
+			// 즐겨찾기 버튼 기능 시작			
+			$('#like').click(function() {
+				var bname = '<%=bb.getName()%>'
+				var mid = '<%=(String)session.getAttribute("id")%>';
+				if(mid == "null"){
+					// 로그인이 안됐을 경우
+					alert("로그인이 필요한 동작입니다.");
+				}else{
+					$.ajax({
+						url : "likecampAjax.jsp",
+						type : "post",
+						data : {mid:mid, bname:bname},
+						success:function(data){
+							if(data == -1){
+		 						alert('이미 존재하는 즐겨찾기입니다.');
+							}else{
+								alert('즐겨찾기 완료 ★');
+							}
+						}
+					});					
+					
+				}			
+			});
+			// 즐겨찾기 버튼 기능 끝			
+			
+		});
+		// jquery 코드 끝
+
 	</script>
-	<!-- id 값 받아오기 끝 -->
 
 
 <!-- navbar 시작 -->
@@ -173,6 +185,7 @@
 	<!-- 조회수 및 수정 삭제 줄 시작 -->	
 	<div class="row">
 				<%
+				// 아이디 어드민일 때
 				try {
 					if(id.equals("admin")){ %>
 						<div class="col-1 text-center">
@@ -188,32 +201,30 @@
 					<%
 					
 					}else{
+						// 아이디 어드민이 아닐 때
 						%>
 						<div class="col-1 text-center"></div>
 						<div class="col-9"></div>
 						<div class="col-1">
-							<button type="button" class="btn btn-outline-danger active" id="like">♥ 즐겨찾기</button>
+							<button type="button" class="btn btn-outline-danger" id="like">♥ 즐겨찾기</button>
 						</div>			
 						<div class="col-1 mt-1">
 							<b>조회수 <%=bb.getReadcount() %></b>
 						</div>
 					<%
-						
-						
 					}
 				}catch (Exception e) {
-
+					// 로그인 안했을 때
 					%>
 						<div class="col-1 text-center"></div>
 						<div class="col-9"></div>
 						<div class="col-1">
-							<button type="button" class="btn btn-outline-danger active" id="like">♥ 즐겨찾기</button>
+							<button type="button" class="btn btn-outline-danger" id="like">♥ 즐겨찾기</button>
 						</div>			
 						<div class="col-1 mt-1">
 							<b>조회수 <%=bb.getReadcount() %></b>
 						</div>
 					<%
-				
 			} %>
 			
 	</div>
@@ -635,7 +646,7 @@
 				</div>
 				<div class="col">
 					화장실<br>
-					<%if(bb.getFishing().equals("y")){%>
+					<%if(bb.getToilet().equals("y")){%>
 						있음
 						<%}else{%>
 						없음
@@ -643,7 +654,7 @@
 				</div>
 				<div class="col">
 					주차장<br>
-					<%if(bb.getFishing().equals("y")){%>
+					<%if(bb.getPark().equals("y")){%>
 						있음
 						<%}else{%>
 						없음
@@ -651,7 +662,7 @@
 				</div>
 				<div class="col">
 					물놀이<br>
-					<%if(bb.getFishing().equals("y")){%>
+					<%if(bb.getWater().equals("y")){%>
 						가능
 					<%}else{%>
 						불가능
@@ -825,7 +836,7 @@
 		</div>
 		<div class="col-2"></div>
 	</div>
-	<!-- 댓글 제목 끝 -->
+	<!-- 댓글 내용 끝 -->
 							
 							
 
@@ -842,7 +853,7 @@
 	<hr>
  	<!-- 목록으로 row 시작 -->
 	<div class="row text-center">
-		<div><button type="button" class="btn btn-secondary" onclick="location.href='/Portpolio_camp/freecamp/freeForm.jsp?pageNum=<%=pageNum %>'">목록으로</button></div>
+		<div><button type="button" class="btn btn-secondary" onclick="location.href='/Portpolio_camp/freecamp/freeForm.jsp'">목록으로</button></div>
 	</div>
  	<!-- 목록으로 row 끝 -->
 </body>

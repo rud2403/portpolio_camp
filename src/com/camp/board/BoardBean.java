@@ -33,7 +33,14 @@ public class BoardBean {
 	private int re_ref; // 부모글(원글)에서 달린 답변글을 표기하기 위한 그룹번호
 	private int re_lev; // 답글의 들여쓰기, 일반글은 0 (들여쓰기 없음)
 	private int re_seq; // 답글의 순서, 일반글 0
+	private int count;
 	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public int getRe_ref() {
 		return re_ref;
 	}
@@ -211,7 +218,7 @@ public class BoardBean {
 				+ ", coment=" + coment + ", filename=" + filename + ", filename2=" + filename2 + ", filename3="
 				+ filename3 + ", kind=" + kind + ", ip=" + ip + ", price=" + price + ", trade=" + trade + ", state="
 				+ state + ", id=" + id + ", pw=" + pw + ", re_ref=" + re_ref + ", re_lev=" + re_lev + ", re_seq="
-				+ re_seq + "]";
+				+ re_seq + ", count=" + count + "]";
 	}
 	
 }
