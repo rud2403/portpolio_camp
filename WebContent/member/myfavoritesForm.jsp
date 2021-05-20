@@ -111,17 +111,21 @@
 			BoardBean bb = (BoardBean)boardList.get(i);
 			%>		
 			<div class="card m-3" style="width: 18rem;">
+			<%if(bb.getFilename().equals("null")){ %>
+			  <img src="https://allways.smotor.com/wp-content/uploads/2020/04/0429_%EC%BA%A0%ED%95%91_12.jpg" class="card-img-top" alt="..." width="180" height="200" onclick="location.href='/Portpolio_camp/freecamp/content.jsp?num=<%=bb.getNum()%>'" style=" cursor:pointer;">
+			 <%}else{ %>
 			  <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="card-img-top" alt="..." width="180" height="200" onclick="location.href='/Portpolio_camp/freecamp/content.jsp?num=<%=bb.getNum()%>'" style=" cursor:pointer;">
+			 <%} %>
 			  <div class="card-body">
 			    <h5 class="card-title" onclick="location.href='/Portpolio_camp/freecamp/content.jsp?num=<%=bb.getNum()%>'" style=" cursor:pointer;"><%=bb.getName() %></h5>
 			    <p class="card-text"><%=bb.getAddress() %></p>
 			    <p class="card-text">
 					난이도 <%if(bb.getLevel().equals("상")){ %>
-								★★★
+							  ★★★
 					      <%}else if(bb.getLevel().equals("중")){ %>
-					       		★★
+					       	  ★★
 					       <%}else{ %>
-					     	    ★
+					     	  ★
 					       <%} %>
 				</p>
 				<input type="button" class="btn btn-danger btn-sm"  id="<%=bb.getName()%>" value="삭제하기" onclick="del()">

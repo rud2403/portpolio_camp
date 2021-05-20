@@ -104,7 +104,6 @@ public class LikeDAO {
 						check = -1;
 					}else{
 						// 겹치는 목록 없음
-						System.out.println("밑으로 빠졌다 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ");
 						System.out.println("디비에 있는 캠핑지 이름은 @@@@@@@@@@ : " + rs.getString("bname"));			
 						System.out.println("현재 게시글 캠핑지 이름은 ########## : " + lb.getBname());						
 						// 3 sql (글 번호를 계산하는 구문)
@@ -143,6 +142,19 @@ public class LikeDAO {
 						pstmt.executeUpdate();
 
 						System.out.println("sql구문 실행 완료 : 즐겨찾기 추가 완료");
+						
+						
+						// camp_camp 테이블의 count 1올리는 sql
+						
+						sql = "update camp_camp set count = count + 1 where name= ?";
+						
+						pstmt = conn.prepareStatement(sql);
+						
+						pstmt.setString(1, lb.getBname());						
+											
+						pstmt.execute();
+
+						System.out.println("즐겨찾기 cout증가 완료 !!!!!!!!!!!");
 					}
 	
 			} catch (SQLException e) {
@@ -155,6 +167,98 @@ public class LikeDAO {
 				return check;
 			}
 		// insertLike(LikeBean lb) 끝	
+		
+
+
+//////////////insertLike 백업 /////////////////////////////		
+		// insertLike(LikeBean bb) 시작 ( 캠핑 게시판 글쓰기 기능)
+//		public int insertLike(LikeBean lb) {
+//			int check = 0;
+//			int num = 0;
+//
+//			try {
+//				// 1 드라이버 로드
+//				// 2 디비 연결
+//				// => 한번에 처리하는 메소드로 변경
+//				conn = getConnection();
+//				
+//				sql = "select * from camp_like where mid=?";
+//				
+//				pstmt = conn.prepareStatement(sql);
+//
+//				pstmt.setString(1, lb.getMid());
+//								
+//				rs = pstmt.executeQuery();
+//				
+//				
+//				while(rs.next()){
+//					
+//					// 현재 캠핑지 이름이 DB안의 캠핑지 이름중에 존재할 때
+//					if(rs.getString("bname").equals(lb.getBname())){
+//						// 이미 존재하는 즐겨찾기 목록이다.
+//						System.out.println("디비에 있는 캠핑지 이름은 @@@@@@@@@@ : " + rs.getString("bname"));			
+//						System.out.println("현재 게시글 캠핑지 이름은 ########## : " + lb.getBname());
+//						check = -1;
+//					}else{
+//						// 겹치는 목록 없음
+//						System.out.println("디비에 있는 캠핑지 이름은 @@@@@@@@@@ : " + rs.getString("bname"));			
+//						System.out.println("현재 게시글 캠핑지 이름은 ########## : " + lb.getBname());						
+//						// 3 sql (글 번호를 계산하는 구문)
+//						}
+//					}
+//				
+//					if(check == 0){
+//						sql = "select max(lnum) from camp_like";
+//
+//						pstmt = conn.prepareStatement(sql);
+//
+//						// 4 sql 실행
+//						rs = pstmt.executeQuery();
+//
+//						// 5 데이터 처리
+//						// max(num) - sql 함수를 실행했을 경우 커서 이동 가능(데이터 여부 상관없음)
+//						// num - sql 칼럼의 경우 커서 이동 불가능
+//						if (rs.next()) {
+//							// num = rs.getInt("mxa(num)") + 1;
+//							num = rs.getInt(1) + 1;
+//						}
+//
+//						System.out.println(" 글 번호 : " + num);
+//						
+//						// 3 sql 작성 (insert) & pstmt 객체 생성
+//						sql = "insert into camp_like values(?, ?, ?)";
+//
+//						pstmt = conn.prepareStatement(sql);
+//
+//						pstmt.setInt(1, num);
+//						pstmt.setString(2, lb.getMid());
+//						pstmt.setString(3, lb.getBname());
+//
+//						// 4 sql 실행
+//
+//						pstmt.executeUpdate();
+//
+//						System.out.println("sql구문 실행 완료 : 즐겨찾기 추가 완료");
+//						
+//					}
+//	
+//			} catch (SQLException e) {
+//				System.out.println("디비 연결 실패 !!");
+//				e.printStackTrace();
+//			} finally {
+//				// 자원해제
+//				closeDB();
+//			}
+//				return check;
+//			}
+		// insertLike(LikeBean lb) 끝		
+//////////////insertLike 백업 /////////////////////////////		
+		
+		
+		
+		
+		
+		
 		
 		
 		// getLikeCount() 시작 ( 캠핑장 즐겨찾기 수 기능 )
@@ -297,6 +401,20 @@ public class LikeDAO {
 					pstmt.setString(2, mid);					
 										
 					pstmt.executeUpdate();
+					
+
+					// camp_camp 테이블의 count 1내리는 sql
+					
+					sql = "update camp_camp set count = count - 1 where name= ?";
+					
+					pstmt = conn.prepareStatement(sql);
+					
+					pstmt.setString(1, lb.getBname());						
+										
+					pstmt.execute();
+
+					System.out.println("즐겨찾기 cout감소 완료 !!!!!!!!!!!");
+					
 
 					check = 0;
 						
