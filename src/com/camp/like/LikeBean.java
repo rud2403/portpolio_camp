@@ -2,16 +2,16 @@ package com.camp.like;
 
 public class LikeBean {
 
-	private int num;
+	private int lnum;
 	private String mid;
 	private String bname;
 	
 
 	public int getNum() {
-		return num;
+		return lnum;
 	}
-	public void setNum(int num) {
-		this.num = num;
+	public void setNum(int lnum) {
+		this.lnum = lnum;
 	}
 	public String getMid() {
 		return mid;
@@ -29,7 +29,7 @@ public class LikeBean {
 
 	@Override
 	public String toString() {
-		return "likeBean [num=" + num + ", mid=" + mid + ", bname=" + bname + "]";
+		return "likeBean [lnum=" + lnum + ", mid=" + mid + ", bname=" + bname + "]";
 	}	
 	
 }

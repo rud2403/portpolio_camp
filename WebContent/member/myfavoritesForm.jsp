@@ -1,3 +1,4 @@
+<%@page import="com.camp.board.BoardBean"%>
 <%@page import="com.camp.like.LikeBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.camp.like.LikeDAO"%>
@@ -44,7 +45,7 @@
 	// 게시판 페이징 처리 : DB에서 원하는 만큼만 글 가져오기
 	
 	// 한페이지당 보여줄 글의 개수
-	int pageSize = 5;
+	int pageSize = 8;
 	
 	// 지금 페이지가 몇 페이지인지 확인
 	String pageNum = request.getParameter("pageNum");
@@ -77,6 +78,7 @@
 	
 </head>
 <body>
+
 <!-- navbar 시작 -->
  <jsp:include page="/navbar/navbar.jsp" />
  
@@ -97,26 +99,39 @@
 	<!-- 오른쪽 col 시작 -->	
 	<div class="col-10 text-center mt-5">
 		<div class="row">
-			<h3>캠핑장 즐겨찾기</h3>
-			즐겨찾기 총 <%=cnt %>개
+			<h3><%=mid %>님의 캠핑장 즐겨찾기</h3>
 		</div>
 		<div class="row">
+		<div class="col-1"></div>
+		<div class="col-10">
+		<div class="row">
 
-	  	<%for(int i = 0;i < boardList.size(); i++){ 
-			LikeBean lbn = (LikeBean)boardList.get(i);
-		%>		
 		
-			<div class="card m-3" style="width: 18rem; cursor:pointer;" onclick="location.href='/Portpolio_camp/freecamp/content.jsp?num=2'">
-			  <img src="http://img.etoday.co.kr/pto_db/2019/10/600/20191001173327_1372185_787_590.jpg" class="card-img-top" alt="...">
+			<%for(int i = 0;i < boardList.size(); i++){ 
+			BoardBean bb = (BoardBean)boardList.get(i);
+			%>		
+			<div class="card m-3" style="width: 18rem;">
+			  <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="card-img-top" alt="..." width="180" height="200" onclick="location.href='/Portpolio_camp/freecamp/content.jsp?num=<%=bb.getNum()%>'" style=" cursor:pointer;">
 			  <div class="card-body">
-			    <h5 class="card-title"><%=lbn.getBname() %></h5>
-			    <p class="card-text">부산</p>
-			    <a href="/Portpolio_camp/main/main.jsp" class="btn btn-danger btn-sm">삭제하기</a>
+			    <h5 class="card-title" onclick="location.href='/Portpolio_camp/freecamp/content.jsp?num=<%=bb.getNum()%>'" style=" cursor:pointer;"><%=bb.getName() %></h5>
+			    <p class="card-text"><%=bb.getAddress() %></p>
+			    <p class="card-text">
+					난이도 <%if(bb.getLevel().equals("상")){ %>
+								★★★
+					      <%}else if(bb.getLevel().equals("중")){ %>
+					       		★★
+					       <%}else{ %>
+					     	    ★
+					       <%} %>
+				</p>
+				<input type="button" class="btn btn-danger btn-sm"  id="<%=bb.getName()%>" value="삭제하기" onclick="del()">
 			  </div>
 			</div>
 
-		<%} %>			
-												
+		<%} %>
+		</div>
+		</div>
+		<div class="col-1"></div>
 		</div>
 	</div>
 	<!-- 오른쪽 col 시작 -->
@@ -131,5 +146,39 @@
  <jsp:include page="/footer/footer.jsp" />
 </div>
 <!-- footer 끝 -->
+
+
+<!-- 자바스크립트 시작 -->
+<script type="text/javascript">
+
+// function del() {
+// 	alert($(this).attr('id'));
+// }
+
+// 	jquery 시작
+	$(function() {
+		$('input[type="button"]').click(function() {
+			var bname = $(this).attr('id');
+			
+			$.ajax({
+				url : "likeDeleteAjax.jsp",
+				type : "post",
+				data : {bname:bname},
+				success:function(data){
+					if(data == 0){
+						alert("삭제완료");
+						window.location.reload();
+					}else{
+						alert("삭제실패 오류발생");
+					}
+				}
+			});				
+
+		});
+	});
+	//jquery 끝
+</script>
+<!-- 자바스크립트 끝 -->
+
 </body>
 </html>

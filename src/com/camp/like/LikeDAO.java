@@ -112,7 +112,7 @@ public class LikeDAO {
 					}
 				
 					if(check == 0){
-						sql = "select max(num) from camp_like";
+						sql = "select max(lnum) from camp_like";
 
 						pstmt = conn.prepareStatement(sql);
 
@@ -207,7 +207,7 @@ public class LikeDAO {
 			ArrayList BoardList = new ArrayList();
 
 			// 게시판 글 1개의 정보를 저장하는 객체
-			LikeBean lb = null;
+			BoardBean bb = null;
 
 			try {
 				// 1, 2 드라이버 로드, 디비 열결
@@ -220,8 +220,8 @@ public class LikeDAO {
 				//				ex) 1번글 -> 0번 인덱스
 				
 				
-				sql = "select * from camp_like where mid=? "
-						+ "order by num desc"
+				sql = "select * from camp_like left join camp_camp on camp_like.bname = camp_camp.name where mid=? "
+						+ "order by camp_like.lnum desc"
 						+ " limit ?,?";
 				
 
@@ -239,16 +239,18 @@ public class LikeDAO {
 				// 5 데이터 처리
 				while (rs.next()) {
 					// 데이터 있을 때 lb 객체 생성
-					lb = new LikeBean();
+					bb = new BoardBean();
 
 					// DB정보를 Bean에 저장하기
-					lb.setNum(rs.getInt("num"));
-					lb.setMid(rs.getString("mid"));
-					lb.setBname(rs.getString("bname"));
+					bb.setNum(rs.getInt("num"));
+					bb.setName(rs.getString("bname"));
+					bb.setAddress(rs.getString("address"));
+					bb.setLevel(rs.getString("level"));
+					bb.setFilename(rs.getString("filename"));
 
 					
 					// Bean -> ArrayList 한칸에 저장
-					BoardList.add(lb);
+					BoardList.add(bb);
 
 				} // while
 				
@@ -266,6 +268,51 @@ public class LikeDAO {
 		}
 		// getLikeList(int startRow, int pageSize) 끝
 		
-		
 
+		public int deleteLike(LikeBean lb, String mid) {
+
+			int check = -1;
+			
+			try {
+				// 1, 2 디비 연결
+				conn = getConnection();
+				// 3 sql 생성 &pstmt 객체 생성
+				sql="select * from camp_like where bname=? && mid=?";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				System.out.println("@@@@@@@@@@@@가져온 게시판이름의 값은 : " + lb.getBname());
+				System.out.println("@@@@@@@@@@@@가져온 세션 아이디 값은 : " + mid);
+				
+				pstmt.setString(1, lb.getBname());
+				pstmt.setString(2, mid);
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()){
+					sql = "delete from camp_like where bname=? && mid=?";
+					pstmt = conn.prepareStatement(sql);
+					
+					pstmt.setString(1, lb.getBname());
+					pstmt.setString(2, mid);					
+										
+					pstmt.executeUpdate();
+
+					check = 0;
+						
+				}else{
+					check = -1;
+				}
+				
+				System.out.println("글 삭제 완료" + check);
+			
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally{
+			closeDB();
+			}
+			
+			return check;
 		}
+
+	}

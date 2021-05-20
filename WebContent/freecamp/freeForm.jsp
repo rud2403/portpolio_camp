@@ -241,7 +241,6 @@
 	     	</div>
 	      	<div class="row">
 	      	난이도 <%if(bb.getLevel().equals("상")){ %>
-<!-- 			      	<img src="/Portpolio_camp/img/camp/star.png" height="20px" width="20px"> -->
 						★★★
 			      <%}else if(bb.getLevel().equals("중")){ %>
 			       	★★
