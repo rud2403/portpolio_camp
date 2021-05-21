@@ -19,10 +19,26 @@
 		// DB에 대한 처리를 하는 객체를 생성
 		MemberDAO bdao = new MemberDAO();
 		// 회원가입 기능 사용
-		bdao.insertMember(mb);
+		int check = bdao.insertMember(mb);
+		
+		if(check == 0){
 		// 페이지 이동
 		 response.sendRedirect("/Portpolio_camp/member/insertconfirmForm.jsp");
-		
+		}else if(check == -1){
+			%>
+			<script type="text/javascript">
+			 alert('중복된 아이디입니다.');
+			 location.href="/Portpolio_camp/member/insertForm.jsp"; 
+			</script>
+			<%
+		}else{
+			%>
+			<script type="text/javascript">
+			 alert('중복된 이메일입니다.');
+			 location.href="/Portpolio_camp/member/insertForm.jsp"; 
+			</script>			
+		<%
+		}
 		%>
 
 

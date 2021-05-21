@@ -72,7 +72,7 @@ public class MemberDAO {
 
 	
 	// insertMember 메소드 시작
-	public void insertMember(MemberBean mb) {
+	public int insertMember(MemberBean mb) {
 		int check = 0;
 		int num = 0;
 
@@ -82,6 +82,38 @@ public class MemberDAO {
 			// => 한번에 처리하는 메소드로 변경
 			conn = getConnection();
 
+			
+			// 아이디 검색하는 쿼리 작성 및 실행
+			sql = "select id from camp_member where id=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, mb.getId());
+
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				//중복되는 아이디 있음
+				return check = -1;
+			}
+		
+			
+			// 이메일 검색하는 쿼리 작성 및 실행
+			sql = "select email from camp_member where email=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, mb.getEmail());
+
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				//중복되는 이메일 있음
+				return check = -2;
+			}			
+
+				
+			
 			// 3 sql (회원 번호를 계산하는 구문)
 			sql = "select max(num) from camp_member";
 
@@ -99,6 +131,7 @@ public class MemberDAO {
 			}
 
 			System.out.println(" 회원 번호 : " + num);
+			
 
 			// 3 sql 작성 (insert) & pstmt 객체 생성
 			sql = "insert into camp_member values(?, ?, ?, ?, ?, ?, now())";
@@ -116,7 +149,8 @@ public class MemberDAO {
 			pstmt.executeUpdate();
 
 			System.out.println("sql구문 실행 완료 : 회원가입 완료");
-
+						
+			
 		} catch (SQLException e) {
 			System.out.println("디비 연결 실패 !!");
 			e.printStackTrace();
@@ -131,10 +165,94 @@ public class MemberDAO {
 			}
 
 		}
+		
+		System.out.println("check 넘버는 @@@@@ : " + check);
+		
+		return check;
 
 	} // insertMember 메소드 끝
 
 
+	
+	
+//	// insertMember() 백업 시작
+//		public void insertMember(MemberBean mb) {
+//			int check = 0;
+//			int num = 0;
+//
+//			try {
+//				// 1 드라이버 로드
+//				// 2 디비 연결
+//				// => 한번에 처리하는 메소드로 변경
+//				conn = getConnection();
+//
+//				
+//				// 아이디 검색하는 쿼리 작성 및 실행
+//				// if 중복안되면 아래 insert 코드 실행, 중복되면 에러 코드 작성			
+//				
+//				
+//				
+//				// 3 sql (회원 번호를 계산하는 구문)
+//				sql = "select max(num) from camp_member";
+//
+//				pstmt = conn.prepareStatement(sql);
+//
+//				// 4 sql 실행
+//				rs = pstmt.executeQuery();
+//
+//				// 5 데이터 처리
+//				// max(num) - sql 함수를 실행했을 경우 커서 이동 가능(데이터 여부 상관없음)
+//				// num - sql 칼럼의 경우 커서 이동 불가능
+//				if (rs.next()) {
+//					// num = rs.getInt("mxa(num)") + 1;
+//					num = rs.getInt(1) + 1;
+//				}
+//
+//				System.out.println(" 회원 번호 : " + num);
+//				
+//
+//				// 3 sql 작성 (insert) & pstmt 객체 생성
+//				sql = "insert into camp_member values(?, ?, ?, ?, ?, ?, now())";
+//
+//				pstmt = conn.prepareStatement(sql);
+//
+//				pstmt.setInt(1, num);
+//				pstmt.setString(2, mb.getId());
+//				pstmt.setString(3, mb.getPw());
+//				pstmt.setString(4, mb.getName());
+//				pstmt.setString(5, mb.getPhone());
+//				pstmt.setString(6, mb.getEmail());
+//				// 4 sql 실행
+//
+//				pstmt.executeUpdate();
+//
+//				System.out.println("sql구문 실행 완료 : 회원가입 완료");
+//
+//			} catch (SQLException e) {
+//				System.out.println("디비 연결 실패 !!");
+//				e.printStackTrace();
+//			} finally {
+//				// 자원해제
+//				try {
+//					pstmt.close();
+//					conn.close();
+//				} catch (SQLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//
+//			}
+//
+//	// insertMember() 백업 끝
+
+	
+	
+	
+	
+	
+	
+	
+	
 	// deleteBoard(BoardBean bb) 시작
 	public int deleteMember(MemberBean mb) {
 		int check = -1;

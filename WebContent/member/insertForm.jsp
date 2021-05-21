@@ -27,25 +27,23 @@
 		var num = 0;
 
 		$('#id').keyup(function() {
-// 			alert("키업");
-
 			var id = $('#id').val();
 			$.ajax({
 				url : "memberIdChk.jsp",
 				type : "post",
 				data : {id:id},
 				success:function(data){
-// 					alert(data);
+					
 					//아이디 값이 있을 때
 					if(id.length > 0){
 	  					if(data == 0){
 	  						num = 0;
 	  			 			$('#idcheck2').html("");
-	 						$('#idcheck1').html("사용가능한 아이디입니다." + num);
+	 						$('#idcheck1').html("사용가능한 아이디입니다.");
 	  					}else{
 	  						num = -1;
 	  			 			$('#idcheck1').html("");
-	  						$('#idcheck2').html("사용할 수 없는 아이디 입니다." + num);
+	  						$('#idcheck2').html("사용할 수 없는 아이디 입니다.");
 	  					}
 					//아이디 값이 없을 때	  					
 					}else{
@@ -134,7 +132,19 @@ function check1(){
 	
 	// 사용자의 아이디가 "admin"인 경우 사용불가
 	// 사용자의 아이디가 5~10자리 내외로만 사용 가능
+
+
+    function isNumeric(s) { 
+          for (i=0; i<s.length; i++) { 
+            c = s.substr(i, 1); 
+            if (c < "0" || c > "9") return false; 
+          } 
+          return true; 
+    }
 	
+	
+	
+// 아이디 유효성 검사 시작		
 	if(document.fr.id.value.length < 1){
 		alert("아이디를 입력하세요.")
 		document.fr.id.focus();
@@ -156,7 +166,10 @@ function check1(){
 		return false;
 		// 아이디 길이가 5보다 작거나 10보다 클 경우 차단
 	} // if
+// 아이디 유효성 검사 끝		
+
 	
+// 비밀번호 유효성 검사 시작	
 	if(document.fr.pw.value == ""){
 		alert("비밀번호를 입력하세요.")
 		document.fr.pw.focus();
@@ -179,30 +192,92 @@ function check1(){
 		return false;
 	} // if
 	
+	
+    if (document.fr.pw.value == document.fr.id.value) {
+        alert("아이디와 비밀번호가 같습니다.")
+		document.fr.pw.focus();
+        return false;
+    }	
+// 비밀번호 유효성 검사 시작	
+
+// 이름 유효성 검사 시작
 	if(document.fr.name.value == ""){
 		alert("이름을 입력하세요.");
 		document.fr.name.focus();
 		return false;
 	} // if
 	
+    if(document.fr.name.value.length < 2){
+        alert("이름을 2자 이상 입력해주십시오.")
+		document.fr.name.focus();
+        return false;
+    }	
+// 이름 유효성 검사 끝
+
+	
+// 전화번호 유효성 검사 시작	
 	if(document.fr.phone.value == ""){
 		alert("전화번호 입력하세요.");
 		document.fr.phone.focus();
 		return false;
 	} // if
+
+    // 숫자가 아닌 것을 입력한 경우
+    if (!isNumeric(document.fr.phone.value.substr(0,5))) {
+        alert("전화번호는 숫자로 입력하세요.");
+		document.fr.phone.value="";
+		document.fr.phone.focus();
+        return false;
+    }		
 	
 	if(document.fr.phone.value.length != 11){
-		alert("잘못된 전화번호 입니다.");
+		alert("잘못된 전화번호 형식 입니다.");
 		document.fr.phone.value="";
 		document.fr.phone.focus();
 		return false;
 	} // if
+
+
+
+출처: https://suyou.tistory.com/150 [수유산장]
 	
+// 전화번호 유효성 검사 끝	
+	
+
+// 이메일 유효성 검사 시작
 	if(document.fr.email.value == ""){
 		alert("이메일을 입력하세요.");
 		document.fr.email.focus();
 		return false;
 	} // if	
+// 이메일 유효성 검사 끝
+
+	
+// 아이디, 이메일 중복시 회원가입 막기 시작		
+		var id = $('#id').val();
+		var pw = $('#pw').val();
+		var name = $('#name').val();
+		var phone = $('#phone').val();
+		var email = $('#email').val();
+			
+		$.ajax({
+			url : "insertAjax.jsp",
+			type : "post",
+			data : {id:id,pw:pw,name:name,phone:phone,email:email},
+			success:function(data){
+ 					if(data == 0){
+ 						alert('회원가입이 완료됐습니다.')
+ 						location.href="/Portpolio_camp/main/main.jsp";
+ 					}else if(data == -1){
+ 						alert('중복된 아이디입니다.')
+ 						$('#id').focus()
+ 					}else{
+ 						alert('중복된 이메일입니다.')
+ 						$('#email').focus()						
+ 					}
+			}
+		});
+// 아이디, 이메일 중복시 회원가입 막기 끝
 
 	
 }	
@@ -220,7 +295,7 @@ function check1(){
  
  <!-- 컨테이너 시작 -->
  <div class="container-md">
-  <form class="row g-3" action="insertPro.jsp" method="post" name="fr" id="fr">
+  <form class="row g-3" action="" method="post" name="fr" id="fr">
  
    <!-- 아이디 --> 
    <div class="form-floating mb-3">
@@ -247,26 +322,26 @@ function check1(){
    
    <!-- 이름 -->
    <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="floatingInput" placeholder="Name" name="name">
+    <input type="text" class="form-control" id="name" placeholder="Name" name="name">
     <label for="floatingInput">Name</label>
    </div>
    
    <!-- 전화번호 --> 
    <div class="form-floating mb-3">
-    <input type="tel" class="form-control" id="floatingInput" placeholder="PhoneNumber" name="phone">
+    <input type="tel" class="form-control" id="phone" placeholder="PhoneNumber" name="phone">
     <label for="floatingInput">Phone ('-' 제외)</label>
    </div>
    
    <!-- 이메일 -->
    <div class="form-floating mb-3">
-    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
+    <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email">
     <label for="floatingInput">Email address</label>
    </div>
 
 
   <!-- 제출 버튼 -->   
   <div class="col-sm30 p-5" style="text-align:center;">
-   <input class="btn btn-primary btn-block" type="submit" value="가입하기" onclick="return check1()" id="submit">
+   <input class="btn btn-primary btn-block" type="button" value="가입하기" onclick="return check1()" id="submit">
   </div>
 
  </form>
