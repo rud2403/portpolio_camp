@@ -67,7 +67,7 @@
 		 		// 아이디가 없는 경우 => 오류 (페이지 뒤로 이동)
 		 			%>
 		 		<script type="text/javascript">
-	 			alert(" 아이디 없음 ! ");
+	 			alert(" 중복되는 이메일입니다. ");
 	 			history.back();
 	 			</script>
 		 		

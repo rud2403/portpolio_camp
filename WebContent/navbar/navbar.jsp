@@ -10,23 +10,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!-- jquery 준비 끝 -->
 
-<!-- jquery 시작 -->
-<script type="text/javascript">
-// 	$(function (){
-// 		$('#sub_1').hide();
-		
-// 		$('#menu_1').mouseover(function(){
-// 			$('#sub_1').slideDown('fast');
-// 		});
-		
-// 		$('#menu_2').mouseleave(function(){
-// 			$('#sub_1').hide();
-// 		});
-
-// 	});
-
-</script>
-<!-- jquery 끝 -->
 
 
 <script type="text/javascript">	
@@ -55,7 +38,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #E9E9E9;">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/Portpolio_camp/main/main.jsp">CampMap</a>
+    <a class="navbar-brand" href="/Portpolio_camp/main/main.jsp"><img alt="" src="../favicon.ico" width="45" height="45"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

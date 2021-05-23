@@ -13,6 +13,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!-- jquery 준비 끝 -->
 
+<!-- 파비콘 시작 -->
+<link rel="shortcut icon" href="../favicon.ico">
+<!-- 파비콘 끝 -->
+
 <!-- 우편번호 시작 -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- 우편번호 끝 -->
@@ -67,7 +71,7 @@
 	        if (!confirm("정말 삭제하시겠습니까?")) {
 	        	// 아니오 버튼 누를 시 창 닫음.
 	        } else {
-	            location.href="/Portpolio_camp/freeboard/deletePro.jsp?pageNum=${param.pageNum}&num=${param.num}";
+	            location.href="/Portpolio_camp/freeboard/deletePro.jsp?pageNum=${param.pageNum}&num=${param.num}&re_ref=${param.re_ref}";
 	  	    }
 	    }
 	</script>
@@ -89,7 +93,13 @@
 			});
 
 			$("#back").click(function(){
-				history.back();
+				var prePage = document.referrer;
+				
+				if(prePage == "http://localhost:8088/Portpolio_camp/main/main.jsp"){
+	 				location.href="/Portpolio_camp/freeboard/freeboardForm.jsp";
+				}else{
+					location.href="/Portpolio_camp/freeboard/freeboardForm.jsp?pageNum=<%=pageNum %>";
+				}
 			});
 
 			

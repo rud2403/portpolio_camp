@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -80,10 +81,9 @@ public class MemberDAO {
 			// 1 드라이버 로드
 			// 2 디비 연결
 			// => 한번에 처리하는 메소드로 변경
-			conn = getConnection();
-
+			conn = getConnection();			
 			
-			// 아이디 검색하는 쿼리 작성 및 실행
+			// 아이디 검색하는 쿼리 작성 및 실행 (중복체크)
 			sql = "select id from camp_member where id=?";
 			
 			pstmt = conn.prepareStatement(sql);
@@ -967,6 +967,20 @@ public class MemberDAO {
 			// => 한번에 처리하는 메소드로 변경
 			conn = getConnection();
 
+			
+
+			// 아이디가 admin일 때
+			if(mb.getId().equals("admin")){
+				return check = -2;
+			}		
+			
+			// 아이디 길이가 5보다 작거나 10보다 클 경우 차단
+			if(!(5 <= mb.getId().length() && mb.getId().length() <= 10)){
+				return check = -3;
+			}
+						
+			
+			
 			// 3. sql작성 & pstmt 객체생성
 			sql = "select id from camp_member where id=?";
 

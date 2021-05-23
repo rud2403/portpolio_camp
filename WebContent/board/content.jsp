@@ -13,6 +13,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!-- jquery 준비 끝 -->
 
+<!-- 파비콘 시작 -->
+<link rel="shortcut icon" href="../favicon.ico">
+<!-- 파비콘 끝 -->
+
 <!-- 우편번호 시작 -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- 우편번호 끝 -->
@@ -132,17 +136,15 @@
 			});
 
 			$("#back").click(function(){
+				var prePage = document.referrer;
+				
+				if(prePage == "http://localhost:8088/Portpolio_camp/main/main.jsp"){
+	 				location.href="/Portpolio_camp/board/marketForm.jsp";
+				}else{
 				history.back();
+				}
 			});
 			
-			// 디비에 있는 pw값(bb.getPw)와 input으로 받아오는 pw값이 다를 경우 다르다 하기
-// 			$("#correct").click(function() {
-// 				var pw1 = $("#pw").val();
-// 				var pw2;
-// 				if(pw1 != pw2){
-// 					alert("비밀번호가 다릅니다.");
-// 				}
-// 			});
 			
 			$("#tsuccess").click(function() {
 				location.href="/Portpolio_camp/board/statePro.jsp?pageNum=<%=pageNum%>&num=<%=num%>"

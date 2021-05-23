@@ -13,8 +13,8 @@
 	<br><br><br><br><br><br>
 	<div class="footer text-center pb-4 mt-5" id="ft" >
 	<hr>
-		Copyright © 2021<br>
-		BGM | qkrrudals2403@naver.com | 010-2059-2403
+		Copyright © 2021 CampMap All rights reserved<br>
+		👨🏻‍💻 BGM | ✉ qkrrudals2403@naver.com | 📱 010-2059-2403
 	</div>
 
 

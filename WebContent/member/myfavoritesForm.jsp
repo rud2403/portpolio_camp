@@ -9,24 +9,28 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>캠핑장 즐겨찾기</title>
-	<!-- 부트스트랩 시작 -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
-	<!-- 부트스트랩 끝 -->
+<!-- 부트스트랩 시작 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+<!-- 부트스트랩 끝 -->
 
-	<!-- jquery 준비 시작 -->
-	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-	<!-- jquery 준비 끝 -->
+<!-- 파비콘 시작 -->
+<link rel="shortcut icon" href="../favicon.ico">
+<!-- 파비콘 끝 -->
+
+<!-- jquery 준비 시작 -->
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<!-- jquery 준비 끝 -->
 	
-	<!-- id 값 받아오기 시작 -->
-		<%
-		String mid = (String)session.getAttribute("id");
-		%>
-	<jsp:useBean id="lb" class="com.camp.like.LikeBean"></jsp:useBean>
-	<jsp:setProperty property="*" name="lb"/>	
-	<!-- id 값 받아오기 끝 -->
+<!-- id 값 받아오기 시작 -->
+	<%
+	String mid = (String)session.getAttribute("id");
+	%>
+<jsp:useBean id="lb" class="com.camp.like.LikeBean"></jsp:useBean>
+<jsp:setProperty property="*" name="lb"/>	
+<!-- id 값 받아오기 끝 -->
 	
 
 <!-- DB글 정보 연동 시작 -->
@@ -128,7 +132,7 @@
 					     	  ★
 					       <%} %>
 				</p>
-				<input type="button" class="btn btn-danger btn-sm"  id="<%=bb.getName()%>" value="삭제하기" onclick="del()">
+				<input type="button" class="btn btn-danger btn-sm"  id="<%=bb.getName()%>" value="삭제하기">
 			  </div>
 			</div>
 
@@ -137,8 +141,81 @@
 		</div>
 		<div class="col-1"></div>
 		</div>
+
+<!-- page네비 시작 -->
+
+	<div class="row">
+		<div class="col-5"></div>
+		<div class="col-lg-3">
+		<nav aria-label="Page navigation example">
+		  	<ul class="pagination">
+		<%
+		///////////////////////////////////////////////////
+		// 페이징 처리 - 하단부 링크
+		if(cnt != 0){
+			// 글이 있을 때 표시
+			// 전체 페이지 수 계산
+			// ex) 50개 -> 한 페이지당 10개씩 출력, 필요한 페이지 개수 = 5개
+			//     57개 -> 필요한 페이지 개수 = 6개
+			
+			int pageCount = cnt/pageSize+(cnt % pageSize == 0? 0:1);
+			
+			// 한 화면에 보여줄 페이지 번호의 개수 (페이지 블록)
+			int pageBlock = 3;
+			
+			// 페이지 블록의 시작페이지 번호
+			// ex) 1~5페이지 : 1~10 페이지 : 1, 11~20페이지 : 11
+			int startPage = ((currentPage-1)/pageBlock) * pageBlock +1;
+			
+			// 페이지 블록의 끝 페이지 번호
+			int endPage = startPage+pageBlock-1;
+			
+			if(endPage > pageCount){
+				endPage = pageCount;
+			}
+			
+			// 이전
+			
+			%>
+			    <li class="page-item"><a class="page-link"
+			    
+			    <%if(startPage > pageBlock){ %>
+			    
+			     href="/Portpolio_camp/member/myfavoritesForm.jsp?pageNum=<%=startPage-pageBlock%>"
+			    
+			    <%} %>
+			    >&laquo;</a></li>
+			<%
+			
+			// 숫자 1...5
+			for(int i = startPage; i <= endPage; i++){
+			%>
+			    <li class="page-item"><a class="page-link" href="/Portpolio_camp/member/myfavoritesForm.jsp?pageNum=<%=i %>"><%=i %></a></li>
+			<%
+			}
+			// 다음(기존의 페이지 블럭보다 페이지의 수가 많을 때)
+				%>
+			    <li class="page-item"><a class="page-link"
+			    
+			    <%if(endPage < pageCount){ %>
+			     href="/Portpolio_camp/member/myfavoritesForm.jsp?pageNum=<%=startPage + pageBlock%>"
+			     <%} %>
+			     
+			     >&raquo;</a></li>
+			    <%
+		}
+	
+	%>
+		  	</ul>
+		</nav>
+		</div>
+		<div class="col-4"></div>
 	</div>
-	<!-- 오른쪽 col 시작 -->
+	
+	<!-- page네비 끝 -->		
+		
+	</div>
+	<!-- 오른쪽 col 끝 -->
 	
 </div>
 
@@ -154,10 +231,6 @@
 
 <!-- 자바스크립트 시작 -->
 <script type="text/javascript">
-
-// function del() {
-// 	alert($(this).attr('id'));
-// }
 
 // 	jquery 시작
 	$(function() {

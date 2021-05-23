@@ -1,3 +1,6 @@
+<%@page import="com.camp.reply.ReplyBean"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.camp.reply.ReplyDAO"%>
 <%@page import="com.camp.board.BoardBean"%>
 <%@page import="com.camp.board.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -22,6 +25,10 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 <!-- 부트 스트랩 끝 -->
+
+<!-- 파비콘 시작 -->
+<link rel="shortcut icon" href="../favicon.ico">
+<!-- 파비콘 끝 -->
 
 <!-- jquery 준비 시작 -->
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -105,6 +112,29 @@
  		BoardBean bb = bdao.getBoard(num);
 	
 	%>
+	
+	
+	<!-- DB 데이터 가져오기 시작 -->
+	<%
+	// 디비에 저장된 글의 개수를 알기
+	
+	// BoardDAO 객체 생성
+	ReplyDAO rdao = new ReplyDAO();
+	
+	// 디비에 있는 글의 수를 계산하는 메소드 생성 -> 호출
+	// getBoardCount();
+	int cnt = rdao.getReplyCount();
+	
+
+	
+
+	// 디비에 저장된 모든 글 정보를 가져오기
+	//ArrayList replyList = rdao.getfreeBoardList();
+	ArrayList replyList = rdao.getReplyList();
+	
+		
+	%>
+	<!-- DB 데이터 가져오기 끝 -->
 
 	<script type="text/javascript">
 	
@@ -129,7 +159,18 @@
 			$("#cc1").click(function(){
 				$("#cc2").click();
 			});			
-			// 글수정 모달 취소 기능 끝
+			// 글수정 모달 취소 기능 끝		
+			
+			// 댓글 수정 모달 취소 기능 시작
+			$("#rc2").hide();
+			
+			$("#rc1").click(function(){
+				$("#rc2").click();
+			});				
+			// 댓글 수정 모달 취소 기능 끝
+			
+			
+			
 			
 			// 즐겨찾기 버튼 기능 시작			
 			$('#like').click(function() {
@@ -156,11 +197,346 @@
 			});
 			// 즐겨찾기 버튼 기능 끝			
 			
+			// 댓글 기능 시작
+			// 댓글 눌렸을 때 수정 폼 나오기 시작
+			$('a').click(function() {
+				
+				var mid = '<%=(String)session.getAttribute("id")%>';
+				
+				var rnum = $(this).attr('id');
+				alert(rnum);
+				
+				var con = document.getElementById(rnum + "_rereply");
+				con.style.display = (con.style.display != 'none') ? "none" : "block";
+				
+				var reresub = document.getElementById(rnum + "_reresub");
+				var recoment = document.getElementById(rnum + "_recoment");
+
+				// 대댓글 작성 버튼 시작
+				$(reresub).click(function() {
+					
+ 					var coment = $(recoment).val();
+					alert(rnum); // 대댓글 번호
+					alert(coment); // 대댓글 내용
+					alert(mid); // 누가
+					
+					if(mid == "null"){
+						// 로그인이 안됐을 경우
+						alert("로그인이 필요한 동작입니다.");
+					}else{
+						$.ajax({
+							url : "rereplyAjax.jsp",
+							type : "post",
+							data : {rnum:rnum, mid:mid, coment:coment},
+							success:function(data){
+								
+								alert(data);
+								location.reload();
+							}
+						});					
+						
+					};					
+					
+				});
+				
+				
+				// 대댓글 작성 버튼 끝
+				
+			});
+			// 댓글 눌렸을 때 수정 폼 나오기 끝
+
+			
+			
+			// 댓글 작성 버튼 시작
+			$('#resub').click(function() {
+					var bname = '<%=bb.getName()%>'
+					var mid = '<%=(String)session.getAttribute("id")%>';
+					var coment = $('#coment').val();
+					
+					
+					if(mid == "null"){
+						// 로그인이 안됐을 경우
+						alert("로그인이 필요한 동작입니다.");
+					}else{
+						$.ajax({
+							url : "replyAjax.jsp",
+							type : "post",
+							data : {mid:mid, bname:bname, coment:coment},
+							success:function(data){
+								
+								$('#coment').val("");
+								location.reload();
+							}
+						});					
+						
+					};
+
+			});
+			// 댓글 작성버튼 끝
+			
+			$('span').click(function() {
+				var rnum = $(this).attr('id');
+				
+				// 댓글 수정 시작
+ 				$('#csubmit').click(function() {
+ 					var coment = $('#ccoment').val();
+ 					 					
+					$.ajax({
+						url : "replyCorrectAjax.jsp",
+						type : "post",
+						data : {coment:coment, rnum:rnum},
+						success:function(data){
+							location.reload();
+						}
+					});
+				});
+ 				// 댓글 수정 끝
+ 				
+ 				// 댓글 삭제 시작
+ 				$('#dsubmit').click(function() { 					 					
+					$.ajax({
+						url : "replyDeleteAjax.jsp",
+						type : "post",
+						data : {rnum:rnum},
+						success:function(data){
+							location.reload();
+						}
+					});
+				}); 				
+ 				// 댓글 삭제 끝
+				 				
+ 				
+			});			
+			// 댓글 기능 끝
+			
+			
 		});
 		// jquery 코드 끝
 
 	</script>
+	
+	<!-- 날씨 api 가져오기 시작 -->	
+	<script>
+		// 위도 경도 변수 설정
+		var lat = <%=bb.getLat() %>;
+		var lng = <%=bb.getLng()%>;
 
+		$(function() {
+
+			$.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat='+lat+'&lon='+lng+'&appid=70931aa0594e66e3093a428260edb010&units=metric',function(result){
+
+				// 밀리세컨을 월 일 요일로 변환해주는 함수 시작
+				function convertTime(t) {
+					
+					var ot = new Date(t*1000);
+					
+					var mon = ot.getMonth() + 1;
+					var date = ot.getDate();
+					var day = ot.getDay();				
+				
+					// 숫자를 요일로 바꿔주는 switch 시작
+					switch(day){
+						case 1:
+							day = '월';
+						break;
+						case 2:
+							day = '화';
+						break;
+						case 3:
+							day = '수';
+						break;
+						case 4:
+							day = '목';
+						break;
+						case 5:
+							day = '금';
+						break;
+						case 6:
+							day = '토';
+						break;
+						case 0:
+							day = '일';
+						break;						
+					}
+					// 숫자를 요일로 바꿔주는 switch 끝
+
+					return mon + '/' + date + '(' + day + ')';
+				}
+				// 밀리세컨을 월 일 요일로 변환해주는 함수 끝
+					
+					
+				// 날짜 설정 시작
+				var ct0 = result.daily[0].dt;
+				var ct1 = result.daily[1].dt;
+				var ct2 = result.daily[2].dt;
+				var ct3 = result.daily[3].dt;
+				
+				
+				
+				// 날짜
+				var day0 = convertTime(ct0);
+				var day1 = convertTime(ct1);
+				var day2 = convertTime(ct2);
+				var day3 = convertTime(ct3);
+				
+				// 온도
+				var temp0 = result.daily[0].temp.day;
+				var temp1 = result.daily[1].temp.day;
+				var temp2 = result.daily[2].temp.day;
+				var temp3 = result.daily[3].temp.day;
+				
+				// 날씨 
+				var weather0 = result.daily[0].weather[0].main;
+				var weather1 = result.daily[1].weather[0].main;
+				var weather2 = result.daily[2].weather[0].main;
+				var weather3 = result.daily[3].weather[0].main;
+				
+				
+				// 영어 날씨를 한글로 바꿔주는 switch 시작
+				switch(weather0){
+					case 'Thunderstorm':
+						weather0 = '천둥 번개';
+					break;
+					case 'Drizzle':
+						weather0 = '흐리고 비';
+					break;
+					case 'Rain':
+						weather0 = '비';
+					break;
+					case 'Snow':
+						weather0 = '눈';
+					break;
+					case 'Atmosphere':
+						weather0 = '안개';
+					break;
+					case 'Clear':
+						weather0 = '맑음';
+					break;
+					case 'Clouds':
+						weather0 = '구름';
+					break;						
+					}
+					
+					switch(weather1){
+					case 'Thunderstorm':
+						weather1 = '천둥 번개';
+					break;
+					case 'Drizzle':
+						weather1 = '흐리고 비';
+					break;
+					case 'Rain':
+						weather1 = '비';
+					break;
+					case 'Snow':
+						weather1 = '눈';
+					break;
+					case 'Atmosphere':
+						weather1 = '안개';
+					break;
+					case 'Clear':
+						weather1 = '맑음';
+					break;
+					case 'Clouds':
+						weather1 = '구름';
+					break;						
+				}
+					
+					switch(weather2){
+					case 'Thunderstorm':
+						weather2 = '천둥 번개';
+					break;
+					case 'Drizzle':
+						weather2 = '흐리고 비';
+					break;
+					case 'Rain':
+						weather2 = '비';
+					break;
+					case 'Snow':
+						weather2 = '눈';
+					break;
+					case 'Atmosphere':
+						weather2 = '안개';
+					break;
+					case 'Clear':
+						weather2 = '맑음';
+					break;
+					case 'Clouds':
+						weather2 = '구름';
+					break;						
+				}
+					
+					switch(weather3){
+					case 'Thunderstorm':
+						weather3 = '천둥 번개';
+					break;
+					case 'Drizzle':
+						weather3 = '흐리고 비';
+					break;
+					case 'Rain':
+						weather3 = '비';
+					break;
+					case 'Snow':
+						weather3 = '눈';
+					break;
+					case 'Atmosphere':
+						weather3 = '안개';
+					break;
+					case 'Clear':
+						weather3 = '맑음';
+					break;
+					case 'Clouds':
+						weather3 = '구름';
+					break;						
+				}
+				// 영어 날씨를 한글로 바꿔주는 switch 끝
+				
+				// 날씨 아이콘
+				var weatherIcon0 = result.daily[0].weather[0].icon;
+				var weatherUrl0 = '<img alt="'+result.daily[0].weather[0].description+'" src="http://openweathermap.org/img/wn/'+weatherIcon0+'.png">';
+				
+				var weatherIcon1 = result.daily[1].weather[0].icon;
+				var weatherUrl1 = '<img alt="'+result.daily[1].weather[0].description+'" src="http://openweathermap.org/img/wn/'+weatherIcon1+'.png">';
+
+				var weatherIcon2 = result.daily[2].weather[0].icon;
+				var weatherUrl2 = '<img alt="'+result.daily[2].weather[0].description+'" src="http://openweathermap.org/img/wn/'+weatherIcon2+'.png">';
+
+				var weatherIcon3 = result.daily[3].weather[0].icon;
+				var weatherUrl3 = '<img alt="'+result.daily[3].weather[0].description+'" src="http://openweathermap.org/img/wn/'+weatherIcon3+'.png">';
+
+				// 풍속
+				var wind0 = result.daily[0].wind_speed;
+				var wind1 = result.daily[1].wind_speed;
+				var wind2 = result.daily[2].wind_speed;
+				var wind3 = result.daily[3].wind_speed;
+				
+				// jsp 페이지에 넣는 코드
+				$('#day0').append(day0);				
+				$('#temp0').append(temp0);
+				$('#weather0').append(weather0);
+				$('#weatherUrl0').append(weatherUrl0);						
+				$('#wind0').append(wind0);
+				
+				$('#day1').append(day1);				
+				$('#temp1').append(temp1);
+				$('#weather1').append(weather1);
+				$('#weatherUrl1').append(weatherUrl1);						
+				$('#wind1').append(wind1);
+				
+				$('#day2').append(day2);				
+				$('#temp2').append(temp2);
+				$('#weather2').append(weather2);
+				$('#weatherUrl2').append(weatherUrl2);						
+				$('#wind2').append(wind2);
+				
+				$('#day3').append(day3);				
+				$('#temp3').append(temp3);
+				$('#weather3').append(weather3);
+				$('#weatherUrl3').append(weatherUrl3);						
+				$('#wind3').append(wind3);
+			});
+		});
+	</script>
+	<!-- 날씨 api 가져오기 끝 -->	
 
 <!-- navbar 시작 -->
  <jsp:include page="/navbar/navbar.jsp" />
@@ -572,8 +948,8 @@
 				<div class="px-4 m-2"><%=bb.getAddress() %></div>
 			</div>
 			<div class="row m-1">
-				<div class="col-3"><span class="badge rounded-pill bg-primary">위도</span> <%=bb.getLng() %></div>
-				<div class="col-9"><span class="badge rounded-pill bg-danger">경도</span> <%=bb.getLat() %> </div>
+				<div class="col-4"><span class="badge rounded-pill bg-primary">위도</span> <%=bb.getLng() %></div>
+				<div class="col-8"><span class="badge rounded-pill bg-danger">경도</span> <%=bb.getLat() %> </div>
 			</div>
 		</div>
 		<!-- 위치 칼럼 끝 -->
@@ -606,7 +982,7 @@
 	<div class="row">
 		<div class="col-4"></div>
 		<div class="col-4 pt-4 m-2 text-center">
-			<h2>알립니다 !</h2>
+			<h2>📢 알립니다 ❗︎</h2>
 		</div>
 		<div class="col-4"></div>		
 	</div>
@@ -636,43 +1012,77 @@
 	    <blockquote class="blockquote mb-0">
 	      <div class="row">
 		      <div class="col">
-		      		필드<br>
+		      		<b>필드</b>
+		      		<br>
+		      		<%if(bb.getField().equals("계곡")){ %>
+		      			<img alt="" src="../img/camp/계곡.png" width="80" height="80"> <br>
+		      		<%}else if(bb.getField().equals("산")){ %>
+		      			<img alt="" src="../img/camp/산.png" width="80" height="80"> <br>
+		      		<%}else if(bb.getField().equals("바다")){ %>
+		      			<img alt="" src="../img/camp/바다.png" width="80" height="80"> <br>		      		
+		      		<%}else{ %>
+		      			<img alt="" src="../img/camp/기타.png" width="80" height="80"> <br>		      		
+		      		<%} %>
 					<%=bb.getField() %>
 				</div>
 				<div class="col">
-					바닥<br>
+					<b>바닥</b>
+					<br>
+					<%if(bb.getLand().equals("모래")){ %>
+		      			<img alt="" src="../img/camp/모래.png" width="80" height="80"> <br>					
+					<%}else if(bb.getLand().equals("잔디")){ %>
+		      			<img alt="" src="../img/camp/잔디.png" width="80" height="80"> <br>					
+					<%}else if(bb.getLand().equals("진흙")){ %>
+		      			<img alt="" src="../img/camp/진흙.png" width="80" height="80"> <br>					
+					<%}else if(bb.getLand().equals("모래")){ %>
+		      			<img alt="" src="../img/camp/모래.png" width="80" height="80"> <br>					
+					<%}else{ %>
+		      			<img alt="" src="../img/camp/기타.png" width="80" height="80"> <br>										
+					<%} %>
 					<%=bb.getLand() %>
 					
 				</div>
 				<div class="col">
-					화장실<br>
+					<b>화장실</b>
+					<br>
 					<%if(bb.getToilet().equals("y")){%>
+		      			<img alt="" src="../img/camp/화장실있음.png" width="80" height="80"> <br>										
 						있음
 						<%}else{%>
+		      			<img alt="" src="../img/camp/화장실없음.png" width="80" height="80"> <br>										
 						없음
 					<%} %>
 				</div>
 				<div class="col">
-					주차장<br>
+					<b>주차장</b>
+					<br>
 					<%if(bb.getPark().equals("y")){%>
+		      			<img alt="" src="../img/camp/주차가능.png" width="80" height="80"> <br>															
 						있음
 						<%}else{%>
+		      			<img alt="" src="../img/camp/주차금지.png" width="80" height="80"> <br>																					
 						없음
 					<%} %>
 				</div>
 				<div class="col">
-					물놀이<br>
+					<b>물놀이</b>
+					<br>
 					<%if(bb.getWater().equals("y")){%>
+		      			<img alt="" src="../img/camp/물놀이가능.png" width="80" height="80"> <br>																				
 						가능
 					<%}else{%>
+		      			<img alt="" src="../img/camp/물놀이금지.png" width="80" height="80"> <br>																									
 						불가능
 					<%} %>
 				</div>
 				<div class="col">
-					낚시<br>
+					<b>낚시</b>
+					<br>
 				<%if(bb.getFishing().equals("y")){%>
+		      			<img alt="" src="../img/camp/낚시가능.png" width="80" height="80"> <br>																								
 						가능
 					<%}else{%>
+		      			<img alt="" src="../img/camp/낚시금지.png" width="80" height="80"> <br>																													
 						불가능
 				<%} %>
 			 </div>
@@ -770,7 +1180,6 @@
 		  </a>
 		</div>
 		
-		
 		<%} %>
 		<%
 		}catch(Exception e){
@@ -785,67 +1194,207 @@
 	<div class="row">
 		<div class="col-4"></div>
 		<div class="col-4 pt-4 m-2 text-center">
-			<h4>날씨 정보</h4>
+			<h4>날씨</h4>
 		</div>
 	</div>
-	<!-- 날씨 제목 시작 -->				
+	<!-- 날씨 제목 끝 -->				
+
 
 	<!-- 날씨 내용 시작 -->					
 	<div class="row">
 		<div class="col-2"></div>
 		<div class="col-8 p-4 m-2 text-center">
-			날씨 api 넣기
+			<div class="card-group">
+			
+			  <div class="card">
+			    <span id="weatherUrl0"></span>
+			    <div class="card-body">
+			      <h5 class="card-title" id="day0"></h5>
+			      <p class="card-text">
+					<span id="weather0"> 날씨 : </span> <br>	
+					<span id="temp0"> 온도 : </span> <br>
+					<span id="wind0"> 풍속 : </span>
+				  </p>
+			    </div>
+			  </div>
+			  
+			  <div class="card">
+			    <span id="weatherUrl1"></span>
+			    <div class="card-body">
+			      <h5 class="card-title" id="day1"></h5>
+			      <p class="card-text">
+					<span id="weather1"> 날씨 : </span> <br>	
+					<span id="temp1"> 온도 : </span> <br>
+					<span id="wind1"> 풍속 : </span>
+				  </p>
+			    </div>
+			  </div>
+			  
+			  <div class="card">
+			    <span id="weatherUrl2"></span>
+			    <div class="card-body">
+			      <h5 class="card-title" id="day2"></h5>
+			      <p class="card-text">
+					<span id="weather2"> 날씨 : </span> <br>	
+					<span id="temp2"> 온도 : </span> <br>
+					<span id="wind2"> 풍속 : </span>
+				  </p>
+			    </div>
+			  </div>
+	
+			  <div class="card">
+			    <span id="weatherUrl3"></span>
+			    <div class="card-body">
+			      <h5 class="card-title" id="day3"></h5>
+			      <p class="card-text">
+					<span id="weather3"> 날씨 : </span> <br>	
+					<span id="temp3"> 온도 : </span> <br>
+					<span id="wind3"> 풍속 : </span>
+				  </p>
+			    </div>
+			  </div>
+	
+	
+			</div>
+			<div class="col-2"></div>
+		</div>
+	</div>	
+	<!-- 날씨 내용 끝 -->					
+	
+	<!-- 댓글 제목 시작 -->
+	<div class="row">
+		<div class="col-2"></div>
+		<div class="col-8">
+			<hr>
 		</div>
 		<div class="col-2"></div>
 	</div>
-	<!-- 날씨 내용 끝 -->					
+	<!-- 댓글 제목 끝 -->
 
-	<!-- 댓글 제목 시작 -->						
-<!-- 	<div class="row"> -->
-<!-- 		<div class="col-4"></div> -->
-<!-- 		<div class="col-4 pt-4 m-2 text-center"> -->
-<!-- 			<h4>댓글</h4> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-	<!-- 댓글 제목 끝 -->						
+	<!-- 댓글 리스트 시작 -->							
+	<div class="row">
+	<div class="col-2"></div>
+	<div class="col-8">
+		<table class="table">
+		  <tbody>
+			<%for(int i = 0;i < replyList.size(); i++){
+				ReplyBean rb = (ReplyBean)replyList.get(i);
+			%>
+		    <tr>
+		    
+		      <%if(bb.getName().equals(rb.getBname())){ %>
+		      
+		      <th scope="row"><%=rb.getMid() %></th>
+		      <td class="col-8">
+		      
+			    			<%
+					int wid = 0;
+					if(rb.getRe_lev() > 0){
+					wid = 10 * rb.getRe_lev(); 
+					%>
+					  <img alt="" src="level.gif" height="15" width="<%=wid%>">
+		 			  ┕
+					<%
+					}
+					%>
+			    
+		      	<a style="text-decoration-line: none; color: black; cursor:pointer;" id="<%=rb.getRnum()%>"><%=rb.getRe_lev()%><%=rb.getComent() %> </a>
+		      	<br>
+
+		      	<!-- 댓글 클릭했을 때 뜨는 대댓글 기능 시작 -->
+		      	<div style="display: none;" id="<%=rb.getRnum()%>_rereply">
+		      	<div class="form-floating mt-3">
+				  <textarea class="form-control" placeholder="Leave a comment here" id="<%=rb.getRnum()%>_recoment" name="recoment"></textarea>
+				  <label for="floatingTextarea">Comments</label>				  
+				</div>
+				<button type="button" class="btn btn-success btn-sm mt-2" id="<%=rb.getRnum()%>_reresub">등록하기</button>
+				</div>
+		      	<!-- 댓글 클릭했을 때 뜨는 대댓글 기능 끝 -->
+		      	
+		      </td>
+		      <%if(rb.getMid().equals(id)){ %>
+		      	<td class="col">
+		      	<span class="badge bg-light text-dark" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="cursor:pointer;" id="<%=rb.getRnum()%>">수정하기</span> / <span class="badge bg-light text-dark" style="cursor:pointer;"  data-bs-toggle="modal" data-bs-target="#exampleModal3" id="<%=rb.getRnum()%>">삭제하기</span>
+		      	</td>
+		      <%}else{ %>
+		      	<td class="col"></td>
+		      <%} %>
+		      <%} // if %>
+		    </tr>
+			<%} // for %>
+		    
+		  </tbody>
+		  
+
+		</table>
+	</div>
+	<div class="col-2"></div>
+	</div>					
+	<!-- 댓글 리스트 끝 -->							
 	
 	
-	<!-- 댓글 내용 시작 -->							
+	<!-- 댓글 작성 시작 -->							
 	<div class="row">
 		<div class="col-2"></div>
 		<div class="col-8 p-4 m-2 text-center">
-			<div id="disqus_thread"></div>
-			<script>
-			    /**
-			    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-			    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-			    /*
-			    var disqus_config = function () {
-			    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-			    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-			    };
-			    */
-			    (function() { // DON'T EDIT BELOW THIS LINE
-			    var d = document, s = d.createElement('script');
-			    s.src = 'https://campmap-1.disqus.com/embed.js';
-			    s.setAttribute('data-timestamp', +new Date());
-			    (d.head || d.body).appendChild(s);
-			    })();
-			</script>
-			<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			<div class="form-floating">
+			  <textarea class="form-control" placeholder="Leave a comment here" id="coment" name="coment" style="height: 100px"></textarea>
+			  <label for="floatingTextarea2">Comments</label>
+			</div>
+				<button type="button" class="btn btn-success btn-sm mt-2" id="resub">등록하기</button>
 		</div>
 		<div class="col-2"></div>
 	</div>
-	<!-- 댓글 내용 끝 -->
+	<!-- 댓글 작성 끝 -->
 							
-							
 
+	<!-- 댓글 수정 시작 -->
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">댓글 - 수정하기</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+				<div class="form-floating">
+				  <textarea class="form-control" placeholder="Leave a comment here" id="ccoment"></textarea>
+				  <label for="floatingTextarea">Comments</label>
+				</div>
+		      </div>
+		      <div class="modal-footer">
+		      	<button type="submit" class="btn btn-primary" id="csubmit">수정</button>
+			  	<button type="reset" class="btn btn-secondary" data-bs-dismiss="modal" id="rc1">취소</button>
+			  	<button type="reset" id="rc2">취소2</button>
+		        
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	<!-- 댓글 수정 끝 -->
 
+	<!-- 댓글 삭제 시작 -->
 
-
-
-
-
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">댓글 - 삭제하기</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        	정말로 댓글을 삭제 하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary" id="dsubmit">삭제</button>	      
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+	<!-- 댓글 삭제 끝 -->
 
 </div>
 <!-- container 끝 -->

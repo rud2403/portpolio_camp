@@ -12,7 +12,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 <!-- 부트스트랩 시작 -->
 
-
+<!-- 파비콘 시작 -->
+<link rel="shortcut icon" href="../favicon.ico">
+<!-- 파비콘 끝 -->
 
 <!-- jquery 준비 시작 -->
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -60,7 +62,7 @@
  <div class="row mt-5">
  	<div class="col"></div>
  	<div class="col text-center"> 
- 		<img alt="" src="dossier.png" style="width: 250px; height: 250px; ">
+ 		<img alt="" src="../img/mypage/dossier.png" style="width: 250px; height: 250px; ">
  	</div> 	
  	<div class="col"></div>
  </div>

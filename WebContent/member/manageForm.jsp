@@ -11,10 +11,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>내정보 관리</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+
+<!-- 파비콘 시작 -->
+<link rel="shortcut icon" href="../favicon.ico">
+<!-- 파비콘 끝 -->
 
 <script type="text/javascript">
 	function func1() {
@@ -45,7 +48,7 @@
 		con.style.display = (con.style.display != 'none') ? "none" : "block";
 	}
 	
-	// 비밀번호 유효성 검사
+	// 비밀번호 유효성 검사 시작
 	function pwcheck() {
 		if($("#pw").val() == ""){
 			alert("현재 비밀번호를 입력해주세요.");
@@ -61,10 +64,19 @@
 			alert("새 비밀번호 확인을 입력해주세요.");
 			$("#pw2").focus();
 			return false;
-			}	
+			}
+		
+	    if ($("#pw1").val() == '<%=session.getAttribute("id") %>') {
+	        alert("아이디와 비밀번호가 같습니다.")
+			$("#pw1").focus();
+	        return false;
+	    }		
+		
 	}
+	// 비밀번호 유효성 검사 끝
+
 	
-	// 이름 유효성 검사
+	// 이름 유효성 검사 시작
 	function nmcheck() {
 		
 		if($("#name").val() == ""){
@@ -72,10 +84,33 @@
 			$("#name").focus();
 			return false;
 		}
+		
+	    if($("#name").val().length < 2){
+	        alert("이름을 2자 이상 입력해주십시오.")
+			$("#name").focus();
+	        return false;
+	    }
+	    
+	    var nameRegExp = /^[가-힣]{2,4}$/;
+	    if (!nameRegExp.test($("#name").val())) {
+	        alert("이름이 올바르지 않습니다.");
+	        $("#name").focus();
+	        return false;
+	    }	    
+		
 	}
+	// 이름 유효성 검사 끝
 	
-	// 전화번호 유효성 검사
+	// 전화번호 유효성 검사 시작
 	function phcheck() {
+		
+	    function isNumeric(s) { 
+	          for (i=0; i<s.length; i++) { 
+	            c = s.substr(i, 1); 
+	            if (c < "0" || c > "9") return false; 
+	          } 
+	          return true; 
+	    }
 		
 		if($("#phone").val() == ""){
 			alert("전화번호를 입력해주세요.");
@@ -89,21 +124,40 @@
 			$("#phone").focus();
 			return false;
 		}
-	}
-	
-	// 이메일 유효성 검사
-	function echeck(){
 		
+	    if (!isNumeric($("#phone").val().substr(0,11))) {
+	        alert("전화번호는 숫자로 입력하세요.");
+			$("#phone").val("");
+			$("#phone").focus();
+	        return false;
+	    }
+	    
+		if($("#phone").val().substr(0,3) != '010'){
+			alert("010 으로 시작하는 휴대전화 번호를 입력해주세요.");
+			$("#phone").val("");
+			$("#phone").focus();
+			return false;		
+		}	    
+	}
+	// 전화번호 유효성 검사 끝
+	
+	// 이메일 유효성 검사 시작
+	function echeck(){
+		var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+
 		if($("#email").val() == ""){
 			alert("이메일을 입력해주세요.");
 			$("#email").focus();
 			return false;
-			}
+		}
 		
-		// 에이잭스 넣기
-		// 중복된 이메일 있으면 막기
-
+		if (regex.test($("#email").val()) === false) {
+	        alert("잘못된 이메일 형식입니다.");
+			$("#email").focus();
+	        return false;
+	    }		
 	}	
+	// 이메일 유효성 검사 시작
 	
 	
 	
@@ -225,13 +279,14 @@
 				      <td>
 					      <form action="/Portpolio_camp/member/managepwPro2.jsp" method="post" onsubmit="return pwcheck()">
 					     	<input type="hidden" name="id" value="<%=mb.getId() %>">
+					     	
 					      	<div id="i2" style="display: none;">
 					      		<div>현재 비밀번호 &nbsp;&nbsp;&nbsp;<input type="password" name="pw" id="pw"></div><br>
 					      		<div>새 비밀번호 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="pw1" id="pw1"></div><br>
 					      		<div>새 비밀번호 확인&nbsp;<input type="password" name="pw2" id="pw2"></div><br>
 					      		
-					   		<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
-					      	<input type="button" class="btn btn-outline-primary btn-sm" value="취소" onclick="func1();">	
+						   		<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
+						      	<input type="button" class="btn btn-outline-primary btn-sm" value="취소" onclick="func1();">	
 					      		
 					      	</div>
     							<%

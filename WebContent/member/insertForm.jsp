@@ -12,6 +12,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 <!-- 부트스트랩 끝-->
 
+<!-- 파비콘 시작 -->
+<link rel="shortcut icon" href="../favicon.ico">
+<!-- 파비콘 끝 -->
+
+
 <!-- jquery 준비 시작 -->
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!-- jquery 준비 끝 -->
@@ -37,13 +42,17 @@
 					//아이디 값이 있을 때
 					if(id.length > 0){
 	  					if(data == 0){
-	  						num = 0;
 	  			 			$('#idcheck2').html("");
 	 						$('#idcheck1').html("사용가능한 아이디입니다.");
-	  					}else{
-	  						num = -1;
+	  					}else if(data == -1){
 	  			 			$('#idcheck1').html("");
-	  						$('#idcheck2').html("사용할 수 없는 아이디 입니다.");
+	  						$('#idcheck2').html("중복되는 아이디가 있습니다.");
+	  					}else if(data == -2){
+	  			 			$('#idcheck1').html("");
+	  						$('#idcheck2').html("admin은 사용할 수 없는 아이디 입니다.");	  						
+	  					}else if(data == -3){
+	  			 			$('#idcheck1').html("");
+	  						$('#idcheck2').html("아이디 길이는 5~10입니다.");	  						
 	  					}
 					//아이디 값이 없을 때	  					
 					}else{
@@ -132,7 +141,8 @@ function check1(){
 	
 	// 사용자의 아이디가 "admin"인 경우 사용불가
 	// 사용자의 아이디가 5~10자리 내외로만 사용 가능
-
+ var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+ var nameRegExp = /^[가-힣]{2,4}$/;
 
     function isNumeric(s) { 
           for (i=0; i<s.length; i++) { 
@@ -144,7 +154,7 @@ function check1(){
 	
 	
 	
-// 아이디 유효성 검사 시작		
+// 아이디 유효성 검사 시작 (공백과 'admin'이 올 수없으며, 길이가 5~10인 영어와 숫자조합의 아이디만 가능하다.)
 	if(document.fr.id.value.length < 1){
 		alert("아이디를 입력하세요.")
 		document.fr.id.focus();
@@ -166,10 +176,20 @@ function check1(){
 		return false;
 		// 아이디 길이가 5보다 작거나 10보다 클 경우 차단
 	} // if
+	
+	for (var i = 0; i < document.fr.id.value.length; i++) {
+        chm = document.fr.id.value.charAt(i)
+        if (!(chm >= '0' && chm <= '9') && !(chm >= 'a' && chm <= 'z')&&!(chm >= 'A' && chm <= 'Z')) {
+            alert("아이디는 영문 대소문자, 숫자만 입력가능합니다.")
+			document.fr.id.value="";
+			document.fr.id.focus();
+            return false;
+        }
+    }	
 // 아이디 유효성 검사 끝		
 
 	
-// 비밀번호 유효성 검사 시작	
+// 비밀번호 유효성 검사 시작 (공백이 올 수 없으며, 아이디와 다르고, 비밀번호 확인과 일치해야한다.)
 	if(document.fr.pw.value == ""){
 		alert("비밀번호를 입력하세요.")
 		document.fr.pw.focus();
@@ -200,7 +220,7 @@ function check1(){
     }	
 // 비밀번호 유효성 검사 시작	
 
-// 이름 유효성 검사 시작
+// 이름 유효성 검사 시작 (공백이 올 수 없으며, 2글자이상의 한글이어야 한다.)
 	if(document.fr.name.value == ""){
 		alert("이름을 입력하세요.");
 		document.fr.name.focus();
@@ -211,11 +231,20 @@ function check1(){
         alert("이름을 2자 이상 입력해주십시오.")
 		document.fr.name.focus();
         return false;
-    }	
+    }
+	
+    
+    if (!nameRegExp.test(document.fr.name.value)) {
+        alert("이름이 올바르지 않습니다.");
+		document.fr.name.focus();
+        return false;
+    }
+
+	
 // 이름 유효성 검사 끝
 
 	
-// 전화번호 유효성 검사 시작	
+// 전화번호 유효성 검사 시작 (공백x, 010으로 시작하는 숫자로 된 11자리 번호)
 	if(document.fr.phone.value == ""){
 		alert("전화번호 입력하세요.");
 		document.fr.phone.focus();
@@ -223,7 +252,7 @@ function check1(){
 	} // if
 
     // 숫자가 아닌 것을 입력한 경우
-    if (!isNumeric(document.fr.phone.value.substr(0,5))) {
+    if (!isNumeric(document.fr.phone.value.substr(0,11))) {
         alert("전화번호는 숫자로 입력하세요.");
 		document.fr.phone.value="";
 		document.fr.phone.focus();
@@ -235,21 +264,41 @@ function check1(){
 		document.fr.phone.value="";
 		document.fr.phone.focus();
 		return false;
-	} // if
-
-
-
-출처: https://suyou.tistory.com/150 [수유산장]
+	} // if	
+	
+	if(document.fr.phone.value.substr(0,3) != '010'){
+		alert("010 으로 시작하는 휴대전화 번호를 입력해주세요.");
+		document.fr.phone.value="";
+		document.fr.phone.focus();
+		return false;		
+	}
 	
 // 전화번호 유효성 검사 끝	
 	
 
-// 이메일 유효성 검사 시작
+// 이메일 유효성 검사 시작 (공백x, 영어와 숫자조합으로 xxx@xxx.xxx 형식을 맞춰야한다.)
 	if(document.fr.email.value == ""){
 		alert("이메일을 입력하세요.");
 		document.fr.email.focus();
 		return false;
 	} // if	
+	
+	if (regex.test(document.fr.email.value) === false) {
+        alert("잘못된 이메일 형식입니다.");
+        document.fr.email.value="";
+		document.fr.email.focus();
+        return false;
+    }
+	
+	for (var i = 0; i < document.fr.email.value.length; i++) {
+        chm = document.fr.email.value.charAt(i)
+        if (!(chm >= '0' && chm <= '9') && !(chm >= 'a' && chm <= 'z') && !(chm >= 'A' && chm <= 'Z') && !(chm ='@')) {
+            alert("이메일은 영문 대소문자, 숫자만 입력가능합니다.")
+	        document.fr.email.value="";
+			document.fr.email.focus();
+            return false;
+        }
+    }	
 // 이메일 유효성 검사 끝
 
 	
@@ -269,10 +318,10 @@ function check1(){
  						alert('회원가입이 완료됐습니다.')
  						location.href="/Portpolio_camp/main/main.jsp";
  					}else if(data == -1){
- 						alert('중복된 아이디입니다.')
+ 						alert('중복된 아이디입니다.');
  						$('#id').focus()
  					}else{
- 						alert('중복된 이메일입니다.')
+ 						alert('중복된 이메일입니다.');
  						$('#email').focus()						
  					}
 			}
@@ -329,7 +378,7 @@ function check1(){
    <!-- 전화번호 --> 
    <div class="form-floating mb-3">
     <input type="tel" class="form-control" id="phone" placeholder="PhoneNumber" name="phone">
-    <label for="floatingInput">Phone ('-' 제외)</label>
+    <label for="floatingInput">Phone [ '-' 제외 ]</label>
    </div>
    
    <!-- 이메일 -->
