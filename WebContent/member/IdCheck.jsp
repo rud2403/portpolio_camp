@@ -55,7 +55,7 @@
  <div class="row mt-5">
  	<div class="col"></div>
  	<div class="col text-center"> 
- 		<img alt="" src="magnifier.png" style="width: 250px; height: 250px; ">
+ 		<img alt="" src="../img/mypage/magnifier.png" style="width: 250px; height: 250px; ">
  	</div> 	
  	<div class="col"></div>
  </div>

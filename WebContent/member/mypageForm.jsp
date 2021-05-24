@@ -17,6 +17,9 @@
 
 </head>
 <body>
+
+<%	String id = (String)session.getAttribute("id"); %>
+
 <!-- navbar 시작 -->
  <jsp:include page="/navbar/navbar.jsp" />
  
@@ -53,7 +56,7 @@
 		  <div class="card-body text-center my-5">
 		    <h5 class="card-title">내정보 관리</h5>
 		    <p class="card-text">가입 시 입력한 회원정보를 수정 합니다.</p>
-		    <a href="/Portpolio_camp/member/manageForm.jsp" class="btn btn-primary">이동하기</a>
+		    <a href="/Portpolio_camp/member/manageForm.jsp?id=<%=id %>" class="btn btn-primary">이동하기</a>
 		  </div>
 		</div>
 		<!-- 카드 종료 -->	

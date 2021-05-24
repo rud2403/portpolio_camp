@@ -57,6 +57,8 @@
 			// 상세보기 구현 끝
 
 			
+			// 캠핑지 추가 로직 = 게시판 num가 id이다.
+			// id에 맞게 #ck(게시글 num)으로 설정
 			// 지도 위치 이동 시작
 			$("#ck1").click(function(){
 			 	infowindow1.open(map, marker1);
@@ -67,12 +69,34 @@
  			 	infowindow2.open(map, marker2);
  			 	map.setCenter(markerPosition2);						
  			});
-			// 지도 위치 이동 끝
-
  			
-
-		
+ 			$("#ck3").click(function(){
+ 			 	infowindow3.open(map, marker3);
+ 			 	map.setCenter(markerPosition3);						
+ 			});
+ 			
+ 			$("#ck4").click(function(){
+ 			 	infowindow4.open(map, marker4);
+ 			 	map.setCenter(markerPosition4);						
+ 			});			
+ 			$("#ck5").click(function(){
+ 			 	infowindow5.open(map, marker5);
+ 			 	map.setCenter(markerPosition5);						
+ 			});				
+ 			
+ 			$("#ck6").click(function(){
+ 			 	infowindow6.open(map, marker6);
+ 			 	map.setCenter(markerPosition6);						
+ 			});	 			
+ 			
+ 			
+ 			
+ 			
+ 			
+ 			
 		});
+		// 지도 위치 이동 끝
+
 	</script>
 		<!-- jquery 끝 -->
 	
@@ -239,7 +263,7 @@
 	      
 	      <td class="pt-2 ml-3 col-6">
 	      	<div class="row" style='cursor:pointer;'>
-	      		<a id="ck<%=bb.getNum() %>"><%=bb.getName() %></a>
+	      		<a id="ck<%=bb.getNum() %>"><h5><%=bb.getName() %></h5></a>
 	     	</div>
 	      	<div class="row py-3">
 	      		<%=bb.getAddress() %>
@@ -332,7 +356,6 @@
 			     
 			     >&raquo;</a></li>
 			    <%
-			
 		}
 	
 	%>
@@ -552,7 +575,7 @@
 	<div class="col-8 text-center mt-5">
 	
 	
-	<!-- /////////////////////////////////지도 api 시작 /////////////////////////////////-->
+	<!-- ////////////////////////////////////////////////////////지도 api 시작 ////////////////////////////////////////////////////////////////-->
 	<div id="map" style="width:100%; height:940px;"></div>
 		
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8cf6d2a5b75cdde0c3700860a547a92e"></script>
@@ -566,11 +589,15 @@
 		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
 		
-		//마커가 표시될 위치입니다 
+		//----------------------------------------마커가 표시될 위치입니다 
 		var markerPosition1  = new kakao.maps.LatLng(35.2058957, 129.2247213); 
-		var markerPosition2  = new kakao.maps.LatLng(33.450300, 126.570300); 
+		var markerPosition2  = new kakao.maps.LatLng(35.00526907336864, 128.82406688230586); 
+		var markerPosition3  = new kakao.maps.LatLng(35.57272898700915, 129.45231298970947); 
+		var markerPosition4  = new kakao.maps.LatLng(35.61056648191471, 129.40827935517790); 
+		var markerPosition5  = new kakao.maps.LatLng(34.79978876044260, 128.61183711832933); 
+		var markerPosition6  = new kakao.maps.LatLng(35.10286041704596, 128.50036722911120); 
 		
-		// 마커를 생성합니다
+		//---------------------------------------- 마커를 생성합니다
 		var marker1 = new kakao.maps.Marker({
 		    position: markerPosition1
 		});
@@ -579,54 +606,131 @@
 		    position: markerPosition2
 		});
 		
+		var marker3 = new kakao.maps.Marker({
+		    position: markerPosition3
+		});
+		
+		var marker4 = new kakao.maps.Marker({
+		    position: markerPosition4
+		});		
+		
+		var marker5 = new kakao.maps.Marker({
+		    position: markerPosition5
+		});				
 
-		// 마커가 지도 위에 표시되도록 설정합니다
+		var marker6 = new kakao.maps.Marker({
+		    position: markerPosition6
+		});	
+		
+		//------------------------------------------ 마커가 지도 위에 표시되도록 설정합니다
 		marker1.setMap(map);
 		marker2.setMap(map);
-
+		marker3.setMap(map);
+		marker4.setMap(map);
+		marker5.setMap(map);
+		marker6.setMap(map);
 				
 		/////////////////// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다 시작 ////////////////////
 		
 		
-		
-		
-		//-- iwContent1 시작--//
+		//------------------------------------------- iwContent 시작--//
 		var iwContent1 = 
 			'<div class="container">'+
 			' <div class="row"">'+
 			'  <div class="col-2 pt-2">'+
-			'   <img src="http://img.etoday.co.kr/pto_db/2019/10/600/20191001173327_1372185_787_590.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
+			'   <img src="../upload/부산오랑대공원1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
 			'  </div>'+
 			' <div class="text-center pl-3 col-10">'+
 			'  <div class="row-4 mt-3"><h5>부산 오랑대 공원</h5></div>'+
-			'  <div class="row-4">주소 xxxxxxx</div>'+
+			'  <div class="row-4">부산 기장군 기장읍 기장해안로 434</div>'+
 			' </div>'+
 			' </div>'+
 			'</div>'
 			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
-		//-- iwContent1 끝--//
 		    
 		 // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
 		var iwContent2 =
 			'<div class="container">'+
 			' <div class="row"">'+
 			'  <div class="col-2 pt-2">'+
-			'   <img src="http://img.etoday.co.kr/pto_db/2019/10/600/20191001173327_1372185_787_590.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
+			'   <img src="../upload/부산외양포항주차장1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
 			'  </div>'+
 			' <div class="text-center pl-3 col-10">'+
-			'  <div class="row-4 mt-3"><h5>부산 이기대 공원</h5></div>'+
-			'  <div class="row-4">주소 xxxxxxx</div>'+
-			'  <div class="row-4"><input class="btn btn-primary btn-sm m-2" type="submit" value="상세보기" id="loc1"></div>'+
+			'  <div class="row-4 mt-3"><h5>부산 외양포항주차장</h5></div>'+
+			'  <div class="row-4">부산 강서구 대항동 산 13-23</div>'+
 			' </div>'+
 			' </div>'+
 			'</div>'
 			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다    
 		    
-		    
-		    
-		// 인포윈도우1을 생성합니다
+		 // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+		var iwContent3 =
+			'<div class="container">'+
+			' <div class="row"">'+
+			'  <div class="col-2 pt-2">'+
+			'   <img src="../upload/울산구암마을주전해변1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
+			'  </div>'+
+			' <div class="text-center pl-3 col-10">'+
+			'  <div class="row-4 mt-3"><h5>울산 구암마을주전해변</h5></div>'+
+			'  <div class="row-4">울산 북구 어물동 273</div>'+
+			' </div>'+
+			' </div>'+
+			'</div>'
+			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 		    
+
+		var iwContent4 =
+			'<div class="container">'+
+			' <div class="row"">'+
+			'  <div class="col-2 pt-2">'+
+			'   <img src="../upload/울산큰골저수지부근1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
+			'  </div>'+
+			' <div class="text-center pl-3 col-10">'+
+			'  <div class="row-4 mt-3"><h5>울산 큰골 저수지 부근</h5></div>'+
+			'  <div class="row-4">울산 북구 무룡동 978</div>'+
+			' </div>'+
+			' </div>'+
+			'</div>'
+			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 			    
+	    
+		var iwContent5 =
+			'<div class="container">'+
+			' <div class="row"">'+
+			'  <div class="col-2 pt-2">'+
+			'   <img src="../upload/거제만다라화시공원1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
+			'  </div>'+
+			' <div class="text-center pl-3 col-10">'+
+			'  <div class="row-4 mt-3"><h5>거제 만다라화 시 공원</h5></div>'+
+			'  <div class="row-4">경남 거제시 동부면 부춘리 산 56-2</div>'+
+			' </div>'+
+			' </div>'+
+			'</div>'
+			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 	
+					    
+		    var iwContent6 =
+				'<div class="container">'+
+				' <div class="row"">'+
+				'  <div class="col-2 pt-2">'+
+				'   <img src="../upload/창원광암해수욕장노지1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
+				'  </div>'+
+				' <div class="text-center pl-3 col-10">'+
+				'  <div class="row-4 mt-3"><h5>창원 광암해수욕장 노지</h5></div>'+
+				'  <div class="row-4">경남 창원시 마산합포구 진동면 요장리 230</div>'+
+				' </div>'+
+				' </div>'+
+				'</div>'
+				, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+			    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 						    
+					    
+					    
+					    
+					    
+					    
+		//------------------------------------------------ 인포윈도우1을 생성합니다
 		var infowindow1 = new kakao.maps.InfoWindow({
 		    content : iwContent1,
 		    removable : iwRemoveable
@@ -638,12 +742,35 @@
 		    removable : iwRemoveable
 		});
 
+		// 인포윈도우3를 생성합니다
+		var infowindow3 = new kakao.maps.InfoWindow({
+		    content : iwContent3,
+		    removable : iwRemoveable
+		});	
+		
+		// 인포윈도우4를 생성합니다
+		var infowindow4 = new kakao.maps.InfoWindow({
+		    content : iwContent4,
+		    removable : iwRemoveable
+		});			
+		
+		// 인포윈도우5를 생성합니다
+		var infowindow5 = new kakao.maps.InfoWindow({
+		    content : iwContent5,
+		    removable : iwRemoveable
+		});		
+		
+		// 인포윈도우6를 생성합니다
+		var infowindow6 = new kakao.maps.InfoWindow({
+		    content : iwContent6,
+		    removable : iwRemoveable
+		});		
 		/////////////////// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다 끝 ////////////////////
 
 		
 		////////////////// 마커 클릭 이벤트 등록 시작 ////////////////////////
 		
-		// 마커1 에 클릭이벤트를 등록합니다
+		//--------------------------------------------- 마커1 에 클릭이벤트를 등록합니다
 		kakao.maps.event.addListener(marker1, 'click', function() {
 		      // 마커1 위에 인포윈도우1를 표시합니다
 		      infowindow1.open(map, marker1);  
@@ -654,6 +781,32 @@
 		      // 마커2 위에 인포윈도우2를 표시합니다
 		      infowindow2.open(map, marker2);  
 		});
+		
+		
+		// 마커3 에 클릭이벤트를 등록합니다
+		kakao.maps.event.addListener(marker3, 'click', function() {
+		      // 마커3 위에 인포윈도우2를 표시합니다
+		      infowindow3.open(map, marker3);  
+		});		
+		
+		// 마커4 에 클릭이벤트를 등록합니다
+		kakao.maps.event.addListener(marker4, 'click', function() {
+		      // 마커4 위에 인포윈도우2를 표시합니다
+		      infowindow4.open(map, marker4);  
+		});		
+		
+		// 마커5 에 클릭이벤트를 등록합니다
+		kakao.maps.event.addListener(marker5, 'click', function() {
+		      // 마커5 위에 인포윈도우2를 표시합니다
+		      infowindow5.open(map, marker5);  
+		});			
+
+		
+		// 마커6 에 클릭이벤트를 등록합니다
+		kakao.maps.event.addListener(marker6, 'click', function() {
+		      // 마커6 위에 인포윈도우2를 표시합니다
+		      infowindow6.open(map, marker6);  
+		});		
 		//-- 마커 클릭 이벤트 끝 --//
 		
 		
@@ -661,28 +814,18 @@
 
 		
 		
-		////////////////// 마커 클릭 선택 동작 시작 //////////////////////////////
-		
-		//  첫번 째 게시글 눌렸을 때 마커가 선택되는 기능 시작
-// 		var txt = document.getElementById('ck1');
-		
-// 		txt.addEventListener('click', function(){		
-// 			 $(function() {
-// 			 		infowindow1.open(map, marker1);
-// 			 		map.setCenter(markerPosition1);					
-// 				});
- 			 
-// 		});
-		//  첫번 째 게시글 눌렸을 때 마커가 선택되는 끝
+
 		
 
-		////////////////// 마커 클릭 선택 동작 끝 //////////////////////////////
 		
 		
-		////////////////////////////////// 사용자 현재위치 표시 시작/////////////////////////////////
+		
+		
+		
+		
+		//////////////////////////////////////////////////// 사용자 현재위치 표시 시작////////////////////////////////////////////////////////////////
 		var pc = document.getElementById('place');
 
-		
 		// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
 		if (navigator.geolocation) {
 		    
@@ -738,13 +881,8 @@
 				 displayMarker(locPosition, message) 
 	 		});
 			//  현재위치 눌렸을 때 마커가 선택되는 기능 끝
-
-
-			
-			
 		}
-		
-		////////////////////////////////// 사용자 현재위치 표시 끝/////////////////////////////////
+	///////////////////////////////////////////////////// 사용자 현재위치 표시 끝/////////////////////////////////////////////////////////////////////
 		
 		</script>
 	<!-- /////////////////////////////////지도 api 끝 /////////////////////////////////-->

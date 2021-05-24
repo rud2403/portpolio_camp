@@ -33,7 +33,8 @@
 		String pw1 = request.getParameter("pw1");
 		String pw2 = request.getParameter("pw2");
 
-		
+		session.setAttribute(pw1, "pw1");
+		session.setAttribute(pw2, "pw2");
 		
 		%>
 		
@@ -49,7 +50,7 @@
 		
 		MemberDAO bdao = new MemberDAO();
 		
-		int check = bdao.updateEmail(mb);
+		int check = bdao.updatePw(mb);
 		
 		System.out.println("비밀번호 수정 현황 : " + check);
 		
@@ -63,7 +64,7 @@
  		%>
  		<script type="text/javascript">
 			alert(" 비밀번호 변경완료 ");
-			location.href="/Portpolio_camp/member/manageForm.jsp";
+ 			location.href="/Portpolio_camp/member/manageForm.jsp?id=<%=id%>";
 			</script>
  		
  		<%

@@ -58,7 +58,7 @@
 		 		%>
 		 		<script type="text/javascript">
 	 			alert(" 이름 변경완료 ");
-	 			location.href="/Portpolio_camp/member/manageForm.jsp";
+	 			location.href="/Portpolio_camp/member/manageForm.jsp?id=<%=id%>";
 	 			</script>
 		 		
 		 		<%

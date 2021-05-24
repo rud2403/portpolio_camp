@@ -44,7 +44,7 @@
 			if(check > 0 ){
 								
 				//페이지 이동
-				response.sendRedirect("/Portpolio_camp/member/myinfoForm.jsp");
+				response.sendRedirect("/Portpolio_camp/member/myinfoForm2.jsp?id="+id+"");
 				
 				} else {	// 비밀번호 다름 => 오류 (페이지 뒤로 이동)
 	%>

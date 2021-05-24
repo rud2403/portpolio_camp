@@ -71,9 +71,7 @@
 						    <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" name="pw">
 						    <input class="btn btn-primary mt-5" type="submit" value="확인">
 						  </div>
-						  <div class="col-auto">
-						    
-						  </div>
+						  <div class="col-auto"></div>
 						</div>
 					 </div>
 				  <div class="col-4"></div>

@@ -101,7 +101,7 @@
 			 		%>
 			 		<script type="text/javascript">
 		 			alert(" 비밀번호 변경완료 ");
-		 			location.href="/Portpolio_camp/member/manageForm.jsp";
+		 			location.href="/Portpolio_camp/member/manageForm.jsp?id=<%=id%>";
 		 			</script>
 			 		
 			 		<%

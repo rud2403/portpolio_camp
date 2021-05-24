@@ -59,7 +59,7 @@
 			 		%>
 			 		<script type="text/javascript">
 		 			alert(" 전화번호 변경완료 ");
-		 			location.href="/Portpolio_camp/member/manageForm.jsp";
+		 			location.href="/Portpolio_camp/member/manageForm.jsp?id=<%=id%>";
 		 			</script>
 			 		
 			 		<%

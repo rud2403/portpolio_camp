@@ -209,6 +209,9 @@ public class ReplyDAO {
 				rb.setMid(rs.getString("mid"));
 				rb.setBname(rs.getString("bname"));
 				rb.setComent(rs.getString("coment"));
+				rb.setRe_ref(rs.getInt("re_ref"));
+				rb.setRe_lev(rs.getInt("re_lev"));
+				rb.setRe_seq(rs.getInt("re_seq"));
 				
 				// Bean -> ArrayList 한칸에 저장
 				ReplyList.add(rb);
@@ -438,7 +441,7 @@ public class ReplyDAO {
 			
 			pstmt.executeUpdate();
 			
-			System.out.println(" 답글 정렬 완료 ");
+			System.out.println(" 댓글 정렬 완료 ");
 			
 			// 3) 답글 쓰기 
 			sql = "insert into camp_reply(rnum,mid,bname,coment,re_ref,re_lev,re_seq) "
@@ -460,7 +463,9 @@ public class ReplyDAO {
 
 			System.out.println(" 답글 작성완료! ");
 			
-			sql = "select * from camp_reply where num = ?";
+			
+			////////////////////////////////
+			sql = "select * from camp_reply where rnum = ?";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -478,6 +483,7 @@ public class ReplyDAO {
 			
 			}
 			
+			///////////////////////////////
 			check = 0;
 			}
 		} catch (SQLException e) {

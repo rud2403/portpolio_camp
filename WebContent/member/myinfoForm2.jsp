@@ -35,20 +35,20 @@
 			response.sendRedirect("loginForm.jsp");
 		}
 		
+		
+		
 		%>	
-		
 		<jsp:useBean id="mb" class="com.camp.member.MemberBean" />
-
 		<jsp:setProperty property="*" name="mb"/>
-		
 		<%
 		
-	
+		System.out.println("확인 할 정보 @@@@@@@@@@@@@@@@@@@@ : " + mb);
+
 		// 디비 연결 후 필요한 데이터 조회 -> 출력
 		
 		MemberDAO bdao = new MemberDAO();
 
-		bdao.infoMember(mb);
+		MemberBean mb2 = bdao.infoMember(mb);
 		
 		
 		
@@ -84,27 +84,27 @@
 				  <tbody>
 				    <tr>
 				      <th scope="row">아이디</th>
-				      <td><%=mb.getId() %></td>
+				      <td><%=mb2.getId() %></td>
 				    </tr>
 				    <tr>
 				      <th scope="row">비밀번호</th>
-				      <td><%=mb.getPw() %></td>
+				      <td><%=mb2.getPw() %></td>
 				    </tr>
 				    <tr>
 				      <th scope="row">이름</th>
-				      <td><%=mb.getName() %></td>
+				      <td><%=mb2.getName() %></td>
 				    </tr>
 				    <tr>
 				      <th scope="row">전화번호</th>
-				      <td><%=mb.getPhone() %></td>
+				      <td><%=mb2.getPhone() %></td>
 				    </tr>
 				    <tr>
 				      <th scope="row">이메일</th>
-				      <td><%=mb.getEmail() %></td>
+				      <td><%=mb2.getEmail() %></td>
 				    </tr>	
 				    <tr>
 				      <th scope="row">가입일자</th>
-				      <td><%=mb.getRegdate() %></td>
+				      <td><%=mb2.getRegdate() %></td>
 				    </tr>				    			    				    
 				  </tbody>
 				</table>

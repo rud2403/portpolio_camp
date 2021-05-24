@@ -178,7 +178,7 @@
 				var mid = '<%=(String)session.getAttribute("id")%>';
 				if(mid == "null"){
 					// 로그인이 안됐을 경우
-					alert("로그인이 필요한 동작입니다.");
+					alert("로그인 후 이용해 주세요.");
 				}else{
 					$.ajax({
 						url : "likecampAjax.jsp",
@@ -204,7 +204,7 @@
 				var mid = '<%=(String)session.getAttribute("id")%>';
 				
 				var rnum = $(this).attr('id');
-				alert(rnum);
+// 				alert(rnum);
 				
 				var con = document.getElementById(rnum + "_rereply");
 				con.style.display = (con.style.display != 'none') ? "none" : "block";
@@ -216,13 +216,13 @@
 				$(reresub).click(function() {
 					
  					var coment = $(recoment).val();
-					alert(rnum); // 대댓글 번호
-					alert(coment); // 대댓글 내용
-					alert(mid); // 누가
+// 					alert(rnum); // 대댓글 번호
+// 					alert(coment); // 대댓글 내용
+// 					alert(mid); // 누가
 					
 					if(mid == "null"){
 						// 로그인이 안됐을 경우
-						alert("로그인이 필요한 동작입니다.");
+						alert("로그인 후 이용해 주세요.");
 					}else{
 						$.ajax({
 							url : "rereplyAjax.jsp",
@@ -230,7 +230,7 @@
 							data : {rnum:rnum, mid:mid, coment:coment},
 							success:function(data){
 								
-								alert(data);
+// 								alert(data);
 								location.reload();
 							}
 						});					
@@ -238,8 +238,6 @@
 					};					
 					
 				});
-				
-				
 				// 대댓글 작성 버튼 끝
 				
 			});
@@ -256,7 +254,7 @@
 					
 					if(mid == "null"){
 						// 로그인이 안됐을 경우
-						alert("로그인이 필요한 동작입니다.");
+						alert("로그인 후 이용해 주세요.");
 					}else{
 						$.ajax({
 							url : "replyAjax.jsp",
@@ -728,7 +726,7 @@
 						
 			       	<div class="col m-2">
 			       		<h5>주차장</h5>
-			       		 <%if(bb.getToilet().equals("y")){ %>
+			       		 <%if(bb.getPark().equals("y")){ %>
 			        	<div class="form-check">
 						  <input class="form-check-input" type="radio" name="park" id="exampleRadios1" value="y" checked>
 						  <label class="form-check-label" for="exampleRadios1">
@@ -758,7 +756,7 @@
 					</div>
 			       	<div class="col m-2">
 			       		<h5>물놀이</h5>
-			       		<%if(bb.getToilet().equals("y")){ %>
+			       		<%if(bb.getWater().equals("y")){ %>
 			       		 <div class="form-check">
 						  <input class="form-check-input" type="radio" name="water" id="exampleRadios1" value="y" checked>
 						  <label class="form-check-label" for="exampleRadios1">
@@ -788,7 +786,7 @@
 					</div>
 			       	<div class="col m-2">
 			       		<h5>낚시</h5>
-			       		<%if(bb.getToilet().equals("y")){ %>
+			       		<%if(bb.getFishing().equals("y")){ %>
 			       		 <div class="form-check">
 						  <input class="form-check-input" type="radio" name="fishing" id="exampleRadios1" value="y" checked>
 						  <label class="form-check-label" for="exampleRadios1">
@@ -1034,8 +1032,8 @@
 		      			<img alt="" src="../img/camp/잔디.png" width="80" height="80"> <br>					
 					<%}else if(bb.getLand().equals("진흙")){ %>
 		      			<img alt="" src="../img/camp/진흙.png" width="80" height="80"> <br>					
-					<%}else if(bb.getLand().equals("모래")){ %>
-		      			<img alt="" src="../img/camp/모래.png" width="80" height="80"> <br>					
+					<%}else if(bb.getLand().equals("흙")){ %>
+		      			<img alt="" src="../img/camp/흙.png" width="80" height="80"> <br>					
 					<%}else{ %>
 		      			<img alt="" src="../img/camp/기타.png" width="80" height="80"> <br>										
 					<%} %>
@@ -1298,7 +1296,7 @@
 					}
 					%>
 			    
-		      	<a style="text-decoration-line: none; color: black; cursor:pointer;" id="<%=rb.getRnum()%>"><%=rb.getRe_lev()%><%=rb.getComent() %> </a>
+		      	<a style="text-decoration-line: none; color: black; cursor:pointer;" id="<%=rb.getRnum()%>"><%=rb.getComent() %> </a>
 		      	<br>
 
 		      	<!-- 댓글 클릭했을 때 뜨는 대댓글 기능 시작 -->

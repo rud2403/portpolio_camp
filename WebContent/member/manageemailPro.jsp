@@ -57,7 +57,7 @@
 		 		%>
 		 		<script type="text/javascript">
 	 			alert(" 이메일 변경완료 ");
-	 			location.href="/Portpolio_camp/member/manageForm.jsp";
+	 			location.href="/Portpolio_camp/member/manageForm.jsp?id=<%=id%>";
 	 			</script>
 		 		
 		 		<%
