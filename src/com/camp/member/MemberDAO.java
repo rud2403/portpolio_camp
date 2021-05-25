@@ -1014,7 +1014,10 @@ public class MemberDAO {
 				return check = -4;
 			}
 
-						
+			if(mb.getId().matches(".*[ !@#$%^&*(),.?\":{}|<>]+.*")){
+				return check = -5;
+			}			
+			
 			
 			
 			// 3. sql작성 & pstmt 객체생성

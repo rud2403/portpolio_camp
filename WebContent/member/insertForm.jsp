@@ -56,7 +56,11 @@
 	  					}else if(data == -4){
 	  			 			$('#idcheck1').html("");
 	  						$('#idcheck2').html("아이디에 한글은 사용하실 수 없습니다.");	  						
-	  					}	  					
+	  					}else if(data == -5){
+	  			 			$('#idcheck1').html("");
+	  						$('#idcheck2').html("아이디에 공백 및 특수문자는 사용하실 수 없습니다.");	  						
+	  					}
+	  					
 					//아이디 값이 없을 때	  					
 					}else{
   			 			$('#idcheck1').html("");

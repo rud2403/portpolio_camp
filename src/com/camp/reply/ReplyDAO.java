@@ -132,8 +132,8 @@ public class ReplyDAO {
 	
 
 	// getReplyCount() 시작 (댓글 개수 기능)
-	public int getReplyCount() {
-
+	public int getReplyCount(String bname) {
+		
 		int cnt = 0;
 
 		try {
@@ -141,9 +141,11 @@ public class ReplyDAO {
 			conn = getConnection();
 
 			// 3 sql 작성(select) & pstmt 객체 생성
-			sql = "select count(*) from camp_reply";
+			sql = "select count(*) from camp_reply where bname=?";
 
 			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, bname);
 
 			// 4 sql 실행
 			rs = pstmt.executeQuery();

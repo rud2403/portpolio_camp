@@ -20,14 +20,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <!-- jquery 준비 끝 -->
 
-<script type="text/javascript">
-	$(function() {
-
-	});
-
-</script>
-
-
 
 <!-- 버튼 기능 시작 -->
 <script type="text/javascript">

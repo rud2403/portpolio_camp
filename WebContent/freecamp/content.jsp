@@ -97,7 +97,8 @@
 		
 		int num = Integer.parseInt(request.getParameter("num"));
 		String pageNum = request.getParameter("pageNum");
-		
+		String name = request.getParameter("name");
+
 		// BoardDAO 객체 생성
 		
 		BoardDAO bdao = new BoardDAO();
@@ -123,7 +124,7 @@
 	
 	// 디비에 있는 글의 수를 계산하는 메소드 생성 -> 호출
 	// getBoardCount();
-	int cnt = rdao.getReplyCount();
+	int cnt = rdao.getReplyCount(name);
 	
 
 	
@@ -1260,13 +1261,25 @@
 	<!-- 날씨 내용 끝 -->					
 	
 	<!-- 댓글 제목 시작 -->
+
+
+	
+
 	<div class="row">
 		<div class="col-2"></div>
 		<div class="col-8">
-			<hr>
+			<h4>댓글<%=cnt %></h4>
 		</div>
 		<div class="col-2"></div>
 	</div>
+
+	<div class="row">
+		<div class="col-2"></div>
+		<div class="col-8">
+	<hr>
+		</div>
+		<div class="col-2"></div>
+	</div>	
 	<!-- 댓글 제목 끝 -->
 
 	<!-- 댓글 리스트 시작 -->							
