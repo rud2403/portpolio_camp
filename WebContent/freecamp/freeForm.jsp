@@ -632,22 +632,25 @@
 				
 		/////////////////// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다 시작 ////////////////////
 		
-		
+		<% String test = "test"; %>
 		//------------------------------------------- iwContent 시작--//
-		var iwContent1 = 
+
+		
+		var iwContent1 =
 			'<div class="container">'+
 			' <div class="row"">'+
 			'  <div class="col-2 pt-2">'+
 			'   <img src="../upload/부산오랑대공원1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
 			'  </div>'+
 			' <div class="text-center pl-3 col-10">'+
-			'  <div class="row-4 mt-3"><h5>부산 오랑대 공원</h5></div>'+
+			'  <div class="row-4 mt-3"><h5>부산 오랑대공원</h5></div>'+
 			'  <div class="row-4">부산 기장군 기장읍 기장해안로 434</div>'+
 			' </div>'+
 			' </div>'+
 			'</div>'
 			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+		    
 		    
 		 // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
 		var iwContent2 =
@@ -727,9 +730,7 @@
 			    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 						    
 					    
 					    
-					    
-					    
-					    
+					    					    
 		//------------------------------------------------ 인포윈도우1을 생성합니다
 		var infowindow1 = new kakao.maps.InfoWindow({
 		    content : iwContent1,

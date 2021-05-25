@@ -53,7 +53,10 @@
 	  					}else if(data == -3){
 	  			 			$('#idcheck1').html("");
 	  						$('#idcheck2').html("아이디 길이는 5~10입니다.");	  						
-	  					}
+	  					}else if(data == -4){
+	  			 			$('#idcheck1').html("");
+	  						$('#idcheck2').html("아이디에 한글은 사용하실 수 없습니다.");	  						
+	  					}	  					
 					//아이디 값이 없을 때	  					
 					}else{
   			 			$('#idcheck1').html("");
@@ -64,6 +67,44 @@
 			});
 		});
 		// 아이디 중복체크 끝
+		
+		// 이메일 중복체크 시작
+		
+		$('#email').keyup(function() {
+					var email = $('#email').val();
+					$.ajax({
+						url : "memberEmailChk.jsp",
+						type : "post",
+						data : {email:email},
+						success:function(data){
+					
+					//아이디 값이 있을 때
+					if(email.length > 0){
+	  					if(data == 0){
+	  			 			$('#emailcheck2').html("");
+	 						$('#emailcheck1').html("사용가능한 이메일입니다.");
+	  					}else if(data == -1){
+	  			 			$('#emailcheck1').html("");
+	  						$('#emailcheck2').html("중복되는 이메일이 있습니다.");
+	  					}else if(data == -3){
+	  			 			$('#emailcheck1').html("");
+	  						$('#emailcheck2').html("이메일 양식이 맞지않습니다.");
+	  					}else if(data == -4){
+	  			 			$('#emailcheck1').html("");
+	  						$('#emailcheck2').html("이메일 양식이 맞지않습니다.");
+	  					}	  					
+					//아이디 값이 없을 때	  					
+					}else{
+  			 			$('#emailcheck1').html("");
+  			 			$('#emailcheck2').html("");
+						
+					}
+				}
+			});
+		});
+		// 아이디 중복체크 끝		
+		
+		// 이메일 중복체크 끝
 
 		//비밀번호 일치 확인 시작1
 		$('#pw').keyup(function() {
@@ -385,6 +426,8 @@ function check1(){
    <div class="form-floating mb-3">
     <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email">
     <label for="floatingInput">Email address</label>
+    <span id="emailcheck1" style="color: green;"></span>
+    <span id="emailcheck2" style="color: red;"></span>      
    </div>
 
 
