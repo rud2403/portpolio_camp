@@ -46,56 +46,8 @@
 			$("#cc1").click(function(){
 				$("#cc2").click();
 			});
-			
-			// 상세보기 구현 시작
-// 			$("#loc1").click(function(){
-// 				location.href="/Portpolio_camp/main/main.jsp";
-// 			});
-// 			$("#loc2").click(function(){
-// 				location.href="/Portpolio_camp/main/main.jsp";
-// 			});
-			// 상세보기 구현 끝
-
-			
-			// 캠핑지 추가 로직 = 게시판 num가 id이다.
-			// id에 맞게 #ck(게시글 num)으로 설정
-			// 지도 위치 이동 시작
-			$("#ck1").click(function(){
-			 	infowindow1.open(map, marker1);
-			 	map.setCenter(markerPosition1);						
-			});
-			
- 			$("#ck2").click(function(){
- 			 	infowindow2.open(map, marker2);
- 			 	map.setCenter(markerPosition2);						
- 			});
- 			
- 			$("#ck3").click(function(){
- 			 	infowindow3.open(map, marker3);
- 			 	map.setCenter(markerPosition3);						
- 			});
- 			
- 			$("#ck4").click(function(){
- 			 	infowindow4.open(map, marker4);
- 			 	map.setCenter(markerPosition4);						
- 			});			
- 			$("#ck5").click(function(){
- 			 	infowindow5.open(map, marker5);
- 			 	map.setCenter(markerPosition5);						
- 			});				
- 			
- 			$("#ck6").click(function(){
- 			 	infowindow6.open(map, marker6);
- 			 	map.setCenter(markerPosition6);						
- 			});	 			
- 			
- 			
- 			
- 			
- 			
  			
 		});
-		// 지도 위치 이동 끝
 
 	</script>
 		<!-- jquery 끝 -->
@@ -148,7 +100,43 @@
 	                document.getElementById("sample6_address").value = addr;
 	                // 커서를 상세주소 필드로 이동한다.
 	                document.getElementById("sample6_detailAddress").focus();
-	            }
+	                
+	                
+	                Promise.resolve(data).then(o => {
+	                    const { address } = data;
+
+	                    return new Promise((resolve, reject) => {
+	                        const geocoder = new daum.maps.services.Geocoder();
+
+	                        geocoder.addressSearch(address, (result, status) =>{
+	                            if(status === daum.maps.services.Status.OK){
+	                                const { x, y } = result[0];
+
+	                                resolve({ lat: y, lon: x })
+	                            }else{
+	                                reject();
+	                            }
+	                        });
+	                    })
+	                }).then(result => {
+	                	
+	                	
+	                	
+// 	                	JSON.stringify(result)
+	             	   //{"lat":"37.5132284781619","lon":"127.033437226842"}
+	             	   var sp = JSON.stringify(result).split(',');
+	             	   var x=sp[0].substring(8).replace('"','');
+	             	   var y=sp[1].substring(7).replace('"','').replace('}','');
+	             	   
+	             	   document.getElementById('lat').value = x;
+	             	   document.getElementById('lng').value = y;
+	                    
+	                    
+	                    
+	                });
+	            },
+
+
 	        }).open();
 	    }
 	    
@@ -199,6 +187,8 @@
 	
 	// 디비에 저장된 모든 글 중에서 원하는 만큼만 가져오기.(페이지 사이즈만큼)
 	ArrayList boardList = bdao.getBoardList(startRow, pageSize);
+	ArrayList campList = bdao.getCampList();
+	
 	
 	
 	%>
@@ -252,6 +242,7 @@
 	  <tbody>
 	  	<%for(int i = 0; i < boardList.size(); i++){ 
 			BoardBean bb = (BoardBean)boardList.get(i);
+			
 		%>
 	    <tr>
 	      <th class="col-2" scope="row"></th>	      
@@ -407,10 +398,10 @@
 					<!-- 위도 경도 시작 -->
 					<div class="row my-3">
 						<div class="col">
-							<input type="text" class="form-control" id="floatingInput" placeholder="위도" name="lat">
+							<input type="text" class="form-control" id="lat" placeholder="위도" name="lat">
 						</div>
 						<div class="col">
-							<input type="text" class="form-control" id="floatingInput" placeholder="경도" name="lng">
+							<input type="text" class="form-control" id="lng" placeholder="경도" name="lng">
 						</div>
 					</div>
 			       	<!-- 위도 경도 끝 -->
@@ -578,7 +569,7 @@
 	<!-- ////////////////////////////////////////////////////////지도 api 시작 ////////////////////////////////////////////////////////////////-->
 	<div id="map" style="width:100%; height:940px;"></div>
 		
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8cf6d2a5b75cdde0c3700860a547a92e"></script>
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8cf6d2a5b75cdde0c3700860a547a92e&libraries=services"></script>
 		<script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = { 
@@ -588,242 +579,288 @@
 		
 		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+		
+		$(function() {
+			
+			// 캠핑지 추가 로직 = 게시판 num가 id이다.
+			// id에 맞게 #ck(게시글 num)으로 설정
+			// 지도 위치 이동 시작
+
+			
+			<%for(int i = 0; i < campList.size(); i++){ %>		
+				
+			$("#ck"+(<%=i+1%>)).click(function(){
+			 	infowindow[<%=i%>].content.open(map, marker[<%=i%>].content);
+			 	map.setCenter(markerPosition[<%=i%>].content);						
+			});
+			
+			<%}%>
+			
+//  			$("#ck2").click(function(){
+//  				infowindow[1].content.open(map, marker[1].content);
+//  			 	map.setCenter(markerPosition[1].content);						
+//  			});
+ 			
+//  			$("#ck3").click(function(){
+//  				infowindow[2].content.open(map, marker[2].content);
+//  			 	map.setCenter(markerPosition[2].content);						
+//  			});
+ 			
+//  			$("#ck4").click(function(){
+//  				infowindow[3].content.open(map, marker[3].content);
+//  			 	map.setCenter(markerPosition[3].content);						
+//  			});			
+//  			$("#ck5").click(function(){
+//  				infowindow[4].content.open(map, marker[4].content);
+//  			 	map.setCenter(markerPosition[4].content);						
+//  			});				
+ 			
+//  			$("#ck6").click(function(){
+//  				infowindow[5].content.open(map, marker[5].content);
+//  			 	map.setCenter(markerPosition[5].content);						
+//  			});			
+			
+			
+		});
 		
 		//----------------------------------------마커가 표시될 위치입니다 
-		var markerPosition1  = new kakao.maps.LatLng(35.2058957, 129.2247213); 
-		var markerPosition2  = new kakao.maps.LatLng(35.00526907336864, 128.82406688230586); 
-		var markerPosition3  = new kakao.maps.LatLng(35.57272898700915, 129.45231298970947); 
-		var markerPosition4  = new kakao.maps.LatLng(35.61056648191471, 129.40827935517790); 
-		var markerPosition5  = new kakao.maps.LatLng(34.79978876044260, 128.61183711832933); 
-		var markerPosition6  = new kakao.maps.LatLng(35.10286041704596, 128.50036722911120); 
-		
-		//---------------------------------------- 마커를 생성합니다
-		var marker1 = new kakao.maps.Marker({
-		    position: markerPosition1
-		});
-		
-		var marker2 = new kakao.maps.Marker({
-		    position: markerPosition2
-		});
-		
-		var marker3 = new kakao.maps.Marker({
-		    position: markerPosition3
-		});
-		
-		var marker4 = new kakao.maps.Marker({
-		    position: markerPosition4
-		});		
-		
-		var marker5 = new kakao.maps.Marker({
-		    position: markerPosition5
-		});				
+		var markerPosition = [
+		<%						
+		for(int i = 0; i < campList.size(); i++){ 
+			BoardBean bb = (BoardBean)campList.get(i);%>	
+		<%
+			if(i<campList.size()){
+			%>
+			{ content : new kakao.maps.LatLng(<%=bb.getLat()%>, <%=bb.getLng()%>) },
+			<%}else{%>
+			{ content : new kakao.maps.LatLng(<%=bb.getLat()%>, <%=bb.getLng()%>) }			
+			<%
+			}
 
-		var marker6 = new kakao.maps.Marker({
-		    position: markerPosition6
-		});	
+		}
+		%>
+];
+		
+	/* 	var markerPosition = [
+			
+			{ content : new kakao.maps.LatLng(35.2058957, 129.2247213) },
+			{ content : new kakao.maps.LatLng(35.00526907336864, 128.82406688230586) },
+			{ content : new kakao.maps.LatLng(35.57272898700915, 129.45231298970947) },
+			{ content : new kakao.maps.LatLng(35.61056648191471, 129.40827935517790) },
+			{ content : new kakao.maps.LatLng(34.79978876044260, 128.61183711832933) },
+			{ content : new kakao.maps.LatLng(35.10286041704596, 128.50036722911120) }
+			
+		];
+		 */
+
+		//---------------------------------------- 마커를 생성합니다
+
+			
+			
+			var marker = [
+				<%						
+				for(int i = 0; i < campList.size(); i++){ 
+					BoardBean bb = (BoardBean)campList.get(i);%>	
+					<%
+					if(i<campList.size()){
+					%>
+					{ content : new kakao.maps.Marker({position: markerPosition[<%=i%>].content}) },
+					<%}else{%>
+					{ content : new kakao.maps.Marker({position: markerPosition[i].content}) }	
+					<%
+					}
+
+				}
+				%>
+		];
+			
+			
+			
+// 			{ content : new kakao.maps.Marker({position: markerPosition[1].content}) },
+// 			{ content : new kakao.maps.Marker({position: markerPosition[2].content}) },
+// 			{ content : new kakao.maps.Marker({position: markerPosition[3].content}) },
+// 			{ content : new kakao.maps.Marker({position: markerPosition[4].content}) },
+// 			{ content : new kakao.maps.Marker({position: markerPosition[5].content}) }
+			
+// 			];
+		
 		
 		//------------------------------------------ 마커가 지도 위에 표시되도록 설정합니다
-		marker1.setMap(map);
-		marker2.setMap(map);
-		marker3.setMap(map);
-		marker4.setMap(map);
-		marker5.setMap(map);
-		marker6.setMap(map);
-				
+		
+		// 캠핑지 늘릴 때 마다 i 숫자범위 늘리기
+		for(var i = 0; i < markerPosition.length; i++ ){
+			//marker1...6
+		marker[i].content.setMap(map);
+		}
 		/////////////////// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다 시작 ////////////////////
 		
 		<% String test = "test"; %>
 		//------------------------------------------- iwContent 시작--//
 
-		
-		var iwContent1 =
+		<%						
+		for(int i = 0; i < campList.size(); i++){ 
+			BoardBean bb = (BoardBean)campList.get(i);%>
+			
+		var iwContent<%=(i+1)%> =
+			
 			'<div class="container">'+
 			' <div class="row"">'+
 			'  <div class="col-2 pt-2">'+
-			'   <img src="../upload/부산오랑대공원1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
+			'   <img src="../upload/'+'<%=bb.getFilename()%>'+'" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
 			'  </div>'+
 			' <div class="text-center pl-3 col-10">'+
-			'  <div class="row-4 mt-3"><h5>부산 오랑대공원</h5></div>'+
-			'  <div class="row-4">부산 기장군 기장읍 기장해안로 434</div>'+
+			'  <div class="row-4 mt-3"><h5>'+'<%=bb.getName()%>'+'</h5></div>'+
+			'  <div class="row-4">'+'<%=bb.getAddress()%>'+'</div>'+
 			' </div>'+
 			' </div>'+
 			'</div>'
-			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+			,
+			// 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+		 <%}%>
 		    
-		    
-		 // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-		var iwContent2 =
-			'<div class="container">'+
-			' <div class="row"">'+
-			'  <div class="col-2 pt-2">'+
-			'   <img src="../upload/부산외양포항주차장1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
-			'  </div>'+
-			' <div class="text-center pl-3 col-10">'+
-			'  <div class="row-4 mt-3"><h5>부산 외양포항주차장</h5></div>'+
-			'  <div class="row-4">부산 강서구 대항동 산 13-23</div>'+
-			' </div>'+
-			' </div>'+
-			'</div>'
-			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다    
+		    /************************/
 		    
 		 // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-		var iwContent3 =
-			'<div class="container">'+
-			' <div class="row"">'+
-			'  <div class="col-2 pt-2">'+
-			'   <img src="../upload/울산구암마을주전해변1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
-			'  </div>'+
-			' <div class="text-center pl-3 col-10">'+
-			'  <div class="row-4 mt-3"><h5>울산 구암마을주전해변</h5></div>'+
-			'  <div class="row-4">울산 북구 어물동 273</div>'+
-			' </div>'+
-			' </div>'+
-			'</div>'
-			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 		    
+// 		var iwContent2 =
+// 			'<div class="container">'+
+// 			' <div class="row"">'+
+// 			'  <div class="col-2 pt-2">'+
+// 			'   <img src="../upload/부산외양포항주차장1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
+// 			'  </div>'+
+// 			' <div class="text-center pl-3 col-10">'+
+// 			'  <div class="row-4 mt-3"><h5>부산 외양포항주차장</h5></div>'+
+// 			'  <div class="row-4">부산 강서구 대항동 산 13-23</div>'+
+// 			' </div>'+
+// 			' </div>'+
+// 			'</div>'
+// 			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+// 		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다    
+		    
+// 		 // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+// 		var iwContent3 =
+// 			'<div class="container">'+
+// 			' <div class="row"">'+
+// 			'  <div class="col-2 pt-2">'+
+// 			'   <img src="../upload/울산구암마을주전해변1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
+// 			'  </div>'+
+// 			' <div class="text-center pl-3 col-10">'+
+// 			'  <div class="row-4 mt-3"><h5>울산 구암마을주전해변</h5></div>'+
+// 			'  <div class="row-4">울산 북구 어물동 273</div>'+
+// 			' </div>'+
+// 			' </div>'+
+// 			'</div>'
+// 			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+// 		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 		    
 
-		var iwContent4 =
-			'<div class="container">'+
-			' <div class="row"">'+
-			'  <div class="col-2 pt-2">'+
-			'   <img src="../upload/울산큰골저수지부근1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
-			'  </div>'+
-			' <div class="text-center pl-3 col-10">'+
-			'  <div class="row-4 mt-3"><h5>울산 큰골 저수지 부근</h5></div>'+
-			'  <div class="row-4">울산 북구 무룡동 978</div>'+
-			' </div>'+
-			' </div>'+
-			'</div>'
-			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 			    
+// 		var iwContent4 =
+// 			'<div class="container">'+
+// 			' <div class="row"">'+
+// 			'  <div class="col-2 pt-2">'+
+// 			'   <img src="../upload/울산큰골저수지부근1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
+// 			'  </div>'+
+// 			' <div class="text-center pl-3 col-10">'+
+// 			'  <div class="row-4 mt-3"><h5>울산 큰골 저수지 부근</h5></div>'+
+// 			'  <div class="row-4">울산 북구 무룡동 978</div>'+
+// 			' </div>'+
+// 			' </div>'+
+// 			'</div>'
+// 			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+// 		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 			    
 	    
-		var iwContent5 =
-			'<div class="container">'+
-			' <div class="row"">'+
-			'  <div class="col-2 pt-2">'+
-			'   <img src="../upload/거제만다라화시공원1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
-			'  </div>'+
-			' <div class="text-center pl-3 col-10">'+
-			'  <div class="row-4 mt-3"><h5>거제 만다라화 시 공원</h5></div>'+
-			'  <div class="row-4">경남 거제시 동부면 부춘리 산 56-2</div>'+
-			' </div>'+
-			' </div>'+
-			'</div>'
-			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 	
+// 		var iwContent5 =
+// 			'<div class="container">'+
+// 			' <div class="row"">'+
+// 			'  <div class="col-2 pt-2">'+
+// 			'   <img src="../upload/거제만다라화시공원1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
+// 			'  </div>'+
+// 			' <div class="text-center pl-3 col-10">'+
+// 			'  <div class="row-4 mt-3"><h5>거제 만다라화 시 공원</h5></div>'+
+// 			'  <div class="row-4">경남 거제시 동부면 부춘리 산 56-2</div>'+
+// 			' </div>'+
+// 			' </div>'+
+// 			'</div>'
+// 			, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+// 		    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 	
 					    
-		    var iwContent6 =
-				'<div class="container">'+
-				' <div class="row"">'+
-				'  <div class="col-2 pt-2">'+
-				'   <img src="../upload/창원광암해수욕장노지1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
-				'  </div>'+
-				' <div class="text-center pl-3 col-10">'+
-				'  <div class="row-4 mt-3"><h5>창원 광암해수욕장 노지</h5></div>'+
-				'  <div class="row-4">경남 창원시 마산합포구 진동면 요장리 230</div>'+
-				' </div>'+
-				' </div>'+
-				'</div>'
-				, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-			    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 						    
+// 		    var iwContent6 =
+// 				'<div class="container">'+
+// 				' <div class="row"">'+
+// 				'  <div class="col-2 pt-2">'+
+// 				'   <img src="../upload/창원광암해수욕장노지1.jpg" class="d-block rounded my-2" alt="..." width="60px" height="80px">'+
+// 				'  </div>'+
+// 				' <div class="text-center pl-3 col-10">'+
+// 				'  <div class="row-4 mt-3"><h5>창원 광암해수욕장 노지</h5></div>'+
+// 				'  <div class="row-4">경남 창원시 마산합포구 진동면 요장리 230</div>'+
+// 				' </div>'+
+// 				' </div>'+
+// 				'</div>'
+// 				, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+// 			    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다 						    
 					    
 					    
 					    					    
 		//------------------------------------------------ 인포윈도우1을 생성합니다
-		var infowindow1 = new kakao.maps.InfoWindow({
-		    content : iwContent1,
-		    removable : iwRemoveable
-		});
+		var infowindow =[
+			
+			<%for(int i = 0; i < campList.size(); i++){ %>	
+			
+			
+			{
+				content : new kakao.maps.InfoWindow({ content : iwContent<%=(i+1)%>, removable : iwRemoveable })
+			},
+			
+			<%}%>
+			
+			
+// 			{
+// 				content : new kakao.maps.InfoWindow({ content : iwContent2, removable : iwRemoveable })
+// 			},
+			
+// 			{
+// 				content : new kakao.maps.InfoWindow({ content : iwContent3, removable : iwRemoveable })
+// 			},
+			
+// 			{
+// 				content : new kakao.maps.InfoWindow({ content : iwContent4, removable : iwRemoveable })
+// 			},
+			
+// 			{
+// 				content : new kakao.maps.InfoWindow({ content : iwContent5, removable : iwRemoveable })
+// 			},
+			
+// 			{
+// 				content : new kakao.maps.InfoWindow({ content : iwContent6, removable : iwRemoveable })
+// 			},
+			
+ 			];
 		    
-		// 인포윈도우2를 생성합니다
-		var infowindow2 = new kakao.maps.InfoWindow({
-		    content : iwContent2,
-		    removable : iwRemoveable
-		});
-
-		// 인포윈도우3를 생성합니다
-		var infowindow3 = new kakao.maps.InfoWindow({
-		    content : iwContent3,
-		    removable : iwRemoveable
-		});	
 		
-		// 인포윈도우4를 생성합니다
-		var infowindow4 = new kakao.maps.InfoWindow({
-		    content : iwContent4,
-		    removable : iwRemoveable
-		});			
-		
-		// 인포윈도우5를 생성합니다
-		var infowindow5 = new kakao.maps.InfoWindow({
-		    content : iwContent5,
-		    removable : iwRemoveable
-		});		
-		
-		// 인포윈도우6를 생성합니다
-		var infowindow6 = new kakao.maps.InfoWindow({
-		    content : iwContent6,
-		    removable : iwRemoveable
-		});		
 		/////////////////// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다 끝 ////////////////////
 
 		
 		////////////////// 마커 클릭 이벤트 등록 시작 ////////////////////////
 		
-		//--------------------------------------------- 마커1 에 클릭이벤트를 등록합니다
-		kakao.maps.event.addListener(marker1, 'click', function() {
-		      // 마커1 위에 인포윈도우1를 표시합니다
-		      infowindow1.open(map, marker1);  
-		});
-		
-		// 마커2 에 클릭이벤트를 등록합니다
-		kakao.maps.event.addListener(marker2, 'click', function() {
-		      // 마커2 위에 인포윈도우2를 표시합니다
-		      infowindow2.open(map, marker2);  
-		});
+		//--------------------------------------------- 마커 에 클릭이벤트를 등록합니다
+		// 캠핑지 추가시 안걸들여도 됨 시작//
 		
 		
-		// 마커3 에 클릭이벤트를 등록합니다
-		kakao.maps.event.addListener(marker3, 'click', function() {
-		      // 마커3 위에 인포윈도우2를 표시합니다
-		      infowindow3.open(map, marker3);  
-		});		
+		for(var i = 0; i < markerPosition.length; i++){
+			
+			kakao.maps.event.addListener(marker[i].content, 'click', function() {
+			      // 마커1 위에 인포윈도우1를 표시합니다
+			      eval('infowindow'+i+1).open(map, marker[i].content);  
+			});
+			
+		}
+		// 캠핑지 추가시 안걸들여도 됨 끝//
 		
-		// 마커4 에 클릭이벤트를 등록합니다
-		kakao.maps.event.addListener(marker4, 'click', function() {
-		      // 마커4 위에 인포윈도우2를 표시합니다
-		      infowindow4.open(map, marker4);  
-		});		
-		
-		// 마커5 에 클릭이벤트를 등록합니다
-		kakao.maps.event.addListener(marker5, 'click', function() {
-		      // 마커5 위에 인포윈도우2를 표시합니다
-		      infowindow5.open(map, marker5);  
-		});			
-
-		
-		// 마커6 에 클릭이벤트를 등록합니다
-		kakao.maps.event.addListener(marker6, 'click', function() {
-		      // 마커6 위에 인포윈도우2를 표시합니다
-		      infowindow6.open(map, marker6);  
-		});		
 		//-- 마커 클릭 이벤트 끝 --//
-		
 		
 		////////////////// 마커 클릭 이벤트 등록 끝 ////////////////////////
 
-		
-		
-
-		
-
-		
-		
-		
-		
-		
-		
+	
 		//////////////////////////////////////////////////// 사용자 현재위치 표시 시작////////////////////////////////////////////////////////////////
 		var pc = document.getElementById('place');
 

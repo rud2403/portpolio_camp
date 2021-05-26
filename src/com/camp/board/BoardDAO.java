@@ -539,6 +539,81 @@ public class BoardDAO {
 	}
 	// getBoardList(int startRow, int pageSize) 끝
 	
+	// getCampList
+	public ArrayList getCampList() {
+		// DB데이터 1행의 정보를 BoardBean에 저장 -> ArrayList 한칸에 저장
+
+		// 게시판의 글 정보를 원하는 만큼 저장하는 가변길이 배열
+		ArrayList BoardList = new ArrayList();
+
+		// 게시판 글 1개의 정보를 저장하는 객체
+		BoardBean bb = null;
+
+		try {
+			// 1, 2 드라이버 로드, 디비 열결
+			conn = getConnection();
+
+			// 3sql 구문 & pstmtm객체
+			// 글 정보 정렬 - re_ref 값을 최신글 위쪽으로 정렬(내림차순)
+			//				- re_seq 값을 사용 (오름 차순)
+			//				- limit a, b (a 시작, b 개수)
+			//				ex) 1번글 -> 0번 인덱스
+			
+			
+			sql = "select * from camp_camp ";
+			
+
+			//
+			pstmt = conn.prepareStatement(sql);
+
+
+			
+			rs = pstmt.executeQuery();
+
+			// 5 데이터 처리
+			while (rs.next()) {
+				// 데이터 있을 때 bb 객체 생성
+				bb = new BoardBean();
+
+				// DB정보를 Bean에 저장하기
+				bb.setNum(rs.getInt("num"));
+				bb.setName(rs.getString("name"));
+				bb.setAddress(rs.getString("address"));
+				bb.setLat(rs.getString("lat"));
+				bb.setLng(rs.getString("lng"));
+				bb.setToilet(rs.getString("toilet"));
+				bb.setPark(rs.getString("park"));
+				bb.setWater(rs.getString("water"));
+				bb.setFishing(rs.getString("fishing"));
+				bb.setField(rs.getString("field"));
+				bb.setLand(rs.getString("land"));
+				bb.setFilename(rs.getString("filename"));
+				bb.setDate(rs.getDate("date"));
+				bb.setLevel(rs.getString("level"));
+				bb.setReadcount(rs.getInt("readcount"));
+				bb.setComent(rs.getString("coment"));
+				bb.setCount(rs.getInt("count"));
+
+				
+				// Bean -> ArrayList 한칸에 저장
+				BoardList.add(bb);
+
+			} // while
+			
+			System.out.println(" 캐프 모든 정보 저장완료 ");
+			System.out.println(" 총 " + BoardList.size() + " 개");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+
+		return BoardList;
+	}
+	// getCampList() 끝
+	
 	
 	// updateReadcount(int num) 시작 ( 캠핑장 게시글 조회수 증가 기능)
 	public void updateReadcount(int num){
