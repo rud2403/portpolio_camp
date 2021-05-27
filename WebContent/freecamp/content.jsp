@@ -98,7 +98,6 @@
 		int num = Integer.parseInt(request.getParameter("num"));
 		String pageNum = request.getParameter("pageNum");
 		String name = request.getParameter("name");
-
 		// BoardDAO 객체 생성
 		
 		BoardDAO bdao = new BoardDAO();
@@ -992,8 +991,8 @@
 	<div class="row text-center">
 		<div class="col-2"></div>
 		<div class="col-8 p-4 m-2 text-center">
-			자연을 빌려 쓴 댓가로 해당 장소를 청소하는 미덕을 가집시다. 남이 버린 쓰레기까지 되가져오는 캠퍼가 됩시다.<br>
-			바닥에 불피우는 행위 금지!, 쓰레기는 집으로!, 머문 자리는 아니온 듯!
+			<h4>자연을 빌려 쓴 댓가로 해당 장소를 청소하는 미덕을 가집시다.<br>
+			바닥에 불피우는 행위 금지!, 쓰레기는 집으로!, 머문 자리는 아니온 듯!</h4>
 		</div>
 		<div class="col-2"></div>	
 	</div>

@@ -923,68 +923,7 @@ public class MemberDAO {
 				}
 			return check;
 		}
-		//	seachPw(MemberBean mb) 끝
-		
-		
-//		seachPw(MemberBean mb) 시작
-//			public int seachPw(MemberBean mb){
-//				int check = -1;
-//
-//				try {
-//					// 1 드라이버 로드
-//					// 2 디비 연결
-//					// => 한번에 처리하는 메소드로 변경
-//					conn = getConnection();
-//
-//					// 3 sql (회원 번호를 계산하는 구문)
-//					sql = "select pw from camp_member where id=? and name=? and email=?";
-//
-//					pstmt = conn.prepareStatement(sql);
-//
-//					pstmt.setString(1, mb.getId());
-//					pstmt.setString(2, mb.getName());
-//					pstmt.setString(3, mb.getEmail());				
-//					
-//					
-//					// 4 sql 실행
-//					rs = pstmt.executeQuery();
-//
-//					// 5 데이터 처리
-//					// 데이터가 있을 경우
-//					if (rs.next()) {
-//					
-//					// 3 sql 작성 (insert) & pstmt 객체 생성
-//						sql = "select pw from camp_member where id=? and name=? and email=?";
-//
-//					pstmt = conn.prepareStatement(sql);
-//
-//					pstmt.setString(1, mb.getId());
-//					pstmt.setString(2, mb.getName());
-//					pstmt.setString(3, mb.getEmail());
-//					
-//					// 4 sql 실행
-//
-//					mb.setPw(rs.getString("pw"));
-//					
-//					rs = pstmt.executeQuery();
-//
-//					
-//					System.out.println("sql구문 실행 완료 : 비밀번호찾기 완료");
-//					check = 0;
-//					
-//					}else{
-//						check = -1;
-//					}
-//				} catch (SQLException e) {
-//					System.out.println("디비 연결 실패 !!");
-//					e.printStackTrace();
-//				} finally {
-//					// 자원해제
-//					closeDB();
-//					}
-//				return check;
-//			}
-			//	seachPw(MemberBean mb) 끝				
+		//	seachPw(MemberBean mb) 끝				
 		
 		
 	// checkId(MemberBean mb) 시작 (회원가입 시 아이디 중복체크)	

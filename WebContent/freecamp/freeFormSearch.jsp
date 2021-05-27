@@ -32,6 +32,9 @@
 <script type="text/javascript">
 	<%
 	String id = (String)session.getAttribute("id");
+	String search = request.getParameter("search");
+	System.out.println("받아온 search 값은 : " + search);
+	
 	%>
 </script>
 <!-- id 값 받아오기 끝 -->
@@ -157,7 +160,7 @@
 	
 	// 디비에 있는 글의 수를 계산하는 메소드 생성 -> 호출
 	// getBoardCount();
-	int cnt = bdao.getBoardCount();
+	int cnt = bdao.getBoardCount(search);
 	
 	//////////////////////////////////////////////////////////////////////////////////
 	// 게시판 페이징 처리 : DB에서 원하는 만큼만 글 가져오기
@@ -186,8 +189,8 @@
 	//ArrayList boardList = bdao.getBoardList();
 	
 	// 디비에 저장된 모든 글 중에서 원하는 만큼만 가져오기.(페이지 사이즈만큼)
-	ArrayList boardList = bdao.getBoardList(startRow, pageSize);
-	ArrayList campList = bdao.getCampList();
+	ArrayList boardList = bdao.getBoardList(search, startRow, pageSize);
+	ArrayList campList = bdao.getCampList(search);
 	
 	
 	
@@ -248,7 +251,6 @@
 		  <input type="text" class="form-control" placeholder="ex) 서울, 부산" aria-label="Recipient's username" aria-describedby="button-addon2" id="search" name="search">
 		  <button class="btn btn-outline-secondary" type="submit" id="sbutton">검색</button>
 		</div>
-		<input type="hidden" name="pageNum" value="<%=pageNum%>">
 	</form>	
 	</div>
 	
@@ -342,7 +344,7 @@
 			    
 			    <%if(startPage > pageBlock){ %>
 			    
-			     href="/Portpolio_camp/freecamp/freeForm.jsp?pageNum=<%=startPage-pageBlock%>"
+			     href="/Portpolio_camp/freecamp/freeFormSearch.jsp?pageNum=<%=startPage-pageBlock%>"
 			    
 			    <%} %>
 			    >&laquo;</a></li>
@@ -352,7 +354,7 @@
 			// 숫자 1...5
 			for(int i = startPage; i <= endPage; i++){
 			%>
-			    <li class="page-item"><a class="page-link" href="/Portpolio_camp/freecamp/freeForm.jsp?pageNum=<%=i %>"><%=i %></a></li>
+			    <li class="page-item"><a class="page-link" href="/Portpolio_camp/freecamp/freeFormSearch.jsp?search=<%=search %>&?pageNum=<%=i %>"><%=i %></a></li>
 			<%
 			}
 			// 다음(기존의 페이지 블럭보다 페이지의 수가 많을 때)
@@ -361,7 +363,7 @@
 			    <li class="page-item"><a class="page-link"
 			    
 			    <%if(endPage < pageCount){ %>
-			     href="/Portpolio_camp/freecamp/freeForm.jsp?pageNum=<%=startPage + pageBlock%>"
+			     href="/Portpolio_camp/freecamp/freeFormSearch.jsp?pageNum=<%=startPage + pageBlock%>"
 			     <%} %>
 			     
 			     >&raquo;</a></li>
