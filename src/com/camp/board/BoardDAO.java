@@ -338,13 +338,7 @@ public class BoardDAO {
 			e.printStackTrace();
 		} finally {
 			// 자원해제
-			try {
-				pstmt.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			closeDB();
 
 		}
 
@@ -1107,15 +1101,7 @@ public class BoardDAO {
 			System.out.println("디비 연결 실패 !!");
 			e.printStackTrace();
 		} finally {
-			// 자원해제
-			try {
-				pstmt.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			closeDB();
 		}
 
 	}
@@ -2189,59 +2175,6 @@ public class BoardDAO {
 		}
 		// deletefreeBoard(BoardBean bb) 끝		
 
-		
-		
-		// deletefreeBoard(BoardBean bb) 시작 ( 캠핑장터 게시판 글 삭제 기능 ) 백업
-//		public int deletefreeBoard(BoardBean bb){
-//			int check = -1;
-//			
-//			try {
-//				// 1, 2 디비 연결
-//				conn = getConnection();
-//				// 3 sql 생성 &pstmt 객체 생성
-//				sql="select * from camp_freeboard where num=?";
-//				
-//				pstmt = conn.prepareStatement(sql);
-//				
-//				System.out.println("@@@@@@@#######가져온 넘버의 값은 : " + bb.getNum());
-//				
-//				pstmt.setInt(1, bb.getNum());
-//				
-//				
-//				rs = pstmt.executeQuery();
-//				
-//				if(rs.next()){
-//					sql = "delete from camp_freeboard where num=?";
-//					pstmt = conn.prepareStatement(sql);
-//					
-//					
-//					pstmt.setInt(1, bb.getNum());
-//					
-//					pstmt.executeUpdate();
-//
-//					
-//					
-//					
-//					
-//					check = 0;
-//						
-//				}else{
-//					check = -1;
-//				}
-//				
-//				System.out.println("글 삭제 완료" + check);
-//				
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}finally {
-//				closeDB();
-//			}
-//
-//			
-//			return check;
-//		}
-		// deletefreeBoard(BoardBean bb) 끝 백업
 		
 
 /////////////////////////////////////////////////////////////// 답글쓰기 시작 ///////////////////////////////////////////////////////////////////////////////////////
