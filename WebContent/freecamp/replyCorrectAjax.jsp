@@ -3,9 +3,7 @@
     pageEncoding="UTF-8"%>
 <%
 String coment = request.getParameter("coment");
-System.out.println("전달된 세션 coment @@@@@@@@@ : " + coment);
 int rnum = Integer.parseInt(request.getParameter("rnum"));
-System.out.println("전달된 세션 rnum ########### : " + rnum);
 %>
 <jsp:useBean id="rb" class="com.camp.reply.ReplyBean"></jsp:useBean>
 <jsp:setProperty property="*" name="rb"/>
