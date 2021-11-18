@@ -32,7 +32,6 @@
 		$("#cc1").click(function(){
 			$("#cc2").click();
 		});
-	
 	});
 </script>
 <!-- jquery 끝 -->
@@ -91,7 +90,6 @@
 	            }
 	        }).open();
 	    }
-	    
 	</script>	
 	<!-- 우편번호 스크립트 끝 -->	
 	
@@ -109,9 +107,7 @@
 	// getBoardCount();
 	int cnt = bdao.getMarketCount();
 	
-	//////////////////////////////////////////////////////////////////////////////////
 	// 게시판 페이징 처리 : DB에서 원하는 만큼만 글 가져오기
-	
 	// 한페이지당 보여줄 글의 개수
 	int pageSize = 10;
 	
@@ -130,8 +126,6 @@
 	// 1p -> 10번, 2p -> 20번 ...
 	int endRow = currentPage*pageSize;
 	
-	//////////////////////////////////////////////////////////////////////////////////
-
 	// 디비에 저장된 모든 글 정보를 가져오기
 	//ArrayList boardList = bdao.getBoardList();
 	
@@ -140,36 +134,33 @@
 	// 삽니다의 경우
 	 ArrayList buyList = bdao.getBuyList(startRow, pageSize);
 	
-	
 	%>
 	<!-- camp_sell 데이터 가져오기 시작 -->
 
+	<!-- navbar 시작 -->
+	<jsp:include page="/navbar/navbar.jsp" />
+	<!-- navbar 끝 -->
 
+	<!-- container 시작 -->	
+	<div class="container-lg">	
 
-<!-- navbar 시작 -->
- <jsp:include page="/navbar/navbar.jsp" />
-<!-- navbar 끝 -->
-
-<!-- container 시작 -->	
-<div class="container-lg">	
-
-<!-- 제목 row 시작 -->
-<div class="row">
-	<h3 class="text-center mt-5">캠핑 장터</h3>
-</div>
-<!-- 제목 row 끝 -->
-
-<!-- 글쓰기 버튼 row 시작 -->
-<div class="row">
-	<div class="col-4"></div>
-	<div class="col-7"></div>
-	<div class="col-1">
-		<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">글쓰기</button>
+	<!-- 제목 row 시작 -->
+	<div class="row">
+		<h3 class="text-center mt-5">캠핑 장터</h3>
 	</div>
-</div>
-<!-- 글쓰기 버튼 row 끝 -->
+	<!-- 제목 row 끝 -->
 
-<!-- 글쓰기 모달 시작 -->
+	<!-- 글쓰기 버튼 row 시작 -->
+	<div class="row">
+		<div class="col-4"></div>
+		<div class="col-7"></div>
+		<div class="col-1">
+			<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">글쓰기</button>
+		</div>
+	</div>
+	<!-- 글쓰기 버튼 row 끝 -->
+
+	<!-- 글쓰기 모달 시작 -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-xl">
 	    <div class="modal-content">
@@ -242,7 +233,6 @@
 					<!-- 우편번호 끝 -->
 			       	
 			       	<!-- 글내용 시작 -->
-			       	
 					<hr>
 					
 					<div class="row text-center">
@@ -258,7 +248,6 @@
 						</div>
 			       	</div>
 			       	<!-- 글내용 끝 -->
-			       	
 			       	<hr>
 			       	
 					<div class="row text-center">
@@ -276,8 +265,6 @@
 			       	<!-- row3 끝 -->
 			  </div>
 			  <!-- 글쓰기 본문 끝 -->
-			      
-
 		      <div class="modal-footer">
 		      	<button type="submit" class="btn btn-primary">작성</button>
 			  	<button type="reset" class="btn btn-secondary" data-bs-dismiss="modal" id="cc1">취소</button>
@@ -285,13 +272,10 @@
 		      </div>
 	      </form>
 	     <!-- 게시판 글 쓰기 폼 작성 끝 -->
-	      
 	    </div>
 	  </div>
 	</div>
-
-<!-- 글쓰기 모달 끝 -->
-
+	<!-- 글쓰기 모달 끝 -->
 
 	<!-- 테이블 row 시작 -->
 	<div class="row mt-5">
@@ -338,8 +322,7 @@
 	<!-- 테이블 row 끝 -->
 
 
-<!-- page네비 시작 -->
-
+	<!-- page네비 시작 -->
 	<div class="row">
 		<div class="col-5"></div>
 		<div class="col-lg-3">
@@ -369,9 +352,7 @@
 			if(endPage > pageCount){
 				endPage = pageCount;
 			}
-			
 			// 이전
-			
 			%>
 			    <li class="page-item"><a class="page-link"
 			    
@@ -382,7 +363,6 @@
 			    <%} %>
 			    >&laquo;</a></li>
 			<%
-			
 			// 숫자 1...5
 			for(int i = startPage; i <= endPage; i++){
 			%>
@@ -400,7 +380,6 @@
 			     >&raquo;</a></li>
 			    <%
 		}
-	
 	%>
 		  	</ul>
 		</nav>
@@ -409,7 +388,6 @@
 	</div>
 	
 	<!-- page네비 끝 -->
-	
 	
 </div>
 <!-- container 끝 -->	

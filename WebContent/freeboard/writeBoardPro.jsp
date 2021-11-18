@@ -14,11 +14,7 @@
 	<%
 		// 한글처리
 		request.setCharacterEncoding("utf-8");
-		
-		// 전달 되는 정보 저장(파라미터)를 저장 - 액션태그 : 자바빈 객체 사용
-		// com.itwillbs.board.BoardBean 자바빈 객체 생성
 	%>
-	
 	
 		<!-- 	자바빈객체 생성 -->
 		<jsp:useBean id="bb" class="com.camp.board.BoardBean"></jsp:useBean>
@@ -26,13 +22,11 @@
 
 	<%
 		bb.setIp(request.getRemoteAddr());
-
 	
 		System.out.println("글쓰기 정보 : " +bb.toString());
 		
 		// DB에 대한 처리를 하는 객체를 생성
 		BoardDAO bdao = new BoardDAO();
-		
 		
 		// 글쓰기 기능 사용
 		bdao.insertfreeBoard(bb);

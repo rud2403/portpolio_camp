@@ -85,7 +85,6 @@
 </head>
 <body>
 
-
 	<%
 		// 페이지 이동 시 전달정보가 있으면 항상 먼저 저장
 		// num, pageNum
@@ -97,17 +96,13 @@
 		
 		BoardDAO bdao = new BoardDAO();
 		
-		
-		
 		// 글 조회수 1증가 (DB 처리)
  		bdao.updateMarketReadcount(num);
-		
 		
  		//DB에서 글 번호(null)에 해당하는 글 정보를 모두 가져와서 출력
  		BoardBean bb = bdao.getMarket(num);
 	
 	%>
-
 	<!-- 자바 스크립트 시작 -->
 	<script type="text/javascript">
 		<!-- id 값 받아오기 시작 -->
@@ -144,7 +139,6 @@
 				history.back();
 				}
 			});
-			
 			
 			$("#tsuccess").click(function() {
 				location.href="/Portpolio_camp/board/statePro.jsp?pageNum=<%=pageNum%>&num=<%=num%>"

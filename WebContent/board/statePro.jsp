@@ -9,33 +9,24 @@
 </head>
 <body>
 
-<%
+	<%
 		// 한글 처리
 		request.setCharacterEncoding("utf-8");
 	
 		// 주소줄에 전달되는 pageNum값 저장
 		String pageNum = request.getParameter("pageNum");
-	
-		// 이전페이지에서 전달된 데이터 저장(파라미터)
-		// => 액션태그
-		
-	
 	%>
 	 <jsp:useBean id="bb" class="com.camp.board.BoardBean" />
 	 <jsp:setProperty property="*" name="bb"/>
 	
 	<%
-	 System.out.println("수정할 정보 : " + bb);
-	
 	// DB 처리 객체 BoardDAO 생성
 		
-		BoardDAO bdao = new BoardDAO();
+	BoardDAO bdao = new BoardDAO();
 	
 	// 해당 글 정보를 사용해서 글 내용 수정 
 	
-		int check = bdao.stateBoard(bb);
-	
-	System.out.println("수정 현황 : " + check);
+	int check = bdao.stateBoard(bb);
 	
 	// 페이지 이동 (자바스크립트 이용)
 	// check =>1, 0, -1

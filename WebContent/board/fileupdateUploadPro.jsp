@@ -26,12 +26,8 @@
 			System.out.println("[info.jsp] : 아이디 없음 -> 로그인페이지 이동");
 			response.sendRedirect("/Portpolio_camp/member/loginForm.jsp");
 		}
-		
 		%>
 	</script>
-
-
-
 
 </head>
 <body>
@@ -86,7 +82,6 @@
 	String oFileName3 = multi.getOriginalFileName("filename3");
 	
 	%>
-
 	<hr>
 	
 	<form id="fr" name="fr" action="/Portpolio_camp/board/updatePro.jsp" method="post">
@@ -105,10 +100,6 @@
 		<input type="hidden" name="num" value="<%=num%>">
 		<input type="hidden" name="pageNum" value="<%=pageNum%>">		
 		
-		
 	</form>
-
-	<!-- <a href="javascript:fr.submit();">DB 저장하기</a> -->
-	
 </body>
 </html>

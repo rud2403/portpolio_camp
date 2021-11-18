@@ -57,7 +57,7 @@
                 // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
                 if(data.userSelectedType === 'R'){
                     // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-    	                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+    	            	// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
                     if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
                         extraAddr += data.bname;
                     }
@@ -102,18 +102,12 @@
 		
 		BoardDAO bdao = new BoardDAO();
 		
-		
-		
 		// 글 조회수 1증가 (DB 처리)
  		bdao.updateReadcount(num);
 		
-		
  		//DB에서 글 번호(null)에 해당하는 글 정보를 모두 가져와서 출력
  		BoardBean bb = bdao.getBoard(num);
-	
 	%>
-	
-	
 	<!-- DB 데이터 가져오기 시작 -->
 	<%
 	// 디비에 저장된 글의 개수를 알기
@@ -124,15 +118,11 @@
 	// 디비에 있는 글의 수를 계산하는 메소드 생성 -> 호출
 	// getBoardCount();
 	int cnt = rdao.getReplyCount(name);
-	
-
-	
 
 	// 디비에 저장된 모든 글 정보를 가져오기
 	//ArrayList replyList = rdao.getfreeBoardList();
 	ArrayList replyList = rdao.getReplyList();
 	
-		
 	%>
 	<!-- DB 데이터 가져오기 끝 -->
 
@@ -169,9 +159,6 @@
 			});				
 			// 댓글 수정 모달 취소 기능 끝
 			
-			
-			
-			
 			// 즐겨찾기 버튼 기능 시작			
 			$('#like').click(function() {
 				var bname = '<%=bb.getName()%>'
@@ -204,7 +191,7 @@
 				var mid = '<%=(String)session.getAttribute("id")%>';
 				
 				var rnum = $(this).attr('id');
-// 				alert(rnum);
+				// alert(rnum);
 				
 				var con = document.getElementById(rnum + "_rereply");
 				con.style.display = (con.style.display != 'none') ? "none" : "block";
@@ -216,9 +203,9 @@
 				$(reresub).click(function() {
 					
  					var coment = $(recoment).val();
-// 					alert(rnum); // 대댓글 번호
-// 					alert(coment); // 대댓글 내용
-// 					alert(mid); // 누가
+					// alert(rnum); // 대댓글 번호
+					// alert(coment); // 대댓글 내용
+					// alert(mid); // 누가
 					
 					if(mid == "null"){
 						// 로그인이 안됐을 경우
@@ -230,45 +217,38 @@
 							data : {rnum:rnum, mid:mid, coment:coment},
 							success:function(data){
 								
-// 								alert(data);
+								// alert(data);
 								location.reload();
 							}
 						});					
-						
 					};					
-					
 				});
 				// 대댓글 작성 버튼 끝
 				
 			});
 			// 댓글 눌렸을 때 수정 폼 나오기 끝
 
-			
-			
 			// 댓글 작성 버튼 시작
 			$('#resub').click(function() {
-					var bname = '<%=bb.getName()%>'
-					var mid = '<%=(String)session.getAttribute("id")%>';
-					var coment = $('#coment').val();
-					
-					
-					if(mid == "null"){
-						// 로그인이 안됐을 경우
-						alert("로그인 후 이용해 주세요.");
-					}else{
-						$.ajax({
-							url : "replyAjax.jsp",
-							type : "post",
-							data : {mid:mid, bname:bname, coment:coment},
-							success:function(data){
-								
-								$('#coment').val("");
-								location.reload();
-							}
-						});					
-						
-					};
-
+				var bname = '<%=bb.getName()%>'
+				var mid = '<%=(String)session.getAttribute("id")%>';
+				var coment = $('#coment').val();
+				
+				if(mid == "null"){
+					// 로그인이 안됐을 경우
+					alert("로그인 후 이용해 주세요.");
+				}else{
+					$.ajax({
+						url : "replyAjax.jsp",
+						type : "post",
+						data : {mid:mid, bname:bname, coment:coment},
+						success:function(data){
+							
+							$('#coment').val("");
+							location.reload();
+						}
+					});					
+				};
 			});
 			// 댓글 작성버튼 끝
 			
@@ -302,11 +282,9 @@
 					});
 				}); 				
  				// 댓글 삭제 끝
-				 				
  				
 			});			
 			// 댓글 기능 끝
-			
 			
 		});
 		// jquery 코드 끝
@@ -320,7 +298,6 @@
 		var lng = <%=bb.getLng()%>;
 
 		$(function() {
-
 			$.getJSON('https://api.openweathermap.org/data/2.5/onecall?lat='+lat+'&lon='+lng+'&appid=70931aa0594e66e3093a428260edb010&units=metric',function(result){
 
 				// 밀리세컨을 월 일 요일로 변환해주는 함수 시작
@@ -362,14 +339,11 @@
 				}
 				// 밀리세컨을 월 일 요일로 변환해주는 함수 끝
 					
-					
 				// 날짜 설정 시작
 				var ct0 = result.daily[0].dt;
 				var ct1 = result.daily[1].dt;
 				var ct2 = result.daily[2].dt;
 				var ct3 = result.daily[3].dt;
-				
-				
 				
 				// 날짜
 				var day0 = convertTime(ct0);
@@ -388,7 +362,6 @@
 				var weather1 = result.daily[1].weather[0].main;
 				var weather2 = result.daily[2].weather[0].main;
 				var weather3 = result.daily[3].weather[0].main;
-				
 				
 				// 영어 날씨를 한글로 바꿔주는 switch 시작
 				switch(weather0){
@@ -536,13 +509,12 @@
 	</script>
 	<!-- 날씨 api 가져오기 끝 -->	
 
-<!-- navbar 시작 -->
- <jsp:include page="/navbar/navbar.jsp" />
- 
-<!-- navbar 끝 -->
+	<!-- navbar 시작 -->
+	<jsp:include page="/navbar/navbar.jsp" />
+	<!-- navbar 끝 -->
 
-<!-- container 시작 -->	
-<div class="container-fluid p-5">
+	<!-- container 시작 -->	
+	<div class="container-fluid p-5">
 
 	<!-- 캠핑지 이름 줄 시작 -->	
 	<div class="row pt-3">
@@ -558,52 +530,50 @@
 	
 	<!-- 조회수 및 수정 삭제 줄 시작 -->	
 	<div class="row">
-				<%
-				// 아이디 어드민일 때
-				try {
-					if(id.equals("admin")){ %>
-						<div class="col-1 text-center">
-							<button class="btn btn-light btn-sm" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" >수정</button> / <button class="btn btn-light btn-sm" type="button" onclick="con()">삭제</button>
-						</div>
-						<div class="col-9"></div>
-						<div class="col-1">
-							<button type="button" class="btn btn-outline-danger" id="like">♥ 즐겨찾기</button>
-						</div>			
-						<div class="col-1 mt-1">
-							<b>조회수 <%=bb.getReadcount() %></b>
-						</div>
-					<%
-					
-					}else{
-						// 아이디 어드민이 아닐 때
-						%>
-						<div class="col-1 text-center"></div>
-						<div class="col-9"></div>
-						<div class="col-1">
-							<button type="button" class="btn btn-outline-danger" id="like">♥ 즐겨찾기</button>
-						</div>			
-						<div class="col-1 mt-1">
-							<b>조회수 <%=bb.getReadcount() %></b>
-						</div>
-					<%
-					}
-				}catch (Exception e) {
-					// 로그인 안했을 때
-					%>
-						<div class="col-1 text-center"></div>
-						<div class="col-9"></div>
-						<div class="col-1">
-							<button type="button" class="btn btn-outline-danger" id="like">♥ 즐겨찾기</button>
-						</div>			
-						<div class="col-1 mt-1">
-							<b>조회수 <%=bb.getReadcount() %></b>
-						</div>
-					<%
-			} %>
+		<%
+		// 아이디 어드민일 때
+		try {
+			if(id.equals("admin")){ %>
+				<div class="col-1 text-center">
+					<button class="btn btn-light btn-sm" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" >수정</button> / <button class="btn btn-light btn-sm" type="button" onclick="con()">삭제</button>
+				</div>
+				<div class="col-9"></div>
+				<div class="col-1">
+					<button type="button" class="btn btn-outline-danger" id="like">♥ 즐겨찾기</button>
+				</div>			
+				<div class="col-1 mt-1">
+					<b>조회수 <%=bb.getReadcount() %></b>
+				</div>
+			<%
 			
+			}else{
+				// 아이디 어드민이 아닐 때
+				%>
+				<div class="col-1 text-center"></div>
+				<div class="col-9"></div>
+				<div class="col-1">
+					<button type="button" class="btn btn-outline-danger" id="like">♥ 즐겨찾기</button>
+				</div>			
+				<div class="col-1 mt-1">
+					<b>조회수 <%=bb.getReadcount() %></b>
+				</div>
+			<%
+			}
+		}catch (Exception e) {
+			// 로그인 안했을 때
+			%>
+				<div class="col-1 text-center"></div>
+				<div class="col-9"></div>
+				<div class="col-1">
+					<button type="button" class="btn btn-outline-danger" id="like">♥ 즐겨찾기</button>
+				</div>			
+				<div class="col-1 mt-1">
+					<b>조회수 <%=bb.getReadcount() %></b>
+				</div>
+			<%
+		} %>
 	</div>
 	<!-- 조회수 및 수정 삭제 줄 끝 -->	
-	
 	
 	<!-- 페이지 수정 모달 시작 -->
 	
@@ -615,7 +585,6 @@
 	        <h5 class="modal-title" id="exampleModalLabel">무료캠핑장 - 글수정</h5>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
-	      
 	      
 		  <!-- 게시판 글 수정 폼 작성 시작 -->
 		  <form action="/Portpolio_camp/freecamp/fileupdateUploadPro.jsp" method="post" enctype="multipart/form-data">
@@ -920,7 +889,6 @@
 			  </div>
 			  <!-- 글수정 본문 끝 -->
 	      
-	      
 		      <div class="modal-footer">
 		      	<button type="submit" class="btn btn-primary">수정</button>
 			  	<button type="reset" class="btn btn-secondary" data-bs-dismiss="modal" id="cc1">취소</button>
@@ -928,7 +896,6 @@
 		      </div>
 	      </form>
 	      <!-- 게시판 글수정 폼 작성 끝 -->
-	      
 	      
 	    </div>
 	  </div>
@@ -957,24 +924,23 @@
 		</div>
 		<div class="col-2">
 			<div class="row text-center px-4 m-2">
-					<span class="badge bg-light text-dark p-3">
-							캠핑지 난이도
-								<br>
-							 <%if(bb.getLevel().equals("상")){ %>
-								★★★
-					     	 <%}else if(bb.getLevel().equals("중")){ %>
-					       		★★
-					      	 <%}else{ %>
-					     		★
-					      	 <%} %>
-					 </span>
+				<span class="badge bg-light text-dark p-3">
+					캠핑지 난이도
+						<br>
+					 <%if(bb.getLevel().equals("상")){ %>
+						★★★
+			     	 <%}else if(bb.getLevel().equals("중")){ %>
+			       		★★
+			      	 <%}else{ %>
+			     		★
+			      	 <%} %>
+				 </span>
 			</div>
 		</div>
 		<!-- 난이도 칼럼 끝 -->
 		
 	</div>
 	<!-- 위치 및 난이도 줄 끝 -->
-	
 	
 	<!-- 알림글 제목 줄 시작 -->
 	<div class="row">
@@ -985,7 +951,6 @@
 		<div class="col-4"></div>		
 	</div>
 	<!-- 알림글 제목 줄 끝 -->	
-
 
 	<!-- 알림글 내용 시작 -->		
 	<div class="row text-center">
@@ -998,7 +963,6 @@
 	</div>
 	<!-- 알림글 내용 끝 -->	
 	
-	
 	<!-- 주변환경 줄 시작 -->
 	<div class="row text-center mt-5 mx-3">
 	
@@ -1010,7 +974,7 @@
 	    <blockquote class="blockquote mb-0">
 	      <div class="row">
 		      <div class="col">
-		      		<b>필드</b>
+	      			<b>필드</b>
 		      		<br>
 		      		<%if(bb.getField().equals("계곡")){ %>
 		      			<img alt="" src="../img/camp/계곡.png" width="80" height="80"> <br>
@@ -1085,13 +1049,11 @@
 				<%} %>
 			 </div>
 	      </div>
-	      
 	    </blockquote>
 	  </div>
 	</div>
 	</div>
 	<!-- 주변환경 줄 끝 -->	
-	
 	
 	<!-- 갤러리 제목 시작 -->			
 	<div class="row">
@@ -1118,7 +1080,6 @@
 		    </div>
 		</div>		
 		</div>
-		
 		
 		<%}else if(bb.getFilename2().equals("null")){ %>
 		
@@ -1197,7 +1158,6 @@
 	</div>
 	<!-- 날씨 제목 끝 -->				
 
-
 	<!-- 날씨 내용 시작 -->					
 	<div class="row">
 		<div class="col-2"></div>
@@ -1251,8 +1211,6 @@
 				  </p>
 			    </div>
 			  </div>
-	
-	
 			</div>
 			<div class="col-2"></div>
 		</div>
@@ -1260,9 +1218,6 @@
 	<!-- 날씨 내용 끝 -->					
 	
 	<!-- 댓글 제목 시작 -->
-
-
-	
 
 	<div class="row">
 		<div class="col-2"></div>
@@ -1296,7 +1251,6 @@
 		      
 		      <th scope="row"><%=rb.getMid() %></th>
 		      <td class="col-8">
-		      
 			    			<%
 					int wid = 0;
 					if(rb.getRe_lev() > 0){
@@ -1335,7 +1289,6 @@
 		    
 		  </tbody>
 		  
-
 		</table>
 	</div>
 	<div class="col-2"></div>
@@ -1357,7 +1310,6 @@
 	</div>
 	<!-- 댓글 작성 끝 -->
 							
-
 	<!-- 댓글 수정 시작 -->
 		<!-- Modal -->
 		<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1406,9 +1358,9 @@
 	</div>	
 	<!-- 댓글 삭제 끝 -->
 
-</div>
-<!-- container 끝 -->
-</div>	
+	</div>
+	<!-- container 끝 -->
+	</div>	
 	<hr>
  	<!-- 목록으로 row 시작 -->
 	<div class="row text-center">

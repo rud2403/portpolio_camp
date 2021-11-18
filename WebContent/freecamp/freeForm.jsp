@@ -120,18 +120,12 @@
 	                    })
 	                }).then(result => {
 	                	
-	                	
-	                	
-// 	                	JSON.stringify(result)
-	             	   //{"lat":"37.5132284781619","lon":"127.033437226842"}
 	             	   var sp = JSON.stringify(result).split(',');
 	             	   var x=sp[0].substring(8).replace('"','');
 	             	   var y=sp[1].substring(7).replace('"','').replace('}','');
 	             	   
 	             	   document.getElementById('lat').value = x;
 	             	   document.getElementById('lng').value = y;
-	                    
-	                    
 	                    
 	                });
 	            },
@@ -381,7 +375,7 @@
 	<!-- 왼쪽 col 끝 -->
 	
 	
-	<!-- /////////////////////////////게시판 글쓰기 Modal 시작/////////////////////////////-->
+	<!-- 게시판 글쓰기 Modal 시작 -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-xl">
 	    <div class="modal-content">

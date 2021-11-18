@@ -17,24 +17,17 @@
 	
 		// 이전페이지에서 전달된 데이터 저장(파라미터)
 		// => 액션태그
-		
 	
 	%>
 	 <jsp:useBean id="bb" class="com.camp.board.BoardBean" />
 	 <jsp:setProperty property="*" name="bb"/>
 	
 	<%
-	 System.out.println("수정할 정보 : " + bb);
-	
 	// DB 처리 객체 BoardDAO 생성
-		
-		BoardDAO bdao = new BoardDAO();
+	BoardDAO bdao = new BoardDAO();
 	
 	// 해당 글 정보를 사용해서 글 내용 수정 
-	
-		int check = bdao.updatefreeBoard(bb);
-	
-	System.out.println("수정 현황 : " + check);
+	int check = bdao.updatefreeBoard(bb);
 	
 	// 페이지 이동 (자바스크립트 이용)
 	// check =>1, 0, -1

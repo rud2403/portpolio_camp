@@ -42,21 +42,22 @@
 	%>
 	<!-- 추천게시판 DB 연동 끝 -->
 	
+	<!-- navbar 시작 -->
+	<jsp:include page="/navbar/navbar.jsp" />
+	<!-- navbar 끝 -->
 
-<!-- navbar 시작 -->
- <jsp:include page="/navbar/navbar.jsp" />
-<!-- navbar 끝 -->
+	<!-- container 시작 -->
+	<div class="container pt-3 mb-5 "> 
 
-<!-- container 시작 -->
-<div class="container pt-3 mb-5 "> 
-
-<!-- 메인 텍스트 시작 -->
-  <div class="col-md-12 text-center p-5 row">
-   <a href="main.jsp" style="text-decoration-line: none; color: black;"> <h1>CampMap</h1> </a>
-  </div>
-<!-- 메인 텍스트 끝 -->  
+	<!-- 메인 텍스트 시작 -->
+	<div class="col-md-12 text-center p-5 row">
+		<a href="main.jsp" style="text-decoration-line: none; color: black;">
+			<h1>CampMap</h1>
+		</a>
+	</div>
+	<!-- 메인 텍스트 끝 -->  
   
-<!-- 이미지 슬라이드 시작 -->  
+	<!-- 이미지 슬라이드 시작 -->  
 	<div class="row">
 		<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
 		  <ol class="carousel-indicators">
@@ -108,10 +109,6 @@
 		 </div>
 		</div>
 <!-- 이미지 슬라이드 끝 -->  
-  
-  
-  
-  
   
 <!-- 테이블 row 시작 -->
 	<div class="row mt-5">
@@ -190,13 +187,9 @@
 		</div>
 	</div>
 <!-- 테이블 row 끝 -->
-
-
 </div>
 <!-- container 끝 -->
-
 </div>
-
 
 <!-- footer 시작 -->
 <div class="row">

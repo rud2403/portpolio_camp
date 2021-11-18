@@ -14,11 +14,6 @@
 	
 		// 주소줄에 전달되는 pageNum값 저장
 		String pageNum = request.getParameter("pageNum");
-	
-		// 이전페이지에서 전달된 데이터 저장(파라미터)
-		// => 액션태그
-		
-	
 	%>
 	 <jsp:useBean id="bb" class="com.camp.board.BoardBean" />
 	 <jsp:setProperty property="*" name="bb"/>

@@ -28,11 +28,8 @@
 		
 		%>
 	</script>
-
-
 </head>
 <body>
-	
 	<!-- camp/파일업로드 프로 -->
 	<%
 	// 파일 업로드 전 준비
@@ -87,11 +84,7 @@
 		<input type="hidden" name="filename" value="<%=filename %>">
 		<input type="hidden" name="filename2" value="<%=filename2 %>">
 		<input type="hidden" name="filename3" value="<%=filename3 %>">
-		
-		
 	</form>
-
-	<!-- <a href="javascript:fr.submit();">DB 저장하기</a> -->
 	
 </body>
 </html>

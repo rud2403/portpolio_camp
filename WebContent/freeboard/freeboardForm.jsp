@@ -40,7 +40,6 @@
 	</script>
 	<!-- jquery 끝 -->
 
-
 </head>
 <body>
 
@@ -55,9 +54,7 @@
 	// getBoardCount();
 	int cnt = bdao.getfreeBoardCount();
 	
-	//////////////////////////////////////////////////////////////////////////////////
 	// 게시판 페이징 처리 : DB에서 원하는 만큼만 글 가져오기
-	
 	// 한페이지당 보여줄 글의 개수
 	int pageSize = 10;
 	
@@ -88,32 +85,32 @@
 	%>
 	<!-- DB 데이터 가져오기 끝 -->
 	
-<!-- navbar 시작 -->
- <jsp:include page="/navbar/navbar.jsp" />
- 
-<!-- navbar 끝 -->
-
-<!-- container 시작 -->	
-<div class="container-lg">	
-
-<!-- 제목 row 시작 -->
-<div class="row">
-	<h3 class="text-center mt-5">자유게시판</h3>
-</div>
-<!-- 제목 row 끝 -->
-
-<!-- 글쓰기 버튼 row 시작 -->
-<div class="row text-center">
-	<div class="col-1"></div>
-	<div class="col-10">게시글 총 <%=cnt %>개</div>
-	<div class="col-1">
-		<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">글쓰기</button>
+	<!-- navbar 시작 -->
+	<jsp:include page="/navbar/navbar.jsp" />
+	 
+	<!-- navbar 끝 -->
+	
+	<!-- container 시작 -->	
+	<div class="container-lg">	
+	
+	<!-- 제목 row 시작 -->
+	<div class="row">
+		<h3 class="text-center mt-5">자유게시판</h3>
 	</div>
-</div>
-<!-- 글쓰기 버튼 row 끝 -->
+	<!-- 제목 row 끝 -->
+	
+	<!-- 글쓰기 버튼 row 시작 -->
+	<div class="row text-center">
+		<div class="col-1"></div>
+		<div class="col-10">게시글 총 <%=cnt %>개</div>
+		<div class="col-1">
+			<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">글쓰기</button>
+		</div>
+	</div>
+	<!-- 글쓰기 버튼 row 끝 -->
 
 
-<!-- 글쓰기 모달 시작 -->
+	<!-- 글쓰기 모달 시작 -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-xl">
 	    <div class="modal-content">
@@ -168,7 +165,6 @@
 			       	<!-- row3 끝 -->
 			  </div>
 			  <!-- 글쓰기 본문 끝 -->
-			      
 
 		      <div class="modal-footer">
 		      	<button type="submit" class="btn btn-primary">작성</button>
@@ -177,68 +173,53 @@
 		      </div>
 	      </form>
 	     <!-- 게시판 글 쓰기 폼 작성 끝 -->
-	      
 	    </div>
 	  </div>
 	</div>
-
 <!-- 글쓰기 모달 끝 -->
 
-
-
-<!-- 게시글 목록 row 시작 -->
-<div class="row mt-5">
-
-<!-- table 시작 -->
-	<table class="table pl-3 pr-3">
-	  <thead>
-	    <tr class="text-center">
-	      <th scope="col">제목</th>
-	      <th scope="col">작성자</th>
-	      <th scope="col">작성일</th>
-	      <th scope="col">조회수</th>
-	    </tr>
-	  </thead>
-	  
-	  
-	  <tbody>
-	  
-		<%for(int i = 0;i < boardList.size(); i++){ 
-			BoardBean bb = (BoardBean)boardList.get(i);
-		%>
-	    <tr>
-		  <td>
-			<%
-			int wid = 0;
-			if(bb.getRe_lev() > 0){
-			wid = 10 * bb.getRe_lev(); 
+	<!-- 게시글 목록 row 시작 -->
+	<div class="row mt-5">
+		<!-- table 시작 -->
+		<table class="table pl-3 pr-3">
+		  <thead>
+		    <tr class="text-center">
+		      <th scope="col">제목</th>
+		      <th scope="col">작성자</th>
+		      <th scope="col">작성일</th>
+		      <th scope="col">조회수</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+			<%for(int i = 0;i < boardList.size(); i++){ 
+				BoardBean bb = (BoardBean)boardList.get(i);
 			%>
-			  <img alt="" src="level.gif" height="15" width="<%=wid%>">
- 			  ┕
-			<%
-			}
-			%>
-	      <a  href="/Portpolio_camp/freeboard/content.jsp?num=<%=bb.getNum()%>&pageNum=<%=pageNum%>&re_ref=<%=bb.getRe_ref() %>&re_lev=<%=bb.getRe_lev() %>&re_seq=<%=bb.getRe_seq() %>" style="text-decoration-line: none; color: black;"><%=bb.getName() %></a>		      	
-		  </td>
-			
-	      <td class="text-center"><%=bb.getId() %></td>
-	      <td class="text-center"><%=bb.getDate() %></td>
-	      <td class="text-center"><%=bb.getReadcount() %></td>
-	    </tr>
-	    <%} %>
-	    
-	  </tbody>
-	  
-	  
-	</table>
-<!-- table 끝 -->
-
-</div>
-<!-- 게시글 목록 row 끝 -->
-
-
-<!-- page네비 시작 -->
-
+		    <tr>
+			  <td>
+				<%
+				int wid = 0;
+				if(bb.getRe_lev() > 0){
+				wid = 10 * bb.getRe_lev(); 
+				%>
+				  <img alt="" src="level.gif" height="15" width="<%=wid%>">
+	 			  ┕
+				<%
+				}
+				%>
+		      <a  href="/Portpolio_camp/freeboard/content.jsp?num=<%=bb.getNum()%>&pageNum=<%=pageNum%>&re_ref=<%=bb.getRe_ref() %>&re_lev=<%=bb.getRe_lev() %>&re_seq=<%=bb.getRe_seq() %>" style="text-decoration-line: none; color: black;"><%=bb.getName() %></a>		      	
+			  </td>
+				
+		      <td class="text-center"><%=bb.getId() %></td>
+		      <td class="text-center"><%=bb.getDate() %></td>
+		      <td class="text-center"><%=bb.getReadcount() %></td>
+		    </tr>
+		    <%} %>
+		  </tbody>
+		</table>
+		<!-- table 끝 -->
+	</div>
+	<!-- 게시글 목록 row 끝 -->
+	<!-- page네비 시작 -->
 	<div class="row">
 		<div class="col-5"></div>
 		<div class="col-lg-3">

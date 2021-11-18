@@ -92,7 +92,6 @@
 		<input type="hidden" name="num" value="<%=num%>">
 		<input type="hidden" name="pageNum" value="<%=pageNum%>">
 		
-		
 	</form>
 
 	<!-- <a href="javascript:fr.submit();">DB 저장하기</a> -->

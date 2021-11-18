@@ -78,7 +78,6 @@
 	String oFileName3 = multi.getOriginalFileName("filename3");
 	
 	%>
-
 	<hr>
 	
 	<form id="fr" name="fr" action="/Portpolio_camp/freeboard/reWritePro.jsp" method="post">

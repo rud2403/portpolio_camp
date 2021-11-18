@@ -41,24 +41,17 @@
 		int re_ref = Integer.parseInt(request.getParameter("re_ref"));
 		int re_lev = Integer.parseInt(request.getParameter("re_lev"));
 		int re_seq = Integer.parseInt(request.getParameter("re_seq"));
-
-
 		
 		// BoardDAO 객체 생성
 		
 		BoardDAO bdao = new BoardDAO();
 		
-		
-		
 		// 글 조회수 1증가 (DB 처리)
  		bdao.updatefreeBoardReadcount(num);
 		
-		
  		//DB에서 글 번호(null)에 해당하는 글 정보를 모두 가져와서 출력
  		BoardBean bb = bdao.getfreeBoard(num);
-	
 	%>
-
 	<!-- 자바 스크립트 시작 -->
 	<script type="text/javascript">
 		<!-- id 값 받아오기 시작 -->
@@ -101,244 +94,215 @@
 					location.href="/Portpolio_camp/freeboard/freeboardForm.jsp?pageNum=<%=pageNum %>";
 				}
 			});
-
-			
-			
-			
-			// 디비에 있는 pw값(bb.getPw)와 input으로 받아오는 pw값이 다를 경우 다르다 하기
-// 			$("#correct").click(function() {
-// 				var pw1 = $("#pw").val();
-// 				var pw2;
-// 				if(pw1 != pw2){
-// 					alert("비밀번호가 다릅니다.");
-// 				}
-// 			});
-	
-			
 		});
 	</script>
 	<!-- jquery 끝 -->
 
+	<!-- navbar 시작 -->
+	<jsp:include page="/navbar/navbar.jsp" />
+	<!-- navbar 끝 -->
 
-<!-- navbar 시작 -->
- <jsp:include page="/navbar/navbar.jsp" />
- 
-<!-- navbar 끝 -->
-
-<!-- container 시작 -->	
-<div class="container-fluid p-5">
-
-	<!-- 캠핑지 이름 줄 시작 -->	
-	<div class="row pt-3">
-		<div class="col-4 text-center">
-		</div>
-		<div class="col-4 text-center">
-			<h2><%=bb.getName() %></h2>
-		</div>
-		<div class="col-4 text-center">
-		</div>
-	</div>
-	<!-- 캠핑지 이름 줄 끝 -->	
+	<!-- container 시작 -->	
+	<div class="container-fluid p-5">
 	
-	<!-- 조회수 및 수정 삭제 줄 시작 -->	
-	<%if(bb.getId().equals(id)){ %>
-	<div class="row">
-		<div class="col-1 text-center">
-			<button class="btn btn-light btn-sm" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" >수정</button>
-			 / 
-			 <button class="btn btn-light btn-sm" type="button" onclick="con()">삭제</button>
-		</div>
-		<div class="col-10"></div>
-		<div class="col-1">
-			조회수 <%=bb.getReadcount() %>
-		</div>
-	</div>
-	<%}else{ %>
-	<div class="row">
-		<div class="col-1 text-center">
-		</div>
-		<div class="col-10">
-		</div>	
-		<div class="col-1">
-			조회수 <%=bb.getReadcount() %>
-		</div>
-	</div>
-	<%} %>
-	<!-- 조회수 및 수정 삭제 줄 끝 -->	
-	
-	
-	<hr>
-	
-	<!-- 위치 row 시작 -->
-	<div class="row">
-		<!-- 위치 col 시작 -->
-		<div class="col-4 px-3">
-			<div class="row">
-				<div class="px-4 m-3"><h4><%=bb.getId()%></h4></div>
+		<!-- 캠핑지 이름 줄 시작 -->	
+		<div class="row pt-3">
+			<div class="col-4 text-center">
+			</div>
+			<div class="col-4 text-center">
+				<h2><%=bb.getName() %></h2>
+			</div>
+			<div class="col-4 text-center">
 			</div>
 		</div>
-		<!-- 위치 col 끝 -->
-		<div class="col-4 text-center"></div>
-		<div class="col-4"></div>
-	</div>
-	<!-- 위치 row 끝 -->
-	
-	<hr>
-	
-	<!-- coment row 시작 -->
-	<div class="row m-5">
-		<%=bb.getComent() %>
-
+		<!-- 캠핑지 이름 줄 끝 -->	
 		
-	</div>
-	<!-- coment row 끝 -->
-	
-	<!-- 사진 파일 row 시작 -->
-	<div class="row m-5">
-		<div class="col-2"></div>
-		<%if(!bb.getFilename().equals("null")){ %>
-			<div class="col-8 p-4 m-2 text-center">
-			<%if(bb.getFilename2().equals("null")){ %>
-			
-			<div id="carouselExampleIndicators" class="carousel slide m-3" data-bs-ride="carousel">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="250" height="300">
-			    </div>
-			  </div>		
-			
-			
-				<%}else if(bb.getFilename3().equals("null")){ %>
-				
-				<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-				  <div class="carousel-inner">
-				    <div class="carousel-item active">
-				      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="250" height="300">
-				    </div>
-				    <div class="carousel-item">
-				      <img src="/Portpolio_camp/upload/<%=bb.getFilename2() %>" class="d-block w-100" alt="..." width="250" height="300">
-				    </div>
-					<div class="carousel-item">
-				      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="250" height="300">
-				    </div>
-				  </div>
-				  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
-				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				    <span class="visually-hidden">Previous</span>
-				  </a>
-				  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
-				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-				    <span class="visually-hidden">Next</span>
-				  </a>
-				</div>
-		
-		
-				
-				<%}else{ %>
-				
-				<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-				  <div class="carousel-inner">
-				    <div class="carousel-item active">
-				      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="300">
-				    </div>
-				    <div class="carousel-item">
-				      <img src="/Portpolio_camp/upload/<%=bb.getFilename2() %>" class="d-block w-100" alt="..." width="300" height="300">
-				    </div>
-				    <div class="carousel-item">
-				      <img src="/Portpolio_camp/upload/<%=bb.getFilename3() %>" class="d-block w-100" alt="..." width="300" height="300">
-				    </div>
-				  </div>
-				  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
-				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				    <span class="visually-hidden">Previous</span>
-				  </a>
-				  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
-				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-				    <span class="visually-hidden">Next</span>
-				  </a>
-				</div>
-				
-				
-				<%} %>
-			<%} %>
-
-				<div class="col-2"></div>
-			</div>	
+		<!-- 조회수 및 수정 삭제 줄 시작 -->	
+		<%if(bb.getId().equals(id)){ %>
+		<div class="row">
+			<div class="col-1 text-center">
+				<button class="btn btn-light btn-sm" type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" >수정</button>
+				 / 
+				 <button class="btn btn-light btn-sm" type="button" onclick="con()">삭제</button>
+			</div>
+			<div class="col-10"></div>
+			<div class="col-1">
+				조회수 <%=bb.getReadcount() %>
+			</div>
 		</div>
-	</div>
-	<!-- 사진 파일 row 끝 -->
-	
-	<!-- 페이지 수정 모달 시작 -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-xl">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h2 class="modal-title" id="exampleModalLabel">자유게시판 - 글수정 </h2>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      
-	      <!-- 캠핑 장터 글 수정 폼 작성 시작 -->
-		  <form action="/Portpolio_camp/freeboard/fileupdateUploadPro.jsp" method="post" enctype="multipart/form-data">
-		  	<input type="hidden" name="num" value="<%=bb.getNum()%>">
-		  	<input type="hidden" name="pageNum" value="<%=pageNum%>">	  	
-		  	
-	      	  <!-- 글수정 본문 시작 -->
-		      <div class="modal-body mx-5">
-			       <div class="form-floating mb-3">
-					  <input type="text" class="form-control" id="floatingInput" placeholder="캠핑지명" name="name" value="<%=bb.getName()%>">
-					  <label for="floatingInput">제목</label>
-					</div>					
-			       	
-			       	<!-- 글내용 시작 --><hr>
-					<div class="row text-center">
-			       		<div class="col-4"></div>
-			       		<div class="col-4"><h4>글내용</h4></div>
-			       		<div class="col-4"></div>
-					</div>			 
-					      	
-			       	<div class="row">
-						<div class="form-floating">
-						  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px" name="coment"><%=bb.getComent() %></textarea>
-						  <label for="floatingTextarea2"></label>
+		<%}else{ %>
+		<div class="row">
+			<div class="col-1 text-center">
+			</div>
+			<div class="col-10">
+			</div>	
+			<div class="col-1">
+				조회수 <%=bb.getReadcount() %>
+			</div>
+		</div>
+		<%} %>
+		<!-- 조회수 및 수정 삭제 줄 끝 -->	
+		
+		<hr>
+		
+		<!-- 위치 row 시작 -->
+		<div class="row">
+			<!-- 위치 col 시작 -->
+			<div class="col-4 px-3">
+				<div class="row">
+					<div class="px-4 m-3"><h4><%=bb.getId()%></h4></div>
+				</div>
+			</div>
+			<!-- 위치 col 끝 -->
+			<div class="col-4 text-center"></div>
+			<div class="col-4"></div>
+		</div>
+		<!-- 위치 row 끝 -->
+		
+		<hr>
+		
+		<!-- coment row 시작 -->
+		<div class="row m-5">
+			<%=bb.getComent() %>
+		</div>
+		<!-- coment row 끝 -->
+		
+		<!-- 사진 파일 row 시작 -->
+		<div class="row m-5">
+			<div class="col-2"></div>
+			<%if(!bb.getFilename().equals("null")){ %>
+				<div class="col-8 p-4 m-2 text-center">
+				<%if(bb.getFilename2().equals("null")){ %>
+				
+					<div id="carouselExampleIndicators" class="carousel slide m-3" data-bs-ride="carousel">
+					  <div class="carousel-inner">
+					    <div class="carousel-item active">
+					      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="250" height="300">
+					    </div>
+					  </div>		
+						<%}else if(bb.getFilename3().equals("null")){ %>
+						
+						<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+						  <div class="carousel-inner">
+						    <div class="carousel-item active">
+						      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="250" height="300">
+						    </div>
+						    <div class="carousel-item">
+						      <img src="/Portpolio_camp/upload/<%=bb.getFilename2() %>" class="d-block w-100" alt="..." width="250" height="300">
+						    </div>
+							<div class="carousel-item">
+						      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="250" height="300">
+						    </div>
+						  </div>
+						  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+						    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						    <span class="visually-hidden">Previous</span>
+						  </a>
+						  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+						    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+						    <span class="visually-hidden">Next</span>
+						  </a>
 						</div>
-			       	</div>
-			       	<!-- 글내용 끝 -->
-			       	
-			       	<hr>
-			       	
-					<div class="row text-center">
-			       		<div class="col-4"></div>
-			       		<div class="col-4"><h4>사진 첨부</h4></div>
-			       		<div class="col-4"></div>			       		
-			       	</div>
-			       	
-			       	<!-- row3 시작 -->
-			       	<div class="row mt-2 mb-3">
-						<input class="form-control m-1" type="file" id="formFile" name="filename" >
-						<input class="form-control m-1" type="file" id="formFile" name="filename2">
-						<input class="form-control m-1" type="file" id="formFile" name="filename3">
-			       	</div>
-			       	<!-- row3 끝 -->
-			  </div>
-			  <!-- 글수정 본문 끝 -->
-			      
-
-		      <div class="modal-footer">
-		      	<button type="submit" class="btn btn-primary" id="correct">수정</button>
-			  	<button type="reset" class="btn btn-secondary" data-bs-dismiss="modal" id="cc1">취소</button>
-			  	<button type="reset" id="cc2">취소2</button>
+						<%}else{ %>
+						<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+						  <div class="carousel-inner">
+						    <div class="carousel-item active">
+						      <img src="/Portpolio_camp/upload/<%=bb.getFilename() %>" class="d-block w-100" alt="..." width="300" height="300">
+						    </div>
+						    <div class="carousel-item">
+						      <img src="/Portpolio_camp/upload/<%=bb.getFilename2() %>" class="d-block w-100" alt="..." width="300" height="300">
+						    </div>
+						    <div class="carousel-item">
+						      <img src="/Portpolio_camp/upload/<%=bb.getFilename3() %>" class="d-block w-100" alt="..." width="300" height="300">
+						    </div>
+						  </div>
+						  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+						    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						    <span class="visually-hidden">Previous</span>
+						  </a>
+						  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+						    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+						    <span class="visually-hidden">Next</span>
+						  </a>
+						</div>
+						<%} %>
+					<%} %>
+					<div class="col-2"></div>
+				</div>	
+			</div>
+		</div>
+		<!-- 사진 파일 row 끝 -->
+		
+		<!-- 페이지 수정 모달 시작 -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-xl">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h2 class="modal-title" id="exampleModalLabel">자유게시판 - 글수정 </h2>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		      </div>
-	      </form>
-	     <!-- 캠핑장터 글 수정 폼 작성 끝 -->
-	      
-	    </div>
-	  </div>
-	</div>
-	<!-- 페이지 수정 모달 끝 -->	
+		      
+		      <!-- 캠핑 장터 글 수정 폼 작성 시작 -->
+			  <form action="/Portpolio_camp/freeboard/fileupdateUploadPro.jsp" method="post" enctype="multipart/form-data">
+			  	<input type="hidden" name="num" value="<%=bb.getNum()%>">
+			  	<input type="hidden" name="pageNum" value="<%=pageNum%>">	  	
+			  	
+		      	  <!-- 글수정 본문 시작 -->
+			      <div class="modal-body mx-5">
+				       <div class="form-floating mb-3">
+						  <input type="text" class="form-control" id="floatingInput" placeholder="캠핑지명" name="name" value="<%=bb.getName()%>">
+						  <label for="floatingInput">제목</label>
+						</div>					
+				       	
+				       	<!-- 글내용 시작 --><hr>
+						<div class="row text-center">
+				       		<div class="col-4"></div>
+				       		<div class="col-4"><h4>글내용</h4></div>
+				       		<div class="col-4"></div>
+						</div>			 
+						      	
+				       	<div class="row">
+							<div class="form-floating">
+							  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px" name="coment"><%=bb.getComent() %></textarea>
+							  <label for="floatingTextarea2"></label>
+							</div>
+				       	</div>
+				       	<!-- 글내용 끝 -->
+				       	
+				       	<hr>
+				       	
+						<div class="row text-center">
+				       		<div class="col-4"></div>
+				       		<div class="col-4"><h4>사진 첨부</h4></div>
+				       		<div class="col-4"></div>			       		
+				       	</div>
+				       	
+				       	<!-- row3 시작 -->
+				       	<div class="row mt-2 mb-3">
+							<input class="form-control m-1" type="file" id="formFile" name="filename" >
+							<input class="form-control m-1" type="file" id="formFile" name="filename2">
+							<input class="form-control m-1" type="file" id="formFile" name="filename3">
+				       	</div>
+				       	<!-- row3 끝 -->
+				  </div>
+				  <!-- 글수정 본문 끝 -->
 	
-</div>
-<!-- container 끝 -->	
-<hr>
+			      <div class="modal-footer">
+			      	<button type="submit" class="btn btn-primary" id="correct">수정</button>
+				  	<button type="reset" class="btn btn-secondary" data-bs-dismiss="modal" id="cc1">취소</button>
+				  	<button type="reset" id="cc2">취소2</button>
+			      </div>
+		      </form>
+		     <!-- 캠핑장터 글 수정 폼 작성 끝 -->
+		      
+		    </div>
+		  </div>
+		</div>
+		<!-- 페이지 수정 모달 끝 -->	
+		
+	</div>
+	<!-- container 끝 -->	
+	<hr>
  	<!-- 목록으로, 답글쓰기 row 시작 -->
 	<div class="row text-center m-5">
 		<div>
@@ -347,9 +311,6 @@
 		</div>
 	</div>
  	<!-- 목록으로, 답글쓰기  row 끝 -->
- 	
- 	
- 	
  	
 	<!-- 답글쓰기 모달 시작 -->
 	<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -370,7 +331,6 @@
 		  	
 	      	  <!-- 답글 쓰기 본문 시작 -->
 		      <div class="modal-body mx-5">
-		      
 		      
 			       <div class="form-floating mb-3">
 					  <input type="text" class="form-control" id="floatingInput" placeholder="답글 제목" name="name">
@@ -409,7 +369,6 @@
 			       	<!-- row3 끝 -->
 			  </div>
 			  <!-- 답글 쓰기 본문 끝 -->
-			      
 
 		      <div class="modal-footer">
 		      	<button type="submit" class="btn btn-primary" id="correct">답글 쓰기</button>
@@ -423,7 +382,5 @@
 	  </div>
 	</div>
 	<!-- 답글쓰기 모달 끝 -->
- 	
- 	
 </body>
 </html>

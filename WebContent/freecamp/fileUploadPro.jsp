@@ -90,7 +90,6 @@
 		<input type="hidden" name="filename3" value="<%=filename3 %>">		
 		<input type="hidden" name="level" value="<%=level %>">
 		
-		
 	</form>
 
 	<!-- <a href="javascript:fr.submit();">DB 저장하기</a> -->

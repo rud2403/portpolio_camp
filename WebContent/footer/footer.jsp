@@ -6,7 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 
-
 </head>
 <body>
 
@@ -16,8 +15,6 @@
 		Copyright © 2021 CampMap All rights reserved<br>
 		👨🏻‍💻 BGM | ✉ qkrrudals2403@naver.com | 📱 010-2059-2403
 	</div>
-
-
 
 </body>
 </html>
