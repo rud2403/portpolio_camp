@@ -55,9 +55,6 @@ public class BoardDAO {
 
 			conn = ds.getConnection();
 
-			System.out.println(" 드라이버로드, 디비연결 성공! ");
-			System.out.println(conn);
-
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -137,9 +134,6 @@ public class BoardDAO {
 
 			} // while
 			
-			System.out.println(" 추천 게시판 정보 저장완료 ");
-			System.out.println(" 총 " + BoardList.size() + " 개");
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -194,11 +188,7 @@ public class BoardDAO {
 
 				} // while
 				
-				System.out.println(" 캠핑 장터 정보 저장완료 ");
-				System.out.println(" 총 " + marketList.size() + " 개");
-
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
 				closeDB();
@@ -209,68 +199,65 @@ public class BoardDAO {
 		//getMainMarketList() 끝		
 	
 		// getFreeList() 시작 ( 메인페이지 자유게시판 기능 )
-				public ArrayList getFreeList() {
-					// DB데이터 1행의 정보를 BoardBean에 저장 -> ArrayList 한칸에 저장
+		public ArrayList getFreeList() {
+			// DB데이터 1행의 정보를 BoardBean에 저장 -> ArrayList 한칸에 저장
 
-					// 게시판의 글 정보를 원하는 만큼 저장하는 가변길이 배열
-					ArrayList freeList = new ArrayList();
+			// 게시판의 글 정보를 원하는 만큼 저장하는 가변길이 배열
+			ArrayList freeList = new ArrayList();
 
-					// 게시판 글 1개의 정보를 저장하는 객체
-					BoardBean bb = null;
+			// 게시판 글 1개의 정보를 저장하는 객체
+			BoardBean bb = null;
 
-					try {
-						// 1, 2 드라이버 로드, 디비 열결
-						conn = getConnection();
+			try {
+				// 1, 2 드라이버 로드, 디비 열결
+				conn = getConnection();
 
-						// 3sql 구문 & pstmtm객체
-						// 글 정보 정렬 - re_ref 값을 최신글 위쪽으로 정렬(내림차순)
-						//				- re_seq 값을 사용 (오름 차순)
-						//				- limit a, b (a 시작, b 개수)
-						//				ex) 1번글 -> 0번 인덱스
-						
-						
-						sql = "select * from camp_freeboard "
-								+ "order by re_ref desc, re_seq asc";
-						
-						pstmt = conn.prepareStatement(sql);
-						
-						rs = pstmt.executeQuery();
+				// 3sql 구문 & pstmtm객체
+				// 글 정보 정렬 - re_ref 값을 최신글 위쪽으로 정렬(내림차순)
+				//				- re_seq 값을 사용 (오름 차순)
+				//				- limit a, b (a 시작, b 개수)
+				//				ex) 1번글 -> 0번 인덱스
+				
+				
+				sql = "select * from camp_freeboard "
+						+ "order by re_ref desc, re_seq asc";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				rs = pstmt.executeQuery();
 
-						// 5 데이터 처리
-						while (rs.next()) {
-							// 데이터 있을 때 bb 객체 생성
-							bb = new BoardBean();
+				// 5 데이터 처리
+				while (rs.next()) {
+					// 데이터 있을 때 bb 객체 생성
+					bb = new BoardBean();
 
-							// DB정보를 Bean에 저장하기
-							bb.setNum(rs.getInt("num"));				
-							bb.setName(rs.getString("name"));
-							bb.setId(rs.getString("id"));
-							bb.setRe_lev(rs.getInt("re_lev"));
-							bb.setRe_seq(rs.getInt("re_seq"));
-							bb.setRe_ref(rs.getInt("re_ref"));
+					// DB정보를 Bean에 저장하기
+					bb.setNum(rs.getInt("num"));				
+					bb.setName(rs.getString("name"));
+					bb.setId(rs.getString("id"));
+					bb.setRe_lev(rs.getInt("re_lev"));
+					bb.setRe_seq(rs.getInt("re_seq"));
+					bb.setRe_ref(rs.getInt("re_ref"));
 
-							// Bean -> ArrayList 한칸에 저장
-							freeList.add(bb);
+					// Bean -> ArrayList 한칸에 저장
+					freeList.add(bb);
 
-						} // while
-						
-						System.out.println(" 캠핑 장터 정보 저장완료 ");
-						System.out.println(" 총 " + freeList.size() + " 개");
+				} // while
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				closeDB();
+			}
 
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} finally {
-						closeDB();
-					}
-
-					return freeList;
-				}
-				//getMainMarketList() 끝	
+			return freeList;
+		}
+		//getMainMarketList() 끝	
 	
 	
 	
-////////////////////////////////////////// 캠핑 List 개시판 DAO ////////////////////////////////////////////////////////////	
+		// 캠핑 List 개시판 DAO //
 	
 	// insertBoard(BoardBean bb) 시작 ( 캠핑 게시판 글쓰기 기능)
 	public void insertBoard(BoardBean bb) {
@@ -299,8 +286,6 @@ public class BoardDAO {
 				num = rs.getInt(1) + 1;
 			}
 
-			System.out.println(" 글 번호 : " + num);
-
 			// 3 sql 작성 (insert) & pstmt 객체 생성
 			sql = "insert into camp_camp values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ?, ? ,?, ?, ?, ?)";
 
@@ -324,22 +309,15 @@ public class BoardDAO {
 			pstmt.setString(16, bb.getFilename2());
 			pstmt.setString(17, bb.getFilename3());
 			pstmt.setInt(18, bb.getCount());
-
 			
-
 			// 4 sql 실행
-
 			pstmt.executeUpdate();
 
-			System.out.println("sql구문 실행 완료 : 글쓰기 완료");
-
 		} catch (SQLException e) {
-			System.out.println("디비 연결 실패 !!");
 			e.printStackTrace();
 		} finally {
 			// 자원해제
 			closeDB();
-
 		}
 
 	}
@@ -362,7 +340,6 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, search);
-			
 
 			// 4 sql 실행
 			rs = pstmt.executeQuery();
@@ -372,68 +349,51 @@ public class BoardDAO {
 				cnt = rs.getInt(1);
 			} // try
 
-			System.out.println("SQL 구문 실행 완료!");
-			System.out.println(" 글 개수 : " + cnt + "개");
-
 		} catch (Exception e) {
-			System.out.println(" 게시판 글 개수 에러 발생 !!");
 			e.printStackTrace();
 		} finally {
-
 			closeDB();
-
 		}
-
 		return cnt;
-
 	}
 	// getBoardCount() 끝
 	
-	
 	// getBoardCount() 시작 ( 캠핑장 게시판 게시글 수 기능 )
-		public int getBoardCount() {
+	public int getBoardCount() {
 
-			int cnt = 0;
+		int cnt = 0;
 
-			try {
-				// 1, 2 드라이버로드, 디비연결
-				conn = getConnection();
+		try {
+			// 1, 2 드라이버로드, 디비연결
+			conn = getConnection();
 
-				// 3 sql 작성(select) & pstmt 객체 생성
-				sql = "select count(*) from camp_camp";
+			// 3 sql 작성(select) & pstmt 객체 생성
+			sql = "select count(*) from camp_camp";
 
-				pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);
 
-				// 4 sql 실행
-				rs = pstmt.executeQuery();
+			// 4 sql 실행
+			rs = pstmt.executeQuery();
 
-				// 5 데이터 처리
-				if (rs.next()) {
-					cnt = rs.getInt(1);
-				} // try
+			// 5 데이터 처리
+			if (rs.next()) {
+				cnt = rs.getInt(1);
+			} // try
 
-				System.out.println("SQL 구문 실행 완료!");
-				System.out.println(" 글 개수 : " + cnt + "개");
-
-			} catch (Exception e) {
-				System.out.println(" 게시판 글 개수 에러 발생 !!");
-				e.printStackTrace();
-			} finally {
-
-				closeDB();
-
-			}
-
-			return cnt;
-
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeDB();
 		}
-		// getBoardCount() 끝
+		return cnt;
+	}
+	// getBoardCount() 끝
 	
 
 	// getBoardList() 시작 ( 캠핑장 게시판 게시글 가져오기 기능 )
 	public ArrayList getBoardList() {
+		
 		// DB데이터 1행의 정보를 BoardBean에 저장 -> ArrayList 한칸에 저장
-
 		// 게시판의 글 정보를 모두 저장하는 가변길이 배열
 		ArrayList BoardListAll = new ArrayList();
 
@@ -477,15 +437,11 @@ public class BoardDAO {
 				bb.setFilename2(rs.getString("filename2"));
 				bb.setFilename3(rs.getString("filename3"));
 				bb.setCount(rs.getInt("count"));
-				
 
 				// Bean -> ArrayList 한칸에 저장
 				BoardListAll.add(bb);
 
 			} // while
-			
-			System.out.println(" 게시판 모든 정보 저장완료 ");
-			System.out.println(" 총 " + BoardListAll.size() + " 개");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -512,20 +468,11 @@ public class BoardDAO {
 		try {
 			// 1, 2 드라이버 로드, 디비 열결
 			conn = getConnection();
-
-			// 3sql 구문 & pstmtm객체
-			// 글 정보 정렬 - re_ref 값을 최신글 위쪽으로 정렬(내림차순)
-			//				- re_seq 값을 사용 (오름 차순)
-			//				- limit a, b (a 시작, b 개수)
-			//				ex) 1번글 -> 0번 인덱스
-			
 			
 			sql = "select * from camp_camp "
 					+ "order by num desc"
 					+ " limit ?,?";
 			
-
-			//
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, startRow-1);
@@ -562,17 +509,12 @@ public class BoardDAO {
 				BoardList.add(bb);
 
 			} // while
-			
-			System.out.println(" 게시판 모든 정보 저장완료 ");
-			System.out.println(" 총 " + BoardList.size() + " 개");
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeDB();
 		}
-
 		return BoardList;
 	}
 	// getBoardList(int startRow, int pageSize) 끝
@@ -592,18 +534,9 @@ public class BoardDAO {
 		try {
 			// 1, 2 드라이버 로드, 디비 열결
 			conn = getConnection();
-
-			// 3sql 구문 & pstmtm객체
-			// 글 정보 정렬 - re_ref 값을 최신글 위쪽으로 정렬(내림차순)
-			//				- re_seq 값을 사용 (오름 차순)
-			//				- limit a, b (a 시작, b 개수)
-			//				ex) 1번글 -> 0번 인덱스
-			
 			
 			sql = "select * from camp_camp where name like ? order by num desc limit ?,?";
 			
-
-			//
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, search);
@@ -642,11 +575,7 @@ public class BoardDAO {
 
 			} // while
 			
-			System.out.println(" 게시판 모든 정보 저장완료 ");
-			System.out.println(" 총 " + BoardList.size() + " 개");
-
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeDB();
@@ -671,20 +600,9 @@ public class BoardDAO {
 			// 1, 2 드라이버 로드, 디비 열결
 			conn = getConnection();
 
-			// 3sql 구문 & pstmtm객체
-			// 글 정보 정렬 - re_ref 값을 최신글 위쪽으로 정렬(내림차순)
-			//				- re_seq 값을 사용 (오름 차순)
-			//				- limit a, b (a 시작, b 개수)
-			//				ex) 1번글 -> 0번 인덱스
-			
-			
 			sql = "select * from camp_camp ";
 			
-
-			//
 			pstmt = conn.prepareStatement(sql);
-
-
 			
 			rs = pstmt.executeQuery();
 
@@ -712,17 +630,12 @@ public class BoardDAO {
 				bb.setComent(rs.getString("coment"));
 				bb.setCount(rs.getInt("count"));
 
-				
 				// Bean -> ArrayList 한칸에 저장
 				BoardList.add(bb);
 
 			} // while
-			
-			System.out.println(" 캐프 모든 정보 저장완료 ");
-			System.out.println(" 총 " + BoardList.size() + " 개");
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeDB();
@@ -747,22 +660,12 @@ public class BoardDAO {
 			try {
 				// 1, 2 드라이버 로드, 디비 열결
 				conn = getConnection();
-
-				// 3sql 구문 & pstmtm객체
-				// 글 정보 정렬 - re_ref 값을 최신글 위쪽으로 정렬(내림차순)
-				//				- re_seq 값을 사용 (오름 차순)
-				//				- limit a, b (a 시작, b 개수)
-				//				ex) 1번글 -> 0번 인덱스
-				
 				
 				sql = "select * from camp_camp where name like ?";
-				
 
-				//
 				pstmt = conn.prepareStatement(sql);
 
 				pstmt.setString(1, search);
-
 				
 				rs = pstmt.executeQuery();
 
@@ -789,7 +692,6 @@ public class BoardDAO {
 					bb.setReadcount(rs.getInt("readcount"));
 					bb.setComent(rs.getString("coment"));
 					bb.setCount(rs.getInt("count"));
-
 					
 					// Bean -> ArrayList 한칸에 저장
 					BoardList.add(bb);
@@ -800,7 +702,6 @@ public class BoardDAO {
 				System.out.println(" 총 " + BoardList.size() + " 개");
 
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
 				closeDB();
@@ -818,30 +719,22 @@ public class BoardDAO {
 		// 1,2 디비 연결
 		conn = getConnection();
 		
-		
 		// 3 sql 구문 작성(update) & pstmt 객체
 		sql = "update camp_camp set readcount = readcount + 1 where num=?";
-		
 		
 		pstmt = conn.prepareStatement(sql);
 		
 		pstmt.setInt(1, num);
 		
 		//4 sql 실행
-		
 		pstmt.execute();
 		
-		System.out.println("글 조회수 증가 완료");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			closeDB();
 		}
-		
-		
-		// 4 sql 실행
-		
 		
 	}
 	// updateReadcount(int num) 끝
@@ -892,10 +785,7 @@ public class BoardDAO {
 				bb.setFilename3(rs.getString("filename3"));
 				bb.setCount(rs.getInt("count"));
 				
-				
 			}
-			
-			System.out.println(" 글 번호에 해당하는 글정보 저장 완료");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -903,10 +793,7 @@ public class BoardDAO {
 		}finally{
 			closeDB();
 		}
-		
 		return bb;
-		
-
 	}
 	// getBoard(int num) 끝
 	
@@ -919,17 +806,14 @@ public class BoardDAO {
 		try {
 			// 1, 2 디비 연결
 			conn = getConnection();
-			System.out.println("넘버 숫자는 #################: " +bb.getNum());
 			// 3 sql 작성(select - 본인확인) & pstmt 객체
 			sql = "select * from camp_camp where num=?";
-			
 			
 			pstmt = conn.prepareStatement(sql);
 							
 			pstmt.setInt(1, bb.getNum());
 
 			//4 sql 실행
-
 			rs = pstmt.executeQuery();
 			
 			//5 데이터 처리
@@ -942,7 +826,6 @@ public class BoardDAO {
 				pstmt = conn.prepareStatement(sql);
 				
 				// ? 채우기
-
 				pstmt.setString(1, bb.getName());
 				pstmt.setString(2, bb.getAddress());
 				pstmt.setString(3, bb.getLat());
@@ -959,30 +842,19 @@ public class BoardDAO {
 				pstmt.setString(14, bb.getFilename3());
 				pstmt.setInt(15, bb.getNum());
 				
-		
-				
 				// 4 sql 실행
 				pstmt.executeUpdate();
-				
-				
 				check = 0;
-				
-				//check = 1;
-										
 			}else{
 				// 글이 없음
 				check = -1;
 			}
-			
-			System.out.println(" 글 수정 완료 !" + check);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
 			closeDB();
 		}			
 		return check;
-
 	}
 	// updateBoard(BoardBean bb) 끝		
 
@@ -1000,10 +872,7 @@ public class BoardDAO {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			System.out.println("@@@@@@@##########################가져온 넘버의 값은 : " + bb.getNum());
-			
 			pstmt.setInt(1, bb.getNum());
-			
 			
 			rs = pstmt.executeQuery();
 			
@@ -1011,12 +880,10 @@ public class BoardDAO {
 				sql = "delete from camp_camp where num=?";
 				pstmt = conn.prepareStatement(sql);
 				
-				
 				pstmt.setInt(1, bb.getNum());
 				
 				pstmt.executeUpdate();
 
-				
 				check = 0;
 					
 			}else{
@@ -1026,13 +893,11 @@ public class BoardDAO {
 			System.out.println("글 삭제 완료" + check);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			closeDB();
 		}
 
-		
 		return check;
 	}
 	// deleteBoard(BoardBean bb) 끝
@@ -1066,8 +931,6 @@ public class BoardDAO {
 				num = rs.getInt(1) + 1;
 			}
 
-			System.out.println(" 글 번호 : " + num);
-
 			// 3 sql 작성 (insert) & pstmt 객체 생성
 			sql = "insert into camp_sell values(?, ?, ?, ?, ?, ?, now(), ?, ? ,?, ?, ?, ?, ?, ?, ?)";
 
@@ -1089,16 +952,10 @@ public class BoardDAO {
 			pstmt.setString(14, bb.getFilename2());
 			pstmt.setString(15, bb.getFilename3());
 	
-			
-
 			// 4 sql 실행
-
 			pstmt.executeUpdate();
 
-			System.out.println("sql구문 실행 완료 : 글쓰기 완료");
-
 		} catch (SQLException e) {
-			System.out.println("디비 연결 실패 !!");
 			e.printStackTrace();
 		} finally {
 			closeDB();
@@ -1107,7 +964,6 @@ public class BoardDAO {
 	}
 	// insertmarketBoard(BoardBean bb) 끝	
 			
-		
 	// getMarketCount() 시작 ( 캠핑장터 게시판 게시글 수 기능)
 	public int getMarketCount() {
 
@@ -1130,28 +986,19 @@ public class BoardDAO {
 				cnt = rs.getInt(1);
 			} // try
 
-			System.out.println("SQL 구문 실행 완료!");
-			System.out.println(" 글 개수 : " + cnt + "개");
-
 		} catch (Exception e) {
-			System.out.println(" 게시판 글 개수 에러 발생 !!");
 			e.printStackTrace();
 		} finally {
-
 			closeDB();
-
 		}
-
 		return cnt;
-
 	}
 	// getMarketCount() 끝		
 		
-		
 	// getMarketList() 시작 ( 캠핑장터 게시판 게시글 가져오기 기능 )
 	public ArrayList getMarketList() { 
+		
 		// DB데이터 1행의 정보를 BoardBean에 저장 -> ArrayList 한칸에 저장
-
 		// 게시판의 글 정보를 모두 저장하는 가변길이 배열
 		ArrayList BoardListAll = new ArrayList();
 
@@ -1192,15 +1039,10 @@ public class BoardDAO {
 				bb.setFilename2(rs.getString("filename2"));
 				bb.setFilename3(rs.getString("filename3"));
 
-				
-
 				// Bean -> ArrayList 한칸에 저장
 				BoardListAll.add(bb);
 
 			} // while
-			
-			System.out.println(" 게시판 모든 정보 저장완료 ");
-			System.out.println(" 총 " + BoardListAll.size() + " 개");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1212,8 +1054,6 @@ public class BoardDAO {
 		return BoardListAll;
 	 }
 	// getMarketList() 끝		
-		
-
 		
 	// getMarketList(int startRow, int pageSize) 시작 ( 캠핑장터 게시글 시작 끝 기능 )
 	public ArrayList getMarketList(int startRow, int pageSize) {
@@ -1228,20 +1068,10 @@ public class BoardDAO {
 		try {
 			// 1, 2 드라이버 로드, 디비 열결
 			conn = getConnection();
-
-			// 3sql 구문 & pstmtm객체
-			// 글 정보 정렬 - re_ref 값을 최신글 위쪽으로 정렬(내림차순)
-			//				- re_seq 값을 사용 (오름 차순)
-			//				- limit a, b (a 시작, b 개수)
-			//				ex) 1번글 -> 0번 인덱스
-			
 			
 			sql = "select * from camp_sell "
 					+ "order by num desc"
 					+ " limit ?,?";
-			
-
-			//
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, startRow-1);
@@ -1270,18 +1100,13 @@ public class BoardDAO {
 				bb.setFilename(rs.getString("filename"));
 				bb.setFilename2(rs.getString("filename2"));
 				bb.setFilename3(rs.getString("filename3"));
-
 				
 				// Bean -> ArrayList 한칸에 저장
 				BoardList.add(bb);
 
 			} // while
 			
-			System.out.println(" 게시판 모든 정보 저장완료 ");
-			System.out.println(" 총 " + BoardList.size() + " 개");
-
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeDB();
@@ -1292,7 +1117,7 @@ public class BoardDAO {
 	// getMarketList(int startRow, int pageSize) 끝
 
 		
-	///////////////// 삽니다의 경우만 띄우기 시작
+	// 삽니다의 경우만 띄우기 시작
 	// getBuyList(int startRow, int pageSize) 시작
 	public ArrayList getBuyList(int startRow, int pageSize) {
 		// DB데이터 1행의 정보를 BoardBean에 저장 -> ArrayList 한칸에 저장
@@ -1306,20 +1131,11 @@ public class BoardDAO {
 		try {
 			// 1, 2 드라이버 로드, 디비 열결
 			conn = getConnection();
-
-			// 3sql 구문 & pstmtm객체
-			// 글 정보 정렬 - re_ref 값을 최신글 위쪽으로 정렬(내림차순)
-			//				- re_seq 값을 사용 (오름 차순)
-			//				- limit a, b (a 시작, b 개수)
-			//				ex) 1번글 -> 0번 인덱스
-			
 			
 			sql = "select * from camp_sell where kind ='삽니다' "
 					+ "order by num desc"
 					+ " limit ?,?";
 			
-
-			//
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, startRow-1);
@@ -1348,18 +1164,13 @@ public class BoardDAO {
 				bb.setFilename(rs.getString("filename"));
 				bb.setFilename2(rs.getString("filename2"));
 				bb.setFilename3(rs.getString("filename3"));
-
 				
 				// Bean -> ArrayList 한칸에 저장
 				BoardList.add(bb);
 
 			} // while
 			
-			System.out.println(" 게시판 모든 정보 저장완료 ");
-			System.out.println(" 총 " + BoardList.size() + " 개");
-
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeDB();
@@ -1368,10 +1179,10 @@ public class BoardDAO {
 		return BoardList;
 	}
 	// getBuyList(int startRow, int pageSize) 끝
-	///////////// 삽니다의 경우만 띄우기 끝
+	// 삽니다의 경우만 띄우기 끝
 	
 	
-	///////////////// 팝니다의 경우만 띄우기 시작
+	// 팝니다의 경우만 띄우기 시작
 	// getSellList(int startRow, int pageSize) 시작
 	public ArrayList getSellList(int startRow, int pageSize) {
 		// DB데이터 1행의 정보를 BoardBean에 저장 -> ArrayList 한칸에 저장
@@ -1385,20 +1196,11 @@ public class BoardDAO {
 		try {
 			// 1, 2 드라이버 로드, 디비 열결
 			conn = getConnection();
-
-			// 3sql 구문 & pstmtm객체
-			// 글 정보 정렬 - re_ref 값을 최신글 위쪽으로 정렬(내림차순)
-			//				- re_seq 값을 사용 (오름 차순)
-			//				- limit a, b (a 시작, b 개수)
-			//				ex) 1번글 -> 0번 인덱스
-			
 			
 			sql = "select * from camp_sell where kind ='팝니다' "
 					+ "order by num desc"
 					+ " limit ?,?";
 			
-
-			//
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setInt(1, startRow-1);
@@ -1434,11 +1236,7 @@ public class BoardDAO {
 
 			} // while
 			
-			System.out.println(" 게시판 모든 정보 저장완료 ");
-			System.out.println(" 총 " + BoardList.size() + " 개");
-
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			closeDB();
@@ -1447,16 +1245,13 @@ public class BoardDAO {
 		return BoardList;
 	}
 	// getSellList(int startRow, int pageSize) 끝
-	///////////// 팝니다의 경우만 띄우기
 	
-				
 	// updateMarketReadcount(int num) 시작 ( 캠핑장터 게시글 조회수 증가 기능 )
 	public void updateMarketReadcount(int num){
 		
 		try {
 		// 1,2 디비 연결
 		conn = getConnection();
-		
 		
 		// 3 sql 구문 작성(update) & pstmt 객체
 		sql = "update camp_sell set readcount = readcount + 1 where num=?";
@@ -1467,7 +1262,6 @@ public class BoardDAO {
 		pstmt.setInt(1, num);
 		
 		//4 sql 실행
-		
 		pstmt.execute();
 		
 		System.out.println("글 조회수 증가 완료");
@@ -1477,15 +1271,8 @@ public class BoardDAO {
 		}finally{
 			closeDB();
 		}
-		
-		
-		// 4 sql 실행
-		
-		
 	}
 	// updateMarketReadcount(int num) 끝
-		
-
 		
 	// getMarket(int num) 시작 ( 캠핑장터 게시판 번호에 맞는 게시글 정보 가져오기 )
 	public BoardBean getMarket(int num){
@@ -1529,25 +1316,17 @@ public class BoardDAO {
 				bb.setFilename2(rs.getString("filename2"));
 				bb.setFilename3(rs.getString("filename3"));
 				
-				
 			}
 			
-			System.out.println(" 글 번호에 해당하는 글정보 저장 완료");
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			closeDB();
 		}
-		
 		return bb;
 		
-
 	}
 	// getMarket(int num) 끝		
-		
-	
 		
 	// stateBoard(BoardBean bb) 시작 ( 캠핑장터 게시글 거래완료 기능 )
 	public int stateBoard(BoardBean bb){
@@ -1557,17 +1336,15 @@ public class BoardDAO {
 		try {
 			// 1, 2 디비 연결
 			conn = getConnection();
-			System.out.println("stateBoard의 넘버 숫자는 !@!@!@!@!@!@!@!@: " +bb.getNum());
+			
 			// 3 sql 작성(select - 본인확인) & pstmt 객체
 			sql = "select * from camp_sell where num=?";
-			
 			
 			pstmt = conn.prepareStatement(sql);
 							
 			pstmt.setInt(1, bb.getNum());
 
 			//4 sql 실행
-
 			rs = pstmt.executeQuery();
 			
 			//5 데이터 처리
@@ -1594,8 +1371,6 @@ public class BoardDAO {
 				check = -1;
 			}
 			
-			System.out.println(" 글 수정 완료 !" + check);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
@@ -1615,14 +1390,11 @@ public class BoardDAO {
 		try {
 			// 1, 2 디비 연결
 			conn = getConnection();
-			System.out.println("넘버 숫자는 @@@@@@@@@@@@@@@@@@@: " + bb.getNum());
-
+			
 			// 3 sql 작성(select - 본인확인) & pstmt 객체
 			sql = "select * from camp_sell where num=?";
 			
-			
 			pstmt = conn.prepareStatement(sql);
-			
 			
 			pstmt.setInt(1, bb.getNum());
 
@@ -1639,7 +1411,6 @@ public class BoardDAO {
 				pstmt = conn.prepareStatement(sql);
 				
 				// ? 채우기
-
 				pstmt.setString(1, bb.getName());
 				pstmt.setString(2, bb.getKind());
 				pstmt.setString(3, bb.getTrade());
@@ -1650,23 +1421,15 @@ public class BoardDAO {
 				pstmt.setString(8, bb.getFilename2());
 				pstmt.setString(9, bb.getFilename3());
 				pstmt.setInt(10, bb.getNum());
-
-
 				
 				// 4 sql 실행
 				pstmt.executeUpdate();
 				
-				
 				check = 0;
-				
-				//check = 1;
-										
 			}else{
 				// 글이 없음
 				check = -1;
 			}
-			
-			System.out.println(" 글 수정 완료 !" + check);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1691,10 +1454,7 @@ public class BoardDAO {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			System.out.println("@@@@@@@##########################가져온 넘버의 값은 : " + bb.getNum());
-			
 			pstmt.setInt(1, bb.getNum());
-			
 			
 			rs = pstmt.executeQuery();
 			
@@ -1714,6 +1474,393 @@ public class BoardDAO {
 				check = -1;
 			}
 			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			closeDB();
+		}
+		return check;
+	}
+	// deleteMarket(BoardBean bb) 끝
+		
+		
+	// 자유게시판 DAO //
+	// insertfreeBoard(BoardBean bb) 시작 ( 자유 게시판 글쓰기 기능 )
+	public void insertfreeBoard(BoardBean bb) {
+
+		int num = 0;
+
+		try {
+			// 1 드라이버 로드
+			// 2 디비 연결
+			// => 한번에 처리하는 메소드로 변경
+			conn = getConnection();
+
+			// 3 sql (글 번호를 계산하는 구문)
+			sql = "select max(num) from camp_freeboard";
+
+			pstmt = conn.prepareStatement(sql);
+
+			// 4 sql 실행
+			rs = pstmt.executeQuery();
+
+			// 5 데이터 처리
+			// max(num) - sql 함수를 실행했을 경우 커서 이동 가능(데이터 여부 상관없음)
+			// num - sql 칼럼의 경우 커서 이동 불가능
+			if (rs.next()) {
+				// num = rs.getInt("mxa(num)") + 1;
+				num = rs.getInt(1) + 1;
+			}
+
+			System.out.println(" 글 번호 : " + num);
+
+			// 3 sql 작성 (insert) & pstmt 객체 생성
+			sql = "insert into camp_freeboard values(?, ?, ?, ?, ?, ?, now(), ?, ? ,?, ?, ?, ?, ?)";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, num);
+			pstmt.setString(2, bb.getName());
+			pstmt.setString(3, bb.getId());
+			pstmt.setString(4, bb.getPw());		
+			pstmt.setString(5, bb.getComent());	
+			pstmt.setInt(6, bb.getReadcount());
+			pstmt.setString(7, bb.getIp());
+			pstmt.setString(8, bb.getFilename());
+			pstmt.setString(9, bb.getFilename2());
+			pstmt.setString(10, bb.getFilename3());				
+			pstmt.setInt(11, num); //re_ref에 글 번호 num 저장
+			pstmt.setInt(12, bb.getRe_lev());
+			pstmt.setInt(13, bb.getRe_seq());
+
+
+			// 4 sql 실행
+
+			pstmt.executeUpdate();
+
+			System.out.println("sql구문 실행 완료 : 글쓰기 완료");
+
+		} catch (SQLException e) {
+			System.out.println("디비 연결 실패 !!");
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+
+	}
+	// insertfreeBoard(BoardBean bb) 끝	
+	
+	// getfreeBoardCount() 시작 ( 캠핑장터 게시판 게시글 수 기능)
+	public int getfreeBoardCount() {
+
+		int cnt = 0;
+
+		try {
+			// 1, 2 드라이버로드, 디비연결
+			conn = getConnection();
+
+			// 3 sql 작성(select) & pstmt 객체 생성
+			sql = "select count(*) from camp_freeboard";
+
+			pstmt = conn.prepareStatement(sql);
+
+			// 4 sql 실행
+			rs = pstmt.executeQuery();
+
+			// 5 데이터 처리
+			if (rs.next()) {
+				cnt = rs.getInt(1);
+			} // try
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+
+			closeDB();
+
+		}
+
+		return cnt;
+
+	}
+	// getfreeBoardCount() 끝		
+
+	// getfreeBoardList(int startRow, int pageSize) 시작 ( 캠핑장터 게시글 시작 끝 기능 )
+	public ArrayList getfreeBoardList(int startRow, int pageSize) {
+		// DB데이터 1행의 정보를 BoardBean에 저장 -> ArrayList 한칸에 저장
+
+		// 게시판의 글 정보를 원하는 만큼 저장하는 가변길이 배열
+		ArrayList BoardList = new ArrayList();
+
+		// 게시판 글 1개의 정보를 저장하는 객체
+		BoardBean bb = null;
+
+		try {
+			// 1, 2 드라이버 로드, 디비 열결
+			conn = getConnection();
+			
+			sql = "select * from camp_freeboard "
+					+ "order by re_ref desc, re_seq asc"
+					+ " limit ?,?";
+			
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, startRow-1);
+			pstmt.setInt(2, pageSize);
+			
+			rs = pstmt.executeQuery();
+
+			// 5 데이터 처리
+			while (rs.next()) {
+				// 데이터 있을 때 bb 객체 생성
+				bb = new BoardBean();
+
+				// DB정보를 Bean에 저장하기
+				bb.setNum(rs.getInt("num"));
+				bb.setName(rs.getString("name"));
+				bb.setId(rs.getString("id"));
+				bb.setPw(rs.getString("pw"));
+				bb.setComent(rs.getString("coment"));
+				bb.setReadcount(rs.getInt("readcount"));
+				bb.setDate(rs.getDate("date"));
+				bb.setIp(rs.getString("ip"));
+				bb.setFilename(rs.getString("filename"));
+				bb.setFilename2(rs.getString("filename2"));
+				bb.setFilename3(rs.getString("filename3"));
+				bb.setRe_ref(rs.getInt("re_ref"));
+				bb.setRe_lev(rs.getInt("re_lev"));
+				bb.setRe_seq(rs.getInt("re_seq"));
+				
+				// Bean -> ArrayList 한칸에 저장
+				BoardList.add(bb);
+
+			} // while
+			
+			System.out.println(" 게시판 모든 정보 저장완료 ");
+			System.out.println(" 총 " + BoardList.size() + " 개");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+
+		return BoardList;
+	}
+	// getfreeBoardList(int startRow, int pageSize) 끝		
+		
+	// updatefreeBoardReadcount(int num) 시작 ( 자유게시판 게시글 조회수 증가 기능 )
+	public void updatefreeBoardReadcount(int num){
+		
+		try {
+		// 1,2 디비 연결
+		conn = getConnection();
+		
+		// 3 sql 구문 작성(update) & pstmt 객체
+		sql = "update camp_freeboard set readcount = readcount + 1 where num=?";
+		
+		pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setInt(1, num);
+		
+		//4 sql 실행
+		pstmt.execute();
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			closeDB();
+		}
+		
+	}
+	// updatefreeBoardReadcount(int num) 끝		
+
+		
+	// getfreeBoard(int num) 시작 ( 캠핑장터 게시판 번호에 맞는 게시글 정보 가져오기 )
+	public BoardBean getfreeBoard(int num){
+
+		BoardBean bb = null;
+		
+		try {
+			
+			// 1, 2 디비 연결
+			conn = getConnection();
+			
+			// 3 sql 작성(select) & pstmt 객체
+			sql = "select * from camp_freeboard where num=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, num);
+			
+			// 4 sql 실행
+			
+			rs = pstmt.executeQuery();
+			
+			// 5 데이터 처리
+			if(rs.next()){
+				
+				bb = new BoardBean();
+				
+				bb.setNum(rs.getInt("num"));
+				bb.setName(rs.getString("name"));
+				bb.setId(rs.getString("id"));
+				bb.setPw(rs.getString("pw"));
+				bb.setComent(rs.getString("coment"));
+				bb.setReadcount(rs.getInt("readcount"));
+				bb.setDate(rs.getDate("date"));
+				bb.setIp(rs.getString("ip"));
+				bb.setFilename(rs.getString("filename"));
+				bb.setFilename2(rs.getString("filename2"));
+				bb.setFilename3(rs.getString("filename3"));
+				bb.setRe_ref(rs.getInt("re_ref"));
+				bb.setRe_lev(rs.getInt("re_lev"));
+				bb.setRe_seq(rs.getInt("re_seq"));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			closeDB();
+		}
+		
+		return bb;
+
+	}
+	// getfreeBoard(int num) 끝		
+
+		
+	// updatefreeBoard(BoardBean bb) 시작 ( 자유게시판 게시글 글 정보 수정 기능 )
+	public int updatefreeBoard(BoardBean bb){
+		
+		int check = -1;
+		
+		try {
+			// 1, 2 디비 연결
+			conn = getConnection();
+
+			// 3 sql 작성(select - 본인확인) & pstmt 객체
+			sql = "select * from camp_freeboard where num=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, bb.getNum());
+
+			//4 sql 실행
+			rs = pstmt.executeQuery();
+
+			//5 데이터 처리
+			if(rs.next()){
+				// 글이 있음
+				
+				// sql (update-글 수정) & pstmtm 객체
+				sql = "update camp_freeboard set name=?, coment=?, filename=?, filename2=?, filename3=? where num=?";
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, bb.getName());
+				pstmt.setString(2, bb.getComent());
+				pstmt.setString(3, bb.getFilename());
+				pstmt.setString(4, bb.getFilename2());
+				pstmt.setString(5, bb.getFilename3());
+				pstmt.setInt(6, bb.getNum());
+				
+				// 4 sql 실행
+				pstmt.executeUpdate();
+				
+				check = 0;
+				
+			}else{
+				// 글이 없음
+				check = -1;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			closeDB();
+		}			
+		return check;
+
+	}
+	// updatefreeBoard(BoardBean bb) 끝		
+
+		
+	// deletefreeBoard(BoardBean bb) 시작 ( 캠핑장터 게시판 글 삭제 기능 )
+	public int deletefreeBoard(BoardBean bb){
+		int check = -1;
+		
+		try {
+			// 1, 2 디비 연결
+			conn = getConnection();
+			// 3 sql 생성 &pstmt 객체 생성
+			sql="select * from camp_freeboard where num=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			System.out.println("@@@@@@@#######가져온 넘버의 값은 : " + bb.getNum());
+			
+			pstmt.setInt(1, bb.getNum());
+			
+			
+			rs = pstmt.executeQuery();
+			
+			// 삭제할 글이 있다.
+			if(rs.next()){
+				
+				// 본문글이다.
+				if(bb.getNum() == bb.getRe_ref()){
+					
+				sql = "delete from camp_freeboard where num=? or re_ref=?";
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, bb.getNum());
+				pstmt.setInt(2, bb.getRe_ref());
+				
+				pstmt.executeUpdate();
+				
+				check = 0;
+
+				
+				// 댓글글 또는 대댓글 글이다.
+				}else if(bb.getNum() != bb.getRe_ref()){
+					
+				 sql="select * from camp_freeboard where re_lev > (select re_lev from camp_freeboard where num = ?) && re_ref = ?";
+
+				 pstmt = conn.prepareStatement(sql);
+				 
+				 pstmt.setInt(1, bb.getNum());
+				 pstmt.setInt(2, rs.getInt("re_ref"));
+				 
+				 rs = pstmt.executeQuery();
+					 
+					 while(rs.next()){
+
+						sql = "delete from camp_freeboard where num=?";
+						pstmt = conn.prepareStatement(sql);
+
+						pstmt.setInt(1, rs.getInt("num"));
+						
+						pstmt.executeUpdate();
+					 }
+					 sql="delete from camp_freeboard where num = ?";
+					 pstmt = conn.prepareStatement(sql);
+					 
+					 pstmt.setInt(1, bb.getNum());
+
+					 pstmt.executeUpdate();
+
+					check = 0;
+				 }
+					
+			// 삭제할 글이 없다.	
+			}else{
+				check = -1;
+			}
+			
 			System.out.println("글 삭제 완료" + check);
 			
 		} catch (SQLException e) {
@@ -1722,466 +1869,15 @@ public class BoardDAO {
 		}finally {
 			closeDB();
 		}
-
-		
 		return check;
 	}
-	// deleteMarket(BoardBean bb) 끝
-		
-		
-/////////////////////////////////////////////////////////// 자유게시판 DAO ////////////////////////////////////////////////////////////////////////
-		
-	// insertfreeBoard(BoardBean bb) 시작 ( 자유 게시판 글쓰기 기능 )
-		public void insertfreeBoard(BoardBean bb) {
-
-			int num = 0;
-
-			try {
-				// 1 드라이버 로드
-				// 2 디비 연결
-				// => 한번에 처리하는 메소드로 변경
-				conn = getConnection();
-
-				// 3 sql (글 번호를 계산하는 구문)
-				sql = "select max(num) from camp_freeboard";
-
-				pstmt = conn.prepareStatement(sql);
-
-				// 4 sql 실행
-				rs = pstmt.executeQuery();
-
-				// 5 데이터 처리
-				// max(num) - sql 함수를 실행했을 경우 커서 이동 가능(데이터 여부 상관없음)
-				// num - sql 칼럼의 경우 커서 이동 불가능
-				if (rs.next()) {
-					// num = rs.getInt("mxa(num)") + 1;
-					num = rs.getInt(1) + 1;
-				}
-
-				System.out.println(" 글 번호 : " + num);
-
-				// 3 sql 작성 (insert) & pstmt 객체 생성
-				sql = "insert into camp_freeboard values(?, ?, ?, ?, ?, ?, now(), ?, ? ,?, ?, ?, ?, ?)";
-
-				pstmt = conn.prepareStatement(sql);
-
-				pstmt.setInt(1, num);
-				pstmt.setString(2, bb.getName());
-				pstmt.setString(3, bb.getId());
-				pstmt.setString(4, bb.getPw());		
-				pstmt.setString(5, bb.getComent());	
-				pstmt.setInt(6, bb.getReadcount());
-				pstmt.setString(7, bb.getIp());
-				pstmt.setString(8, bb.getFilename());
-				pstmt.setString(9, bb.getFilename2());
-				pstmt.setString(10, bb.getFilename3());				
-				pstmt.setInt(11, num); //re_ref에 글 번호 num 저장
-				pstmt.setInt(12, bb.getRe_lev());
-				pstmt.setInt(13, bb.getRe_seq());
-
-
-				// 4 sql 실행
-
-				pstmt.executeUpdate();
-
-				System.out.println("sql구문 실행 완료 : 글쓰기 완료");
-
-			} catch (SQLException e) {
-				System.out.println("디비 연결 실패 !!");
-				e.printStackTrace();
-			} finally {
-				closeDB();
-			}
-
-		}
-		// insertfreeBoard(BoardBean bb) 끝	
-	
-		// getfreeBoardCount() 시작 ( 캠핑장터 게시판 게시글 수 기능)
-		public int getfreeBoardCount() {
-
-			int cnt = 0;
-
-			try {
-				// 1, 2 드라이버로드, 디비연결
-				conn = getConnection();
-
-				// 3 sql 작성(select) & pstmt 객체 생성
-				sql = "select count(*) from camp_freeboard";
-
-				pstmt = conn.prepareStatement(sql);
-
-				// 4 sql 실행
-				rs = pstmt.executeQuery();
-
-				// 5 데이터 처리
-				if (rs.next()) {
-					cnt = rs.getInt(1);
-				} // try
-
-				System.out.println("SQL 구문 실행 완료!");
-				System.out.println(" 글 개수 : " + cnt + "개");
-
-			} catch (Exception e) {
-				System.out.println(" 게시판 글 개수 에러 발생 !!");
-				e.printStackTrace();
-			} finally {
-
-				closeDB();
-
-			}
-
-			return cnt;
-
-		}
-		// getfreeBoardCount() 끝		
-
-		// getfreeBoardList(int startRow, int pageSize) 시작 ( 캠핑장터 게시글 시작 끝 기능 )
-		public ArrayList getfreeBoardList(int startRow, int pageSize) {
-			// DB데이터 1행의 정보를 BoardBean에 저장 -> ArrayList 한칸에 저장
-
-			// 게시판의 글 정보를 원하는 만큼 저장하는 가변길이 배열
-			ArrayList BoardList = new ArrayList();
-
-			// 게시판 글 1개의 정보를 저장하는 객체
-			BoardBean bb = null;
-
-			try {
-				// 1, 2 드라이버 로드, 디비 열결
-				conn = getConnection();
-
-				// 3sql 구문 & pstmtm객체
-				// 글 정보 정렬 - re_ref 값을 최신글 위쪽으로 정렬(내림차순)
-				//				- re_seq 값을 사용 (오름 차순)
-				//				- limit a, b (a 시작, b 개수)
-				//				ex) 1번글 -> 0번 인덱스
-				
-				
-				sql = "select * from camp_freeboard "
-						+ "order by re_ref desc, re_seq asc"
-						+ " limit ?,?";
-				
-
-				//
-				pstmt = conn.prepareStatement(sql);
-
-				pstmt.setInt(1, startRow-1);
-				pstmt.setInt(2, pageSize);
-				
-				rs = pstmt.executeQuery();
-
-				// 5 데이터 처리
-				while (rs.next()) {
-					// 데이터 있을 때 bb 객체 생성
-					bb = new BoardBean();
-
-					// DB정보를 Bean에 저장하기
-					bb.setNum(rs.getInt("num"));
-					bb.setName(rs.getString("name"));
-					bb.setId(rs.getString("id"));
-					bb.setPw(rs.getString("pw"));
-					bb.setComent(rs.getString("coment"));
-					bb.setReadcount(rs.getInt("readcount"));
-					bb.setDate(rs.getDate("date"));
-					bb.setIp(rs.getString("ip"));
-					bb.setFilename(rs.getString("filename"));
-					bb.setFilename2(rs.getString("filename2"));
-					bb.setFilename3(rs.getString("filename3"));
-					bb.setRe_ref(rs.getInt("re_ref"));
-					bb.setRe_lev(rs.getInt("re_lev"));
-					bb.setRe_seq(rs.getInt("re_seq"));
-					
-					// Bean -> ArrayList 한칸에 저장
-					BoardList.add(bb);
-
-				} // while
-				
-				System.out.println(" 게시판 모든 정보 저장완료 ");
-				System.out.println(" 총 " + BoardList.size() + " 개");
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				closeDB();
-			}
-
-			return BoardList;
-		}
-		// getfreeBoardList(int startRow, int pageSize) 끝		
+	// deletefreeBoard(BoardBean bb) 끝		
 
 		
-		// updatefreeBoardReadcount(int num) 시작 ( 자유게시판 게시글 조회수 증가 기능 )
-		public void updatefreeBoardReadcount(int num){
-			
-			try {
-			// 1,2 디비 연결
-			conn = getConnection();
-			
-			
-			// 3 sql 구문 작성(update) & pstmt 객체
-			sql = "update camp_freeboard set readcount = readcount + 1 where num=?";
-			
-			
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, num);
-			
-			//4 sql 실행
-			
-			pstmt.execute();
-			
-			System.out.println("글 조회수 증가 완료");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally{
-				closeDB();
-			}
-			
-			
-			// 4 sql 실행
-			
-			
-		}
-		// updatefreeBoardReadcount(int num) 끝		
 
-		
-		// getfreeBoard(int num) 시작 ( 캠핑장터 게시판 번호에 맞는 게시글 정보 가져오기 )
-		public BoardBean getfreeBoard(int num){
-
-			BoardBean bb = null;
-			
-			try {
-				
-				// 1, 2 디비 연결
-				conn = getConnection();
-				
-				// 3 sql 작성(select) & pstmt 객체
-				sql = "select * from camp_freeboard where num=?";
-				
-				pstmt = conn.prepareStatement(sql);
-				
-				pstmt.setInt(1, num);
-				
-				// 4 sql 실행
-				
-				rs = pstmt.executeQuery();
-				
-				// 5 데이터 처리
-				if(rs.next()){
-					
-					bb = new BoardBean();
-					
-					bb.setNum(rs.getInt("num"));
-					bb.setName(rs.getString("name"));
-					bb.setId(rs.getString("id"));
-					bb.setPw(rs.getString("pw"));
-					bb.setComent(rs.getString("coment"));
-					bb.setReadcount(rs.getInt("readcount"));
-					bb.setDate(rs.getDate("date"));
-					bb.setIp(rs.getString("ip"));
-					bb.setFilename(rs.getString("filename"));
-					bb.setFilename2(rs.getString("filename2"));
-					bb.setFilename3(rs.getString("filename3"));
-					bb.setRe_ref(rs.getInt("re_ref"));
-					bb.setRe_lev(rs.getInt("re_lev"));
-					bb.setRe_seq(rs.getInt("re_seq"));
-					
-					
-				}
-				
-				System.out.println(" 글 번호에 해당하는 글정보 저장 완료");
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally{
-				closeDB();
-			}
-			
-			return bb;
-			
-
-		}
-		// getfreeBoard(int num) 끝		
-
-		
-		// updatefreeBoard(BoardBean bb) 시작 ( 자유게시판 게시글 글 정보 수정 기능 )
-		public int updatefreeBoard(BoardBean bb){
-			
-			int check = -1;
-			
-			try {
-				// 1, 2 디비 연결
-				conn = getConnection();
-//				System.out.println("넘버 숫자는 @@@@@@@@@@@@@@@@@@@: " + bb.getNum());
-
-				// 3 sql 작성(select - 본인확인) & pstmt 객체
-				sql = "select * from camp_freeboard where num=?";
-				
-				
-				pstmt = conn.prepareStatement(sql);
-				
-				
-				pstmt.setInt(1, bb.getNum());
-
-				//4 sql 실행
-				rs = pstmt.executeQuery();
-//				System.out.println("넘버 숫자는 ####################: " + bb.getNum());
-
-				//5 데이터 처리
-				if(rs.next()){
-					// 글이 있음
-					
-					// sql (update-글 수정) & pstmtm 객체
-					sql = "update camp_freeboard set name=?, coment=?, filename=?, filename2=?, filename3=? where num=?";
-					
-					pstmt = conn.prepareStatement(sql);
-					
-					// ? 채우기
-
-					pstmt.setString(1, bb.getName());
-					pstmt.setString(2, bb.getComent());
-					pstmt.setString(3, bb.getFilename());
-					pstmt.setString(4, bb.getFilename2());
-					pstmt.setString(5, bb.getFilename3());
-					pstmt.setInt(6, bb.getNum());
-
-
-					
-					// 4 sql 실행
-					pstmt.executeUpdate();
-					
-					
-					check = 0;
-					
-					//check = 1;
-											
-				}else{
-					// 글이 없음
-					check = -1;
-				}
-				
-				System.out.println(" 글 수정 완료 !" + check);
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}finally{
-				closeDB();
-			}			
-			return check;
-
-		}
-		// updatefreeBoard(BoardBean bb) 끝		
-
-		
-		// deletefreeBoard(BoardBean bb) 시작 ( 캠핑장터 게시판 글 삭제 기능 )
-		public int deletefreeBoard(BoardBean bb){
-			int check = -1;
-			
-			try {
-				// 1, 2 디비 연결
-				conn = getConnection();
-				// 3 sql 생성 &pstmt 객체 생성
-				sql="select * from camp_freeboard where num=?";
-				
-				pstmt = conn.prepareStatement(sql);
-				
-				System.out.println("@@@@@@@#######가져온 넘버의 값은 : " + bb.getNum());
-				
-				pstmt.setInt(1, bb.getNum());
-				
-				
-				rs = pstmt.executeQuery();
-				
-				// 삭제할 글이 있다.
-				if(rs.next()){
-					
-					// 본문글이다.
-					if(bb.getNum() == bb.getRe_ref()){
-					System.out.println("본문글이다 @@@@@@@@@@@@@@@@@@@@@@@");
-						
-					sql = "delete from camp_freeboard where num=? or re_ref=?";
-					pstmt = conn.prepareStatement(sql);
-					
-					
-					pstmt.setInt(1, bb.getNum());
-					pstmt.setInt(2, bb.getRe_ref());
-					
-					pstmt.executeUpdate();
-					
-					check = 0;
-
-					
-					// 댓글글 또는 대댓글 글이다.
-					}else if(bb.getNum() != bb.getRe_ref()){
-						
-					System.out.println("댓글 또는 대댓글이다 @@@@@@@@@@@@@@@@@@@@@@@");
-					
-					 sql="select * from camp_freeboard where re_lev > (select re_lev from camp_freeboard where num = ?) && re_ref = ?";
-
-					 pstmt = conn.prepareStatement(sql);
-					 
-					 
-					 pstmt.setInt(1, bb.getNum());
-					 pstmt.setInt(2, rs.getInt("re_ref"));
-
-					 
-					 rs = pstmt.executeQuery();
-						 
-
-						 while(rs.next()){
-
-							sql = "delete from camp_freeboard where num=?";
-							pstmt = conn.prepareStatement(sql);
-
-							pstmt.setInt(1, rs.getInt("num"));
-							
-							pstmt.executeUpdate();
-							 
-						 }
-						 
-						 sql="delete from camp_freeboard where num = ?";
-						 pstmt = conn.prepareStatement(sql);
-						 
-						 pstmt.setInt(1, bb.getNum());
-
-						 pstmt.executeUpdate();
-
-					 
-						check = 0;
-
-					 }
-					
-
-					
-						
-				// 삭제할 글이 없다.	
-				}else{
-					check = -1;
-				}
-				
-				System.out.println("글 삭제 완료" + check);
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally {
-				closeDB();
-			}
-
-			
-			return check;
-		}
-		// deletefreeBoard(BoardBean bb) 끝		
-
-		
-
-/////////////////////////////////////////////////////////////// 답글쓰기 시작 ///////////////////////////////////////////////////////////////////////////////////////
-
+	// 답글쓰기 시작 //
 	public void reInsertBoard(BoardBean bb){
 		int num = 0;
-
 		
 		try {
 			// 1) 답글 작성 번호 (num)계산
@@ -2200,11 +1896,7 @@ public class BoardDAO {
 			// 5 데이터 처리
 			if(rs.next()){
 				num = rs.getInt(1) + 1; // 인덱스 번호로 접근
-				
 			}
-			
-			System.out.println(" 답글 번호 계산 완료 : " + num);
-			
 			// 2) 답글의 순서 재배치 (정렬)
 			// -> re_ref(같은 그룹)안에서 re_seq(순서)를 정렬
 			//				"			  기존의 순서 값 보다 큰 값이 있으면 순서를 1 증가
@@ -2216,10 +1908,7 @@ public class BoardDAO {
 			pstmt.setInt(2, bb.getRe_seq());
 			
 			// sql 실행
-			
 			pstmt.executeUpdate();
-			
-			System.out.println(" 답글 정렬 완료 ");
 			
 			// 3) 답글 쓰기 
 			sql = "insert into camp_freeboard(num,name,id,pw,coment,readcount,date,ip,filename,filename2,filename3,re_ref,re_lev,re_seq) "
@@ -2246,16 +1935,10 @@ public class BoardDAO {
 			System.out.println(" 답글 작성완료! ");
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
 			closeDB();
 		}
-		
-
 	}		
-		
-		
-		
 }
 // BoardDAO 끝

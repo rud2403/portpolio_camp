@@ -40,17 +40,14 @@ public class ReplyDAO {
 			System.out.println(conn);
 
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return conn;
 	} 
 	// getConnection() 끝
 
-	
 	// closeDB() 시작
 	public void closeDB() {
 		// 자원 해제
@@ -65,14 +62,12 @@ public class ReplyDAO {
 				conn.close();
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	// closeDB() 끝	
 	
-/////////////////////////////////////////// 댓글 DAO ////////////////////////////////////////////////////////////////////
-	
+	// 댓글 DAO //
 	// insertReply(ReplyBean rb) 시작 ( 자유 게시판 글쓰기 기능 )
 	public int insertReply(ReplyBean rb) {
 		int check = 0;
@@ -162,13 +157,9 @@ public class ReplyDAO {
 			System.out.println(" 게시판 글 개수 에러 발생 !!");
 			e.printStackTrace();
 		} finally {
-
 			closeDB();
-
 		}
-
 		return cnt;
-
 	}
 	// getReplyCount() 끝	
 	
@@ -246,9 +237,7 @@ public class ReplyDAO {
 			// 3 sql 작성(select - 본인확인) & pstmt 객체
 			sql = "select * from camp_reply where rnum=?";
 			
-			
 			pstmt = conn.prepareStatement(sql);
-			
 			
 			pstmt.setInt(1, rb.getRnum());
 
@@ -265,24 +254,17 @@ public class ReplyDAO {
 				pstmt = conn.prepareStatement(sql);
 				
 				// ? 채우기
-
 				pstmt.setString(1, rb.getComent());
 				pstmt.setInt(2, rb.getRnum());
 
 				// 4 sql 실행
 				pstmt.executeUpdate();
 				
-				
 				check = 0;
-				
-				//check = 1;
-										
 			}else{
 				// 글이 없음
 				check = -1;
 			}
-			
-			System.out.println(" 댓글 수정 완료 !" + check);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -306,8 +288,6 @@ public class ReplyDAO {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			System.out.println("@@@@@@@#######가져온 넘버의 값은 : " + rb.getRnum());
-			
 			pstmt.setInt(1, rb.getRnum());
 			
 			rs = pstmt.executeQuery();
@@ -317,7 +297,6 @@ public class ReplyDAO {
 				
 				// 본문글이다.
 				if(rb.getRnum() == rb.getRe_ref()){
-				System.out.println("본문 댓글이다 @@@@@@@@@@@@@@@@@@@@@@@");
 					
 				sql = "delete from camp_reply where rnum=? or re_ref=?";
 				pstmt = conn.prepareStatement(sql);
@@ -334,12 +313,9 @@ public class ReplyDAO {
 				// 댓글글 또는 대댓글 글이다.
 				}else if(rb.getRnum() != rb.getRe_ref()){
 					
-				System.out.println("댓글 또는 대댓글이다 @@@@@@@@@@@@@@@@@@@@@@@");
-				
 				 sql="select * from camp_reply where re_lev > (select re_lev from camp_reply where rnum = ?) && re_ref = ?";
 
 				 pstmt = conn.prepareStatement(sql);
-				 
 				 
 				 pstmt.setInt(1, rb.getRnum());
 				 pstmt.setInt(2, rs.getInt("re_ref"));
@@ -378,7 +354,6 @@ public class ReplyDAO {
 			System.out.println("글 삭제 완료" + check);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			closeDB();
@@ -389,7 +364,6 @@ public class ReplyDAO {
 	}
 	// deleteReply(ReplyBean rb) 끝	
 
-	
 	// insertReReply(rb) 시작
 	public ReplyBean insertReReply(ReplyBean rb){
 		int check = -1;
@@ -443,8 +417,6 @@ public class ReplyDAO {
 			
 			pstmt.executeUpdate();
 			
-			System.out.println(" 댓글 정렬 완료 ");
-			
 			// 3) 답글 쓰기 
 			sql = "insert into camp_reply(rnum,mid,bname,coment,re_ref,re_lev,re_seq) "
 					+ "values(?,?,?,?,?,?,?)";
@@ -462,30 +434,21 @@ public class ReplyDAO {
 			// sql 실행
 			pstmt.executeUpdate();
 			
-
-			System.out.println(" 답글 작성완료! ");
-			
-			
-			////////////////////////////////
 			sql = "select * from camp_reply where rnum = ?";
 
 			pstmt = conn.prepareStatement(sql);
-
 			
 			pstmt.setInt(1, num);
 			
 			rs = pstmt.executeQuery();
 					
 			if(rs.next()){
-	
 				
 			rb.setRe_ref(rs.getInt("re_ref"));
 			rb.setRe_lev(rs.getInt("re_lev"));
 			rb.setRe_seq(rs.getInt("re_seq"));
 			
 			}
-			
-			///////////////////////////////
 			check = 0;
 			}
 		} catch (SQLException e) {
@@ -494,7 +457,6 @@ public class ReplyDAO {
 		} finally{
 			closeDB();
 		}
-		
 		return rb;
 	}	
 	// insertReReply(rb) 시작

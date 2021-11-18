@@ -1313,11 +1313,11 @@
 
 		      	<!-- 댓글 클릭했을 때 뜨는 대댓글 기능 시작 -->
 		      	<div style="display: none;" id="<%=rb.getRnum()%>_rereply">
-		      	<div class="form-floating mt-3">
-				  <textarea class="form-control" placeholder="Leave a comment here" id="<%=rb.getRnum()%>_recoment" name="recoment"></textarea>
-				  <label for="floatingTextarea">Comments</label>				  
-				</div>
-				<button type="button" class="btn btn-success btn-sm mt-2" id="<%=rb.getRnum()%>_reresub">등록하기</button>
+			      	<div class="form-floating mt-3">
+					  <textarea class="form-control" placeholder="Leave a comment here" id="<%=rb.getRnum()%>_recoment" name="recoment"></textarea>
+					  <label for="floatingTextarea">Comments</label>				  
+					</div>
+					<button type="button" class="btn btn-success btn-sm mt-2" id="<%=rb.getRnum()%>_reresub">등록하기</button>
 				</div>
 		      	<!-- 댓글 클릭했을 때 뜨는 대댓글 기능 끝 -->
 		      	

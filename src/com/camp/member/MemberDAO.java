@@ -39,14 +39,9 @@ public class MemberDAO {
 
 			conn = ds.getConnection();
 
-			System.out.println(" 드라이버로드, 디비연결 성공! ");
-			System.out.println(conn);
-
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return conn;
@@ -112,8 +107,6 @@ public class MemberDAO {
 				return check = -2;
 			}			
 
-				
-			
 			// 3 sql (회원 번호를 계산하는 구문)
 			sql = "select max(num) from camp_member";
 
@@ -130,9 +123,6 @@ public class MemberDAO {
 				num = rs.getInt(1) + 1;
 			}
 
-			System.out.println(" 회원 번호 : " + num);
-			
-
 			// 3 sql 작성 (insert) & pstmt 객체 생성
 			sql = "insert into camp_member values(?, ?, ?, ?, ?, ?, now())";
 
@@ -148,11 +138,7 @@ public class MemberDAO {
 
 			pstmt.executeUpdate();
 
-			System.out.println("sql구문 실행 완료 : 회원가입 완료");
-						
-			
 		} catch (SQLException e) {
-			System.out.println("디비 연결 실패 !!");
 			e.printStackTrace();
 		} finally {
 			// 자원해제
@@ -166,92 +152,10 @@ public class MemberDAO {
 
 		}
 		
-		System.out.println("check 넘버는 @@@@@ : " + check);
-		
 		return check;
 
 	} // insertMember 메소드 끝
 
-
-	
-	
-//	// insertMember() 백업 시작
-//		public void insertMember(MemberBean mb) {
-//			int check = 0;
-//			int num = 0;
-//
-//			try {
-//				// 1 드라이버 로드
-//				// 2 디비 연결
-//				// => 한번에 처리하는 메소드로 변경
-//				conn = getConnection();
-//
-//				
-//				// 아이디 검색하는 쿼리 작성 및 실행
-//				// if 중복안되면 아래 insert 코드 실행, 중복되면 에러 코드 작성			
-//				
-//				
-//				
-//				// 3 sql (회원 번호를 계산하는 구문)
-//				sql = "select max(num) from camp_member";
-//
-//				pstmt = conn.prepareStatement(sql);
-//
-//				// 4 sql 실행
-//				rs = pstmt.executeQuery();
-//
-//				// 5 데이터 처리
-//				// max(num) - sql 함수를 실행했을 경우 커서 이동 가능(데이터 여부 상관없음)
-//				// num - sql 칼럼의 경우 커서 이동 불가능
-//				if (rs.next()) {
-//					// num = rs.getInt("mxa(num)") + 1;
-//					num = rs.getInt(1) + 1;
-//				}
-//
-//				System.out.println(" 회원 번호 : " + num);
-//				
-//
-//				// 3 sql 작성 (insert) & pstmt 객체 생성
-//				sql = "insert into camp_member values(?, ?, ?, ?, ?, ?, now())";
-//
-//				pstmt = conn.prepareStatement(sql);
-//
-//				pstmt.setInt(1, num);
-//				pstmt.setString(2, mb.getId());
-//				pstmt.setString(3, mb.getPw());
-//				pstmt.setString(4, mb.getName());
-//				pstmt.setString(5, mb.getPhone());
-//				pstmt.setString(6, mb.getEmail());
-//				// 4 sql 실행
-//
-//				pstmt.executeUpdate();
-//
-//				System.out.println("sql구문 실행 완료 : 회원가입 완료");
-//
-//			} catch (SQLException e) {
-//				System.out.println("디비 연결 실패 !!");
-//				e.printStackTrace();
-//			} finally {
-//				// 자원해제
-//				try {
-//					pstmt.close();
-//					conn.close();
-//				} catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//
-//			}
-//
-//	// insertMember() 백업 끝
-
-	
-	
-	
-	
-	
-	
-	
 	
 	// deleteBoard(BoardBean bb) 시작
 	public int deleteMember(MemberBean mb) {
@@ -310,9 +214,7 @@ public class MemberDAO {
 	}
 	// deleteMember(MemberBean mb) 끝
 
-	
-	/////////// 로그인 멤버 ////////////////////////////////////
-	
+	// 로그인 멤버 //
 	// loginMemeber(MemberBean mb) 시작
 	public int loginMember(MemberBean mb){
 		int check = -1;
@@ -353,17 +255,11 @@ public class MemberDAO {
 				
 			}
 			
-			System.out.println("로그인 완료" + check);
-
-
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace(); 
-			
 		} finally{
 			closeDB();
 		}
-
 		return check;
 		
 	}
@@ -383,18 +279,13 @@ public class MemberDAO {
 				
 				pstmt = conn.prepareStatement(sql);
 				
-				System.out.println("mb.getId() = " +mb.getId());
-
 				// 4 sql 객체 실행 -> rs에 저장
 				
 				pstmt.setString(1, mb.getId());
 				
 				rs = pstmt.executeQuery();
-				// 5 데이터 처리
-
-				System.out.println("sql 실행완료 ");
-
 				
+				// 5 데이터 처리
 				if(rs.next()) { 
 					// rs에 저장된 정보를 꺼내서 화면에 출력
 					
@@ -410,13 +301,9 @@ public class MemberDAO {
 				}
 								
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.out.println("예외 발생");
 			}
 			return mb;
-			
-
 	}
 	// infoMemeber() 끝
 	
@@ -426,28 +313,19 @@ public class MemberDAO {
 			
 			try {
 
-				
-				
 				conn = getConnection();
-				
 				
 				// 3 쿼리 작성(select) & pstmt 작성
 				sql = "select * from camp_member where id = ?";
 				
 				pstmt = conn.prepareStatement(sql);
 				
-				System.out.println("mb.getId() = " +mb.getId());
-
 				// 4 sql 객체 실행 -> rs에 저장
-				
 				pstmt.setString(1, mb.getId());
 				
 				rs = pstmt.executeQuery();
-				// 5 데이터 처리
-
-				System.out.println("sql 실행완료 ");
-
 				
+				// 5 데이터 처리
 				if(rs.next()) { 
 					// rs에 저장된 정보를 꺼내서 화면에 출력
 					
@@ -458,14 +336,10 @@ public class MemberDAO {
 					mb.setEmail(rs.getString("email"));
 					mb.setRegdate(rs.getTimestamp("regdate"));
 					
-					System.out.println("sql 구문 실행 완료");
-					System.out.println("저장된 회원 정보" + mb);
 				}
 								
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.out.println("예외 발생");
 			}
 			return mb;
 			
@@ -473,8 +347,7 @@ public class MemberDAO {
 	}
 	// manageMemeber() 끝	
 
-	
-	// infopreMember(MemberBean mb) 시작
+		// infopreMember(MemberBean mb) 시작
 		public int infopreMember(MemberBean mb) {
 			int check = -1;
 
@@ -502,25 +375,18 @@ public class MemberDAO {
 						
 						check = 1; 
 					}
-					
-					System.out.println("회원 비밀번호 확인 완료" + check);
-
 				}
 
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace(); 
 				
 			} finally{
 				closeDB();
 			}
-
 			return check;
-			
 		}
 		// infopreMember(MemberBean mb) 끝
 	
-
 	// updateEmail() 시작
 	public int updateEmail(MemberBean mb){		
 		int check = -1;
@@ -534,7 +400,6 @@ public class MemberDAO {
 		 	final String DBPW = "1234";
 		 	
 		 	// 1. 드라이버 로드
-		 	
 		 	Class.forName(DRIVER);
 		 	
 		 	// 2. 디비연결
@@ -590,70 +455,64 @@ public class MemberDAO {
 
 	
 	// updateName() 시작
-		public int updateName(MemberBean mb){		
-			int check = -1;
+	public int updateName(MemberBean mb){
+		int check = -1;
+		
+		try{
 			
-			try{
-				
-				// DB접속 후
-				final String DRIVER = "com.mysql.jdbc.Driver";
-				final String DBURL = "jdbc:mysql://localhost:3306/portpolio_camp";
-				final String DBID = "root";
-			 	final String DBPW = "1234";
-			 	
-			 	// 1. 드라이버 로드
-			 	
-			 	Class.forName(DRIVER);
-			 	
-			 	// 2. 디비연결
-			 	Connection conn = DriverManager.getConnection(DBURL, DBID, DBPW);
-				
-			 	// 3. sql작성 & pstmt 객체생성
-			 	String sql = "select name from camp_member where id = ? ";
-
-			 	PreparedStatement pstmt = conn.prepareStatement(sql);
-			 	
-			 	// ? 채우기
-			 	pstmt.setString(1, mb.getId());
-			 	
-			 	// 4. sql 실행
-			 	ResultSet rs = pstmt.executeQuery();
-			 	
-
-			 // 5. 데이터 처리
-		 		// 아이디가 있는 경우
-			 	if(rs.next()){
-			 		
-			 			
-			 			// sql 구문 작성 & pstmt 객체
-			 			sql = "update camp_member set name = ? where id = ? ";
-			 			
-			 			pstmt = conn.prepareStatement(sql);
-			 				// sql문 하나당 pstmt하나 따라와야함
-			 			
-			 			// ? 채우기
-			 			pstmt.setString(1, mb.getName());
-			 			pstmt.setString(2, mb.getId());
+			// DB접속 후
+			final String DRIVER = "com.mysql.jdbc.Driver";
+			final String DBURL = "jdbc:mysql://localhost:3306/portpolio_camp";
+			final String DBID = "root";
+		 	final String DBPW = "1234";
+		 	
+		 	// 1. 드라이버 로드
+		 	
+		 	Class.forName(DRIVER);
+		 	
+		 	// 2. 디비연결
+		 	Connection conn = DriverManager.getConnection(DBURL, DBID, DBPW);
 			
-			 			// sql 실행
-			 			
-			 			pstmt.executeUpdate();
-		 			
-		 			check = 0;
+		 	// 3. sql작성 & pstmt 객체생성
+		 	String sql = "select name from camp_member where id = ? ";
 
-					System.out.println("이름 변경 완료" + check);
+		 	PreparedStatement pstmt = conn.prepareStatement(sql);
+		 	
+		 	// ? 채우기
+		 	pstmt.setString(1, mb.getId());
+		 	
+		 	// 4. sql 실행
+		 	ResultSet rs = pstmt.executeQuery();
+		 	
 
-			 		}
-				}catch (Exception e) {
-					e.printStackTrace(); 
-					
-				}finally{
-					closeDB();
-				}
-				
-				
-				return check;
-			}	
+		 	// 5. 데이터 처리
+	 		// 아이디가 있는 경우
+		 	if(rs.next()){
+		 		
+	 			// sql 구문 작성 & pstmt 객체
+	 			sql = "update camp_member set name = ? where id = ? ";
+	 			
+	 			pstmt = conn.prepareStatement(sql);
+	 				// sql문 하나당 pstmt하나 따라와야함
+	 			
+	 			// ? 채우기
+	 			pstmt.setString(1, mb.getName());
+	 			pstmt.setString(2, mb.getId());
+	
+	 			// sql 실행
+	 			
+	 			pstmt.executeUpdate();
+	 			
+	 			check = 0;
+
+		 		}
+			}catch (Exception e) {
+				e.printStackTrace(); 
+			}finally{
+				closeDB();
+			}
+			return check;
+		}	
 		// updateName() 끝
 
 
@@ -670,13 +529,12 @@ public class MemberDAO {
 			 	final String DBPW = "1234";
 			 	
 			 	// 1. 드라이버 로드
-			 	
 			 	Class.forName(DRIVER);
 			 	
 			 	// 2. 디비연결
 			 	Connection conn = DriverManager.getConnection(DBURL, DBID, DBPW);
 				
-			 // 3. sql작성 & pstmt 객체생성
+			 	// 3. sql작성 & pstmt 객체생성
 			 	String sql = "select phone from camp_member where id = ? ";
 
 			 	PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -718,86 +576,10 @@ public class MemberDAO {
 					closeDB();
 				}
 				
-				
 				return check;
 			}	
-		// updatePhone() 끝	
+			// updatePhone() 끝	
 		
-		
-		
-		// updatePw() 시작
-//	public int updatePw(MemberBean mb){		
-//		int check = -1;
-//		
-//		try{
-//			
-//			conn = getConnection();
-//			
-//		 // 3. sql작성 & pstmt 객체생성
-//		 	sql = "select pw from camp_member where id = ? ";
-//
-//		 	pstmt = conn.prepareStatement(sql);
-//		 	
-//		 	// ? 채우기
-//		 	pstmt.setString(1, mb.getId());
-//		 	
-//		 	// 4. sql 실행
-//		 	rs = pstmt.executeQuery();
-//		 	
-//
-//		 	// 5. 데이터 처리
-//			 	if(rs.next()){
-//			 		// 아이디가 있는 경우
-//			 		if(mb.getPw().equals(rs.getString("pw"))){
-//			 			// 비밀번호 같음
-//			 			
-//			 			
-//			 			// 새 비밀번호 일치 확인
-//			 			if(pw1.equals(pw2)){
-//			 				
-//			 			// sql 구문 작성 & pstmt 객체
-//			 			sql = "update camp_member set pw = ? where id = ? ";
-//			 			
-//			 			pstmt = conn.prepareStatement(sql);
-//			 				// sql문 하나당 pstmt하나 따라와야함
-//			 			
-//			 			// ? 채우기
-//			 			pstmt.setString(1, pw1);
-//			 			pstmt.setString(2, mb.getId());
-//			
-//			 			// sql 실행
-//			 			
-//			 			pstmt.executeUpdate();
-//	 			
-//			 			check = 0;
-//
-//			 			System.out.println("전화번호 변경 완료" + check);
-//
-//				 		}else{
-//				 			check = -1;
-//				 			// 새 비밀번호가 다르다.
-//				 		}
-//			 		
-//			 		}else{
-//			 			check = -2;
-//			 			//현재 비밀번호가 다르다.
-//			 		}
-//			 		
-//			 	}else{
-//			 		check = -3;
-//			 		// 아이디가 없다.
-//			 	}
-//			}catch (Exception e) {
-//				e.printStackTrace(); 
-//				
-//			}finally{
-//				closeDB();
-//			}
-//			
-//			
-//			return check;
-//		}	
-		// updatePw() 끝		
 	
 
 		//	seachId(MemberBean mb) 시작
@@ -858,7 +640,6 @@ public class MemberDAO {
 		}
 		//	seachId(MemberBean mb) 끝
 
-		
 		//	seachPw(MemberBean mb) 시작
 		public int seachPw(MemberBean mb){
 			int check = -1;
@@ -884,7 +665,7 @@ public class MemberDAO {
 				// 데이터가 있을 경우
 				if (rs.next()) {
 					// 아이디 있음
-				// 3 sql 작성 (insert) & pstmt 객체 생성
+					// 3 sql 작성 (insert) & pstmt 객체 생성
 					if (mb.getName().equals(rs.getString("name")) && mb.getEmail().equals(rs.getString("email"))) {
 						
 						sql = "select pw from camp_member where id=? and name=? and email=?";
@@ -925,7 +706,6 @@ public class MemberDAO {
 		}
 		//	seachPw(MemberBean mb) 끝				
 		
-		
 	// checkId(MemberBean mb) 시작 (회원가입 시 아이디 중복체크)	
 	public int checkId(MemberBean mb){
 		int check = -1;
@@ -936,8 +716,6 @@ public class MemberDAO {
 			// 2 디비 연결
 			// => 한번에 처리하는 메소드로 변경
 			conn = getConnection();
-
-			
 
 			// 아이디가 admin일 때
 			if(mb.getId().equals("admin")){
@@ -957,8 +735,6 @@ public class MemberDAO {
 				return check = -5;
 			}			
 			
-			
-			
 			// 3. sql작성 & pstmt 객체생성
 			sql = "select id from camp_member where id=?";
 
@@ -971,22 +747,14 @@ public class MemberDAO {
 
 			if(rs.next()){
 				// 아이디가 있다.
-					
 					check = -1; 
 				}
-				
 				else{
 				// 아이디가 없다.
 					check = 0;
-					
 				}
 				
-			
-			System.out.println("아이디 체크 완료" + check);
-
-
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace(); 
 			
 		} finally{
@@ -1016,7 +784,6 @@ public class MemberDAO {
 				return check = -3;
 			}
 			
-			
 			// 3. sql작성 & pstmt 객체생성
 			sql = "select email from camp_member where email=?";
 
@@ -1029,19 +796,12 @@ public class MemberDAO {
 
 			if(rs.next()){
 				// 아이디가 있다.
-					
 					check = -1; 
 				}
-				
 				else{
 				// 아이디가 없다.
 					check = 0;
-					
 				}
-				
-			
-			System.out.println("이메일 체크 완료" + check);
-
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
