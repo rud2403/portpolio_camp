@@ -55,10 +55,6 @@
 	String field = multi.getParameter("field");
 	String land = multi.getParameter("land");
 	String level = multi.getParameter("level");
-
-
-	
-	//String filename = multi.getParameter("filename");
 	
 	// 서버에 올라가는 파일의 이름(중복처리)
 	String filename = multi.getFilesystemName("filename");
@@ -71,7 +67,6 @@
 	String oFileName3 = multi.getOriginalFileName("filename3");
 	
 	%>
-
 	<hr>
 	
 	<form id="fr" name="fr" action="/Portpolio_camp/freecamp/writecampPro.jsp" method="post">
@@ -92,7 +87,5 @@
 		
 	</form>
 
-	<!-- <a href="javascript:fr.submit();">DB 저장하기</a> -->
-	
 </body>
 </html>

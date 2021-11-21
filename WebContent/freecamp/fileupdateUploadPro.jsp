@@ -94,7 +94,5 @@
 		
 	</form>
 
-	<!-- <a href="javascript:fr.submit();">DB 저장하기</a> -->
-	
 </body>
 </html>
